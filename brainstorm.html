@@ -52,5 +52,30 @@
     <p>
         ...
     </p>
+    
+    <h4>
+        Wie koennte eine Recommandation vom Client angefordert werden?
+    </h4>
+    <p>
+		z.B. mit Nutzung von HTTP/s
+        <ol>
+			<li>
+				GET von Client mit Parameter GPS-Koordinaten, Suchradius, 
+				Filter, weitere Kriterien, die der Nutzer eingestellt hat
+			</li>
+			<li>
+				Auswertung Serverseitig
+			</li>
+			<li>
+				Antwort des Servers mit Liste von Events und zugehoerige Daten, 
+				wie Position, Startzeit, Endzeit, allg. Beliebtheit, Empfehlungswert 
+				basierend auf Nutzerdaten (Praeferenzen, etc.)
+			</li>
+			<li>
+				Auflistung in App, evtl. anzeigen auf Karte mit farblicher Markierung
+				der besonders gut passenden Events
+			</li>
+		</ol>
+    </p>
         
 </html>
