@@ -1,0 +1,57 @@
+\documentclass[beamer]{beamer} % "beamer" zu "handout" ändern, wenn das Aufdecken ausgeschaltet werden soll
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{bm}
+
+\usetheme[progressbar=frametitle]{metropolis}
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+
+\title{Location Based Recommendations}
+\author[H.~Gerdes, J.B.~Latzel, L.~Richardt]{Henrik Gerdes, Johannes B. Latzel, Leon Richardt}
+\date[13.08.2018]{13. August 2018}
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+
+	\begin{frame}{Definition}
+		\begin{quote}
+			Location-based recommendation is a recommender system that incorporates \textcolor{red}{location information}, such as that from a mobile device, into algorithms to attempt to provide more \textcolor{red}{relevant recommendations} to users. This could include recommendations for \textnormal{[\ldots]} events near the user's location.
+		\end{quote}
+		\hfill---~Wikipedia
+		\vfill
+		\bm{$\Rightarrow$} \textbf{Einbeziehung von Standortdaten in Empfehlungen}
+	\end{frame}
+
+	\begin{frame}{In diesem Projekt}
+		Welche Daten könnte man für LBR nutzen?
+		\begin{itemize}
+			\item GPS-Position
+			\item Event-Filter
+			\item User-Teilnahme an ähnlichen Events in der Vergangenheit
+			\item Popularität bestimmter Locations in der Umgebung (mithilfe historischer oder Echtzeit-Daten)
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Projektziel}
+		\textbf{Must-Haves:}
+		\begin{itemize}
+			\item Geordnete Liste und Hervorhebung passender Events (auch auf der Karte)
+			\item Push-Nachrichten, wenn geeignete Events in der Nähe stattfinden
+			\item Konfiguration von Präferenzen, Suchradius, Push-Nachrichten etc.
+		\end{itemize}
+		\uncover<2->{Nice to have:
+			\begin{itemize}
+				\item content...
+				\item more content...
+			\end{itemize}
+		}
+	\end{frame}
+	
+\end{document}
