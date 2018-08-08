@@ -4,11 +4,22 @@
 \usepackage[utf8]{inputenc}
 
 \usepackage{bm}
+\usepackage{tcolorbox}
+\usepackage{setspace}
 
 \usetheme[progressbar=frametitle]{metropolis}
 \beamertemplatenavigationsymbolsempty
 \setbeamertemplate{headline}{}
 \setbeamertemplate{footline}{}
+
+\newcommand{\userstory}[1]{
+\begin{tcolorbox}[boxrule=0.2mm, top=0mm, left=0mm, bottom=1mm, title=User Story]
+	\begin{singlespace}
+		#1
+	\end{singlespace}
+\end{tcolorbox}
+}
+
 
 \title{Location Based Recommendations}
 \author[H.~Gerdes, J.B.~Latzel, L.~Richardt]{Henrik Gerdes, Johannes B. Latzel, Leon Richardt}
@@ -39,6 +50,12 @@
 		\end{itemize}
 	\end{frame}
 
+	\begin{frame}{User Stories}
+		\userstory{Ich möchte Zeit sparen, indem ich Veranstaltungen, die mich interessieren, schnell finden kann.}
+	
+		\userstory{Ich möchte festlegen können, für welche Art von Events ich benachrichtigt werde.}
+	\end{frame}
+
 	\begin{frame}{Projektziel}
 		\textbf{Must-Haves:}
 		\begin{itemize}
@@ -46,7 +63,8 @@
 			\item Push-Nachrichten, wenn geeignete Events in der Nähe stattfinden
 			\item Konfiguration von Präferenzen, Suchradius, Push-Nachrichten etc.
 		\end{itemize}
-		\uncover<2->{Nice to have:
+		\uncover<2->{%
+			\textbf{Nice to have:}
 			\begin{itemize}
 				\item content...
 				\item more content...
