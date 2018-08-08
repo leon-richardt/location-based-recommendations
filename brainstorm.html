@@ -50,8 +50,57 @@
         Was wollen wir am Ende des Projekts vorzeigen k&ouml;nnen? Was soll das Projektziel sein?
     </h4>
     <p>
-        ...
+        Entwicklung von Server-Dienst, der LBR-Aufruf ausfuehrt und Android-App, die Ergebnisse von LBR-Aufruf in einer Liste anzeigt
     </p>
+	<p>
+		must have:
+		<ol>
+			<li>
+				Android-App:
+				<ol>
+					<li>
+						Knopf fuer LBR-Aufruf
+					</li>
+					<li>
+						Listen-View fuer LBR-Ergebnisse
+					</Li>
+					<li>
+						Konfigurationsmenue fuer Filtereinstellungen, Praeferenzen, Radius-Konfiguration, Push-Nachrichten und Aehnlichem
+					</li>
+					<li>
+						Push-Nachrichten, wenn besonders geeignetes Event in der Naehe und zeitnah
+					</li>
+				</ol>
+			</li>
+			<li>
+				Server-Dienst:
+				<ol>
+					<li>
+						HTTP-Dienst, der eingehende GET-Anfragen annimmt
+					</li>
+					<li>
+						Erstellen von potentiell-passenden Events anhand deterministischer Kriterien, wie Abstand vom Benutzer, Zeit des Events, Filtereinstellungen
+					</li>
+					<li>
+						Antwort auf GET-Anfrage mit Base64-kodierter Event-Liste mit Metadaten wie LBR-Score, Position, etc.
+					</li>
+				</ol>
+			</li>
+			<li>
+				Client/Server: gemeinsame Schnittstelle fuer Kommunikation via HTTP, Serialisierung, Base64-Kodierung
+			</li>
+		<ol>
+		Optional:
+		<ol>
+			<li>
+				TLS 1.2 oder hoeher zum Tunneln der Client-Server-Verbindungen
+			</li>
+			<li>
+				Anzeigen von Events auf echter Karte mit Hervorhebung von besonders passenden Events (z.B. durch kurzem Farbpuls, der einmalig radial von 
+				der Event-Location ausstrahlt)
+			</li>
+		</ol>
+	</p>
     
     <h4>
         Wie koennte eine Recommandation vom Client angefordert werden?
