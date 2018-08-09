@@ -1,1 +1,79 @@
-/home/leon/Documents/LaTeXFiles/location_based_recommendations/introduction/introduction.tex
+\documentclass[beamer]{beamer} % "beamer" zu "handout" ändern, wenn das Aufdecken ausgeschaltet werden soll
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{bm}
+\usepackage{tcolorbox}
+\usepackage{setspace}
+
+\usetheme[progressbar=frametitle]{metropolis}
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+
+\newcommand{\userstory}[1]{
+\begin{tcolorbox}[boxrule=0.2mm, top=0mm, left=0mm, bottom=1mm, title=User Story]
+	\begin{singlespace}
+		#1
+	\end{singlespace}
+\end{tcolorbox}
+}
+
+
+\title{Location Based Recommendations}
+\author[H.~Gerdes, J.B.~Latzel, L.~Richardt]{Henrik Gerdes, Johannes B. Latzel, Leon Richardt}
+\date[13.08.2018]{13. August 2018}
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+
+	\begin{frame}{Definition}
+		\begin{quote}
+			Location-based recommendation is a recommender system that incorporates \textcolor{red}{location information} into algorithms to attempt to provide more \textcolor{red}{relevant recommendations} to users.
+		\end{quote}
+		\begin{flushright}
+			---~Wikipedia
+		\end{flushright}
+		\vfill
+		\uncover<2->{
+			\begin{center}
+				\large\textbf{Standortdaten \bm{$\Rightarrow$} Relevante Empfehlungen}
+			\end{center}
+		}
+	\end{frame}
+
+	\begin{frame}{In diesem Projekt}
+		Welche Daten könnte man für LBR nutzen?
+		\begin{itemize}
+			\item GPS-Position
+			\item Event-Filter
+			\item User-Teilnahme an ähnlichen Events in der Vergangenheit
+			\item Popularität bestimmter Locations in der Umgebung (mithilfe von historischen oder Echtzeit-Daten)
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{User Stories}
+		\userstory{Ich möchte Zeit sparen, indem ich Veranstaltungen, die mich interessieren, schnell finden kann.}
+
+		\userstory{Ich möchte festlegen können, für welche Art von Events ich benachrichtigt werde.}
+	\end{frame}
+
+	\begin{frame}{Projektziel}
+		\textbf{Must-Haves:}
+		\begin{itemize}
+			\item Geordnete Liste passender Veranstaltungen
+			\item Push-Nachrichten, wenn geeignete Events in der Nähe stattfinden
+			\item Konfiguration von Präferenzen, Suchradius, Push-Nachrichten etc.
+		\end{itemize}
+		
+		\textbf{Nice to have:}
+		\begin{itemize}
+			\item Hervorhebung empfohlener Events auf der Karte
+		\end{itemize}
+	\end{frame}
+	
+\end{document}
