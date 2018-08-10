@@ -1,11 +1,11 @@
 \documentclass[beamer]{beamer} % "beamer" zu "handout" ändern, wenn das Aufdecken ausgeschaltet werden soll
 
-\usepackage[ngerman]{babel}
+\usepackage[english,ngerman]{babel}
 \usepackage[utf8]{inputenc}
 
-\usepackage{bm}
-\usepackage{tcolorbox}
-\usepackage{setspace}
+\usepackage{bm} % Mathe-Symbole in Fettschrift
+\usepackage{tcolorbox} % Schöne Boxen
+\usepackage{setspace} % Komfortablere Umgebung für unterschiedlichen Zeilenabstand
 
 \usetheme[progressbar=frametitle]{metropolis}
 \beamertemplatenavigationsymbolsempty
@@ -22,7 +22,7 @@
 
 
 \title{Location Based Recommendations}
-\author[H.~Gerdes, J.B.~Latzel, L.~Richardt]{Henrik Gerdes, Johannes B. Latzel, Leon Richardt}
+\author[H.~Gerdes, J.B.~Latzel, L.~Richardt]{Henrik Gerdes, Johannes~B. Latzel, Leon Richardt}
 \date[13.08.2018]{13. August 2018}
 
 \begin{document}
@@ -33,17 +33,15 @@
 
 	\begin{frame}{Definition}
 		\begin{quote}
-			Location-based recommendation is a recommender system that incorporates \textcolor{red}{location information} into algorithms to attempt to provide more \textcolor{red}{relevant recommendations} to users.
+			\foreignlanguage{english}{Location-based recommendation is a recommender system that incorporates \textcolor{red}{location information} into algorithms to attempt to provide more \textcolor{red}{relevant recommendations} to users.}
 		\end{quote}
 		\begin{flushright}
-			---~Wikipedia
+		---~Wikipedia
 		\end{flushright}
 		\vfill
-		\uncover<2->{
-			\begin{center}
-				\large\textbf{Standortdaten \bm{$\Rightarrow$} Relevante Empfehlungen}
-			\end{center}
-		}
+		\begin{center}
+			\large\textbf{Standortdaten \bm{$\Rightarrow$} Relevante Empfehlungen}
+		\end{center}
 	\end{frame}
 
 	\begin{frame}{In diesem Projekt}
@@ -57,22 +55,24 @@
 	\end{frame}
 
 	\begin{frame}{User Stories}
-		\userstory{Ich möchte Zeit sparen, indem ich Veranstaltungen, die mich interessieren, schnell finden kann.}
+		\userstory{Ich möchte Zeit sparen, indem ich Veranstaltungen, die mich interessieren, schneller finden kann.}
+		
+		\uncover<2->{\userstory{Ich möchte benachrichtigt werden, wenn relevante Events in meiner Nähe stattfinden.}}
 
-		\userstory{Ich möchte festlegen können, für welche Art von Events ich benachrichtigt werde.}
+		\uncover<3->{\userstory{Ich möchte festlegen können, für welche Art von Events ich benachrichtigt werde.}}
 	\end{frame}
 
 	\begin{frame}{Projektziel}
 		\textbf{Must-Haves:}
 		\begin{itemize}
 			\item Geordnete Liste passender Veranstaltungen
-			\item Push-Nachrichten, wenn geeignete Events in der Nähe stattfinden
 			\item Konfiguration von Präferenzen, Suchradius, Push-Nachrichten etc.
 		\end{itemize}
 		
-		\textbf{Nice to have:}
+		\textbf{Nice-to-Have:}
 		\begin{itemize}
 			\item Hervorhebung empfohlener Events auf der Karte
+			\item Push-Nachrichten, wenn geeignete Veranstaltungen in der Nähe stattfinden
 		\end{itemize}
 	\end{frame}
 	
