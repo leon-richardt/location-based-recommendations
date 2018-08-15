@@ -48,4 +48,17 @@ public final class Assurance {
 			throw new IllegalArgumentException(i + " <= 0");
 	}
 
+	/**
+	 * 
+	 * @param value
+	 * @param leftBoundary
+	 * @param rightBoundary
+	 * @throws IllegalArugmentException
+	 *             if score is not element of [leftBoundary, rightBoundary]
+	 */
+	public static void assureBoundaries(double value, double leftBoundary, double rightBoundary) {
+		if (value < leftBoundary || value > rightBoundary)
+			throw new IllegalArgumentException("score is not element of [" + leftBoundary + ", " + rightBoundary + "]");
+	}
+
 }
