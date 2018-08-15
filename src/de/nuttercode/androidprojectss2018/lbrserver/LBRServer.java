@@ -77,12 +77,12 @@ public class LBRServer implements Closeable {
 	 * @return appropriate response as {@link LBRResult}
 	 */
 	private LBRResult createLBRResult(LBRQuery lbrQuery) {
-
 		ArrayList<ScoredEvent> dummyList = new ArrayList<>();
+		ArrayList<Genre> dummyGenreList = new ArrayList<>();
+		dummyGenreList.add(new Genre(1, "testGenre1", "testGenre1"));
+		dummyGenreList.add(new Genre(2, "testGenre2", "testGenre2"));
 		dummyList.add(eventScoreCalculator.scoreEvent(new Event(new Venue("testVenue1", 1, "testVenue1", 100, 100),
-				new Genre[] { new Genre(1, "testGenre1", "testGenre1"), new Genre(2, "testGenre2", "testGenre2") },
-				"testEvent1", "testEvent1", 1)));
-
+				dummyGenreList, "testEvent1", "testEvent1", 1)));
 		return new LBRResult(dummyList);
 	}
 
@@ -93,12 +93,16 @@ public class LBRServer implements Closeable {
 	 *            socket of the LBRClient connection
 	 */
 	private void answerRequest(Socket socket) {
-		LBRQuery lbrQuery = null;
 
+		LBRQuery lbrQuery = null;
+		ObjectOutputStream oos = null;
+		ObjectInputStream ois = null;
+		
 		// no try-with-resource, because ObjectInputStream/ObjectOutputStream might
-		// cause close of socket
+		// close the socket prematurely
 		try {
-			lbrQuery = (LBRQuery) new ObjectInputStream(socket.getInputStream()).readObject();
+			ois = new ObjectInputStream(socket.getInputStream());
+			lbrQuery = (LBRQuery) ois.readObject();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -108,7 +112,7 @@ public class LBRServer implements Closeable {
 		}
 		if (lbrQuery != null) {
 			try {
-				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+				oos = new ObjectOutputStream(socket.getOutputStream());
 				oos.writeObject(createLBRResult(lbrQuery));
 				oos.flush();
 			} catch (IOException e) {
@@ -117,6 +121,10 @@ public class LBRServer implements Closeable {
 		}
 		try {
 			socket.close();
+			if (ois != null)
+				ois.close();
+			if (oos != null)
+				oos.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
