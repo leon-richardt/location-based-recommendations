@@ -12,7 +12,8 @@ import de.nuttercode.androidprojectss2018.csi.ScoredEvent;
 public interface EventScoreCalculator {
 
 	/**
-	 * processes the event and calculates a score
+	 * processes the event and calculates its score - the score must satisfy the
+	 * boundaries specified in {@link ScoredEvent}
 	 * 
 	 * @param event
 	 * @return event + score
