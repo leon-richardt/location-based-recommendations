@@ -22,7 +22,7 @@ public class LBRResultSummary {
 			lbrResultState = LBRResultState.Null;
 	}
 
-	public LBRResult getLBRResult() {
+	public LBRResult getLbrResult() {
 		if (lbrResult == null)
 			throw new NullPointerException();
 		return lbrResult;
