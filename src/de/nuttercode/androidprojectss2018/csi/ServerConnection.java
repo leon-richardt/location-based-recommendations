@@ -22,12 +22,22 @@ public class ServerConnection implements Closeable {
 	 * time in milliseconds after which a socket will be closed if the
 	 * {@link LBRServer} does not answer
 	 */
-	private final static int SOCKET_TIMEOUT = 3_000;
+	private final static int SOCKET_TIMEOUT = 5_000;
 
 	/**
 	 * socket of the connection to the {@link LBRServer}
 	 */
 	private final Socket socket;
+
+	/**
+	 * used to send objects to the {@link LBRServer}
+	 */
+	private final ObjectOutputStream objectOutputStream;
+
+	/**
+	 * used to receive objects from the {@link LBRServer}
+	 */
+	private ObjectInputStream objectInputStream;
 
 	/**
 	 * @param port
@@ -46,6 +56,10 @@ public class ServerConnection implements Closeable {
 		Assurance.assureNotEmpty(serverDNSName);
 		socket = new Socket(serverDNSName, port);
 		socket.setSoTimeout(SOCKET_TIMEOUT);
+		objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+		// can't initialize objectInputStream as the LBRServer might not have send any
+		// objects yet. the constructor would block until a timeout was reached.
+		objectInputStream = null;
 	}
 
 	/**
@@ -57,9 +71,8 @@ public class ServerConnection implements Closeable {
 	 *             when {@link ObjectOutputStream#writeObject(Object)} does
 	 */
 	public void writeQuery(LBRQuery lbrQuery) throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-		oos.writeObject(lbrQuery);
-		oos.flush();
+		objectOutputStream.writeObject(lbrQuery);
+		objectOutputStream.flush();
 	}
 
 	/**
@@ -71,15 +84,17 @@ public class ServerConnection implements Closeable {
 	 *             when {@link ObjectInputStream#readObject()} does
 	 */
 	public LBRResult readResult() throws ClassNotFoundException, IOException, InterruptedException {
-		if (socket.getInputStream().available() == 0) {
-			// Thread.sleep(1000);
-		}
-		return (LBRResult) new ObjectInputStream(socket.getInputStream()).readObject();
+		if (objectInputStream == null)
+			objectInputStream = new ObjectInputStream(socket.getInputStream());
+		return (LBRResult) objectInputStream.readObject();
 	}
 
 	@Override
 	public void close() throws IOException {
 		socket.close();
+		objectOutputStream.close();
+		if (objectInputStream != null)
+			objectInputStream.close();
 	}
 
 }
