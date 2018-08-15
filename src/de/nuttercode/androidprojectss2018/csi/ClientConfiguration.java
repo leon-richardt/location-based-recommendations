@@ -16,7 +16,7 @@ public class ClientConfiguration implements Serializable {
 	private final GenrePreferenceConfiguration genrePreferenceConfiguration;
 
 	/**
-	 * distance of farthest considerable event
+	 * distance of farthest considerable event in kilometers (km)
 	 */
 	private double radius;
 	
