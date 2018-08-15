@@ -1,0 +1,45 @@
+NEW MS-SQL
+
+Genre:
+CREATE TABLE LBR.dbo.Genre
+(genre_id int IDENTITY (1,1) NOT NULL,
+genre_name varchar(35) NOT NULL,
+genre_description varchar(500) DEFAULT 'No description',
+PRIMARY KEY (genre_ID))
+
+
+Venue:
+CREATE TABLE LBR.dbo.Venue
+(venue_id int IDENTITY (100,1) NOT NULL,
+venue_name varchar(25) NOT NULL,
+venue_description varchar(500) DEFAULT 'No description',
+lat decimal(21,16) NOT NULL,
+lng decimal(21,16) NOT NULL,
+PRIMARY KEY (venue_id))
+
+Event:
+CREATE TABLE LBR.dbo.Event (
+event_id int IDENTITY(1000,1) NOT NULL,
+event_name varchar(100) NOT NULL,
+date date,
+event_description VARCHAR(500) NOT NULL DEFAULT 'No description',
+venue_id int REFERENCES Venue (venue_id)NOT NULL,
+PRIMARY KEY (event_id))
+
+Event_Genre
+CREATE TABLE LBR.dbo.Event_Genre (
+event_id int REFERENCES Event (event_id) NOT NULL,
+genre_id int REFERENCES Genre (genre_id) NOT NULL)
+
+Cocktail
+CREATE TABLE LBR.dbo.Cocktail
+(cocktail_id int IDENTITY (1,1) NOT NULL,
+cocktail_name varchar(100) NOT NULL,
+description varchar(500) NOT NULL,
+PRIMARY KEY (cocktail_id))
+
+Cocktail_for_Venue
+CREATE TABLE LBR.dbo.Cocktail_for_Venue
+(cocktail_id int REFERENCES Cocktail (cocktail_id) NOT NULL,
+venue_id int REFERENCES Venue (venue_id) NOT NULL,
+price smallmoney NOT NULL)
