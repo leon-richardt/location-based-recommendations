@@ -65,7 +65,6 @@ public class ClientConfiguration implements Serializable {
 	 * @throws IllegalArgumentException when 0 <= radius <= RADIUS_UPPER_BOUND
 	 */
 	public void setRadius(double radius) {
-		Assurance.assurePositive(radius);
 		Assurance.assureBoundaries(radius, 0, RADIUS_UPPER_BOUND);
 		this.radius = radius;
 	}
