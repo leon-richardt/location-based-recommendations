@@ -10,6 +10,11 @@ import java.io.Serializable;
  *
  */
 public class ClientConfiguration implements Serializable {
+	
+	/**
+	 * this upper bound constraints the radius to a maximum of this value
+	 */
+	private final static double RADIUS_UPPER_BOUND = 100.0;
 
 	private static final long serialVersionUID = 135520319529800968L;
 
@@ -57,10 +62,11 @@ public class ClientConfiguration implements Serializable {
 	 * setter for radius
 	 * 
 	 * @param radius
-	 * @throws IllegalArgumentException when radius <= 0
+	 * @throws IllegalArgumentException when 0 <= radius <= RADIUS_UPPER_BOUND
 	 */
 	public void setRadius(double radius) {
 		Assurance.assurePositive(radius);
+		Assurance.assureBoundaries(radius, 0, RADIUS_UPPER_BOUND);
 		this.radius = radius;
 	}
 
