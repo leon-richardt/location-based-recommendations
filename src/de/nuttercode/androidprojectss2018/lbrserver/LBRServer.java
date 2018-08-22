@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import java.lang.Thread;
+
 import de.nuttercode.androidprojectss2018.csi.Assurance;
 import de.nuttercode.androidprojectss2018.csi.Event;
 import de.nuttercode.androidprojectss2018.csi.Genre;
@@ -81,7 +83,7 @@ public class LBRServer implements Closeable {
 		ArrayList<Genre> dummyGenreList = new ArrayList<>();
 		dummyGenreList.add(new Genre(1, "testGenre1", "testGenre1"));
 		dummyGenreList.add(new Genre(2, "testGenre2", "testGenre2"));
-		dummyList.add(eventScoreCalculator.scoreEvent(new Event(new Venue("testVenue1", 1, "testVenue1", 100, 100),
+		dummyList.add(eventScoreCalculator.scoreEvent(new Event(new Venue("testVenue1", 1, "testVenue1", 100, 100, 1),
 				dummyGenreList, "testEvent1", "testEvent1", 1)));
 		return new LBRResult(dummyList);
 	}
@@ -97,7 +99,7 @@ public class LBRServer implements Closeable {
 		LBRQuery lbrQuery = null;
 		ObjectOutputStream oos = null;
 		ObjectInputStream ois = null;
-		
+
 		// no try-with-resource, because ObjectInputStream/ObjectOutputStream might
 		// close the socket prematurely
 		try {
