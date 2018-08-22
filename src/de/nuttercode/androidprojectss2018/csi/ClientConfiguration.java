@@ -39,7 +39,7 @@ public class ClientConfiguration implements Serializable {
 		genrePreferenceConfiguration = new GenrePreferenceConfiguration();
 		radius = 1.0;
 		serverDNSName = "localhost";
-		serverPort = 5555;
+		serverPort = 5445;
 	}
 
 	public GenrePreferenceConfiguration getGenrePreferenceConfiguration() {
