@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class ClientConfiguration implements Serializable {
 	
 	/**
-	 * this upper bound constraints the radius to a maximum of this value
+	 * this upper bound constraints the radius to a maximum of this value - the unit is the same as of {@link #radius}
 	 */
 	private final static double RADIUS_UPPER_BOUND = 100.0;
 
