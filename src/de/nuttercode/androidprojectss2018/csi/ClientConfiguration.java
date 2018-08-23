@@ -10,13 +10,22 @@ import java.io.Serializable;
  *
  */
 public class ClientConfiguration implements Serializable {
-	
+
 	/**
-	 * this upper bound constraints the radius to a maximum of this value - the unit is the same as of {@link #radius}
+	 * this upper bound constraints the radius to a maximum of this value - the unit
+	 * is the same as of {@link #radius}
 	 */
 	private final static double RADIUS_UPPER_BOUND = 100.0;
 
 	private static final long serialVersionUID = 135520319529800968L;
+
+	public final static int DEFAULT_LBR_PORT = 5445;
+	private final static String DEFAULT_LBR_DNS_NAME = "lbr.nuttercode.de";
+
+	/**
+	 * default value for {@link #radius} - same unit as {@link #radius}
+	 */
+	private final static double DEFAULT_RADIUS = 1.0;
 
 	private final GenrePreferenceConfiguration genrePreferenceConfiguration;
 
@@ -24,12 +33,12 @@ public class ClientConfiguration implements Serializable {
 	 * distance of farthest considerable event in kilometers (km)
 	 */
 	private double radius;
-	
+
 	/**
 	 * DNS hostname of the LBRServer
 	 */
 	private String serverDNSName;
-	
+
 	/**
 	 * TCP-Port of the LBRServer
 	 */
@@ -37,9 +46,9 @@ public class ClientConfiguration implements Serializable {
 
 	public ClientConfiguration() {
 		genrePreferenceConfiguration = new GenrePreferenceConfiguration();
-		radius = 1.0;
-		serverDNSName = "localhost";
-		serverPort = 5445;
+		radius = DEFAULT_RADIUS;
+		serverDNSName = DEFAULT_LBR_DNS_NAME;
+		serverPort = DEFAULT_LBR_PORT;
 	}
 
 	public GenrePreferenceConfiguration getGenrePreferenceConfiguration() {
@@ -62,7 +71,8 @@ public class ClientConfiguration implements Serializable {
 	 * setter for radius
 	 * 
 	 * @param radius
-	 * @throws IllegalArgumentException when 0 <= radius <= RADIUS_UPPER_BOUND
+	 * @throws IllegalArgumentException
+	 *             when 0 <= radius <= RADIUS_UPPER_BOUND
 	 */
 	public void setRadius(double radius) {
 		Assurance.assurePositive(radius);
@@ -74,7 +84,8 @@ public class ClientConfiguration implements Serializable {
 	 * setter for serverDNSName
 	 * 
 	 * @param serverDNSName
-	 * @throws IllegalArgumentException when serverDNSName is empty or null
+	 * @throws IllegalArgumentException
+	 *             when serverDNSName is empty or null
 	 */
 	public void setServerDNSName(String serverDNSName) {
 		Assurance.assureNotEmpty(serverDNSName);
@@ -85,7 +96,8 @@ public class ClientConfiguration implements Serializable {
 	 * setter for serverPort
 	 * 
 	 * @param serverPort
-	 * @throws IllegalArgumentException when serverPort <= 0
+	 * @throws IllegalArgumentException
+	 *             when serverPort <= 0
 	 */
 	public void setServerPort(int serverPort) {
 		Assurance.assurePositive(serverPort);
