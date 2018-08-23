@@ -9,27 +9,49 @@ import java.io.Serializable;
  *
  */
 public class Venue implements Serializable {
-	
+
 	private static final long serialVersionUID = -2902776286525562764L;
-	
+
 	private final String description;
 	private final int id;
 	private final String name;
 	private final double longitude;
 	private final double latitude;
-	
-	public Venue(String description, int id, String name, double longitude, double latitude) {
+
+	/**
+	 * the distance of this venue to the user in kilometers (km) at the time when
+	 * {@link LBRQuery#run()} was run
+	 */
+	private final double initialDistance;
+
+	/**
+	 * 
+	 * @param description
+	 * @param id
+	 * @param name
+	 * @param longitude
+	 * @param latitude
+	 * @param initialDistance
+	 * @throws IllegalArgumentException
+	 *             if description or name is name, name is empty, or initialDistance
+	 *             < 0
+	 */
+	public Venue(String description, int id, String name, double longitude, double latitude, double initialDistance) {
+		Assurance.assureNotNull(description);
+		Assurance.assureNotEmpty(name);
+		Assurance.assureNotNegative(initialDistance);
 		this.description = description;
 		this.id = id;
 		this.name = name;
 		this.longitude = longitude;
 		this.latitude = latitude;
+		this.initialDistance = initialDistance;
 	}
 
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -46,6 +68,16 @@ public class Venue implements Serializable {
 		return latitude;
 	}
 
+	public double getInitialDistance() {
+		return initialDistance;
+	}
+
+	@Override
+	public String toString() {
+		return "Venue [description=" + description + ", id=" + id + ", name=" + name + ", longitude=" + longitude
+				+ ", latitude=" + latitude + ", initialDistance=" + initialDistance + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -53,6 +85,8 @@ public class Venue implements Serializable {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
 		long temp;
+		temp = Double.doubleToLongBits(initialDistance);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		temp = Double.doubleToLongBits(latitude);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		temp = Double.doubleToLongBits(longitude);
@@ -77,6 +111,8 @@ public class Venue implements Serializable {
 			return false;
 		if (id != other.id)
 			return false;
+		if (Double.doubleToLongBits(initialDistance) != Double.doubleToLongBits(other.initialDistance))
+			return false;
 		if (Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude))
 			return false;
 		if (Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude))
@@ -89,12 +125,4 @@ public class Venue implements Serializable {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "Venue [description=" + description + ", id=" + id + ", name=" + name + ", longitude=" + longitude
-				+ ", latitude=" + latitude + "]";
-	}
-	
-	
-	
 }

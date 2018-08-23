@@ -10,6 +10,11 @@ import java.io.Serializable;
  *
  */
 public class ClientConfiguration implements Serializable {
+	
+	/**
+	 * this upper bound constraints the radius to a maximum of this value - the unit is the same as of {@link #radius}
+	 */
+	private final static double RADIUS_UPPER_BOUND = 100.0;
 
 	private static final long serialVersionUID = 135520319529800968L;
 
@@ -34,7 +39,7 @@ public class ClientConfiguration implements Serializable {
 		genrePreferenceConfiguration = new GenrePreferenceConfiguration();
 		radius = 1.0;
 		serverDNSName = "localhost";
-		serverPort = 5555;
+		serverPort = 5445;
 	}
 
 	public GenrePreferenceConfiguration getGenrePreferenceConfiguration() {
@@ -57,10 +62,11 @@ public class ClientConfiguration implements Serializable {
 	 * setter for radius
 	 * 
 	 * @param radius
-	 * @throws IllegalArgumentException when radius <= 0
+	 * @throws IllegalArgumentException when 0 <= radius <= RADIUS_UPPER_BOUND
 	 */
 	public void setRadius(double radius) {
 		Assurance.assurePositive(radius);
+		Assurance.assureBoundaries(radius, 0, RADIUS_UPPER_BOUND);
 		this.radius = radius;
 	}
 

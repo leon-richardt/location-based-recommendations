@@ -19,7 +19,7 @@ public final class Assurance {
 	}
 
 	/**
-	 * @param object
+	 * @param s
 	 * @throws IllegalArgumentException
 	 *             if and only if the object is null or the {@link String} is empty
 	 */
@@ -29,7 +29,7 @@ public final class Assurance {
 	}
 
 	/**
-	 * @param object
+	 * @param i
 	 * @throws IllegalArgumentException
 	 *             if and only if the argument is not positive
 	 */
@@ -39,7 +39,27 @@ public final class Assurance {
 	}
 
 	/**
-	 * @param object
+	 * @param i
+	 * @throws IllegalArgumentException
+	 *             if and only if the argument is negative
+	 */
+	public static void assureNotNegative(long i) {
+		if (i < 0)
+			throw new IllegalArgumentException(i + " < 0");
+	}
+
+	/**
+	 * @param i
+	 * @throws IllegalArgumentException
+	 *             if and only if the argument is negative
+	 */
+	public static void assureNotNegative(double i) {
+		if (i < 0)
+			throw new IllegalArgumentException(i + " < 0");
+	}
+
+	/**
+	 * @param i
 	 * @throws IllegalArgumentException
 	 *             if and only if the argument is not positive
 	 */

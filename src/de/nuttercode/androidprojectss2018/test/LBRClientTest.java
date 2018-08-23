@@ -1,6 +1,7 @@
 package de.nuttercode.androidprojectss2018.test;
 
 import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
+import de.nuttercode.androidprojectss2018.csi.Genre;
 import de.nuttercode.androidprojectss2018.csi.LBRQuery;
 
 /**
@@ -12,7 +13,12 @@ import de.nuttercode.androidprojectss2018.csi.LBRQuery;
 public class LBRClientTest {
 
 	public static void main(String[] args) {
-		System.out.println(new LBRQuery(new ClientConfiguration()).run());
+		ClientConfiguration clientConfiguration = new ClientConfiguration();
+		System.out.println(new LBRQuery(clientConfiguration).run());
+		clientConfiguration.getGenrePreferenceConfiguration().addGenre(new Genre(3, "testGenre3", "testGenre3"));
+		System.out.println(new LBRQuery(clientConfiguration).run());
+		clientConfiguration.getGenrePreferenceConfiguration().addGenre(new Genre(1, "testGenre1", "testGenre1"));
+		System.out.println(new LBRQuery(clientConfiguration).run());
 	}
 
 }
