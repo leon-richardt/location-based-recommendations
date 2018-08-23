@@ -24,22 +24,29 @@ public class Event implements Serializable {
 	/**
 	 * 
 	 * @param venue
-	 * @param genreCollection
 	 * @param name
 	 * @param description
 	 * @param id
 	 * @throws IllegalArgumentException
-	 *             if name is null or empty, if description is null, if
-	 *             genreCollection is null, or if venue is null
+	 *             if name is null or empty, if description is null, if or if venue
+	 *             is null
 	 */
-	public Event(Venue venue, Collection<Genre> genreCollection, String name, String description, int id) {
+	public Event(Venue venue, String name, String description, int id) {
 		Assurance.assureNotNull(venue);
-		Assurance.assureNotNull(genreCollection);
-		this.genreList = new ArrayList<>(genreCollection);
+		this.genreList = new ArrayList<>();
 		this.id = id;
 		this.venue = venue;
 		setName(name);
 		setDescription(description);
+	}
+
+	/**
+	 * adds all elements to this event
+	 * 
+	 * @param genres
+	 */
+	public void addAll(Collection<Genre> genres) {
+		genreList.addAll(genres);
 	}
 
 	public List<Genre> getGenres() {
