@@ -84,8 +84,8 @@ public class LBRServer implements Closeable {
 		ArrayList<Genre> genreList = new ArrayList<>();
 		genreList.add(new Genre(1, "testGenre1", "testGenre1"));
 		genreList.add(new Genre(2, "testGenre2", "testGenre2"));
-		eventList.add(new Event(new Venue("testVenue1", 1, "testVenue1", 100, 100, 1), genreList, "testEvent1",
-				"testEvent1", 1));
+		eventList.add(new Event(new Venue("testVenue1", 1, "testVenue1", 100, 100, 1), "testEvent1", "testEvent1", 1));
+		eventList.get(0).addAll(genreList);
 		return eventList;
 	}
 
