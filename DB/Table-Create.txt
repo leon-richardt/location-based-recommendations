@@ -22,6 +22,7 @@ CREATE TABLE lbr.Event
 event_name VARCHAR(100) NOT NULL,
 date DATE,
 time TIME,
+venue_description VARCHAR(500) DEFAULT 'No description',
 venue_id INT NOT NULL,
 PRIMARY KEY (event_id),
 FOREIGN KEY (venue_id) REFERENCES Venue(venue_id))
@@ -32,5 +33,4 @@ CREATE TABLE lbr.Event_Tag
 (event_id INT NOT NULL,
 tag_id INT NOT NULL,
 FOREIGN KEY (event_id) REFERENCES Event(event_id),
-FOREIGN KEY (tag_id) REFERENCES Tag(tag_id)
-)
+FOREIGN KEY (tag_id) REFERENCES Tag(tag_id))
