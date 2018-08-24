@@ -13,46 +13,46 @@ import java.util.Set;
  * @author Johannes B. Latzel
  *
  */
-public class GenrePreferenceConfiguration implements Serializable, Iterable<Genre> {
+public class GenrePreferenceConfiguration implements Serializable, Iterable<Tag> {
 
 	private static final long serialVersionUID = 4061390806054215254L;
 
-	private final Set<Genre> userChoiceGenreSet;
+	private final Set<Tag> userChoiceTagSet;
 
 	public GenrePreferenceConfiguration() {
-		userChoiceGenreSet = new HashSet<>();
+		userChoiceTagSet = new HashSet<>();
 	}
 
 	public GenrePreferenceConfiguration(GenrePreferenceConfiguration genrePreferenceConfiguration) {
 		this();
-		for (Genre genre : genrePreferenceConfiguration.userChoiceGenreSet)
-			addGenre(genre);
+		for (Tag tag : genrePreferenceConfiguration.userChoiceTagSet)
+			addGenre(tag);
 	}
 
-	public void addGenre(Genre genre) {
-		userChoiceGenreSet.add(genre);
+	public void addGenre(Tag tag) {
+		userChoiceTagSet.add(tag);
 	}
 
 	/**
-	 * @param genres
+	 * @param tags
 	 * @return true if any configured genre is contained in the given Collection
 	 */
-	public boolean containsAny(Collection<Genre> genres) {
-		for (Genre genre : this)
-			if (genres.contains(genre))
+	public boolean containsAny(Collection<Tag> tags) {
+		for (Tag tag : this)
+			if (tags.contains(tag))
 				return true;
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return "GenrePreferenceConfiguration [userChoiceGenreSet=" + Arrays.toString(userChoiceGenreSet.toArray())
+		return "GenrePreferenceConfiguration [userChoiceTagSet=" + Arrays.toString(userChoiceTagSet.toArray())
 				+ "]";
 	}
 
 	@Override
-	public Iterator<Genre> iterator() {
-		return userChoiceGenreSet.iterator();
+	public Iterator<Tag> iterator() {
+		return userChoiceTagSet.iterator();
 	}
 
 }

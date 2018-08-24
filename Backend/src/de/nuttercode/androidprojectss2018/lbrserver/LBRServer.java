@@ -12,14 +12,8 @@ import java.util.concurrent.Executors;
 
 import java.lang.Thread;
 
-import de.nuttercode.androidprojectss2018.csi.Assurance;
-import de.nuttercode.androidprojectss2018.csi.Event;
-import de.nuttercode.androidprojectss2018.csi.Genre;
-import de.nuttercode.androidprojectss2018.csi.GenrePreferenceConfiguration;
-import de.nuttercode.androidprojectss2018.csi.LBRQuery;
-import de.nuttercode.androidprojectss2018.csi.LBRResult;
-import de.nuttercode.androidprojectss2018.csi.ScoredEvent;
-import de.nuttercode.androidprojectss2018.csi.Venue;
+import de.nuttercode.androidprojectss2018.csi.*;
+import de.nuttercode.androidprojectss2018.csi.Tag;
 
 /**
  * LBRServer accepts incoming LBRClients and answers their requests
@@ -81,16 +75,16 @@ public class LBRServer implements Closeable {
 	 */
 	private Collection<Event> getDummyEvents() {
 		ArrayList<Event> eventList = new ArrayList<>();
-		ArrayList<Genre> genreList = new ArrayList<>();
-		genreList.add(new Genre(1, "testGenre1", "testGenre1"));
-		genreList.add(new Genre(2, "testGenre2", "testGenre2"));
+		ArrayList<Tag> tagList = new ArrayList<>();
+		tagList.add(new Tag(1, "testGenre1", "testGenre1"));
+		tagList.add(new Tag(2, "testGenre2", "testGenre2"));
 		eventList.add(new Event(new Venue("testVenue1", 1, "testVenue1", 100, 100, 1), "testEvent1", "testEvent1", 1));
-		eventList.get(0).addAll(genreList);
+		eventList.get(0).addAll(tagList);
 		return eventList;
 	}
 
 	/**
-	 * removes all events from eventList which do not contain a {@link Genre} in the
+	 * removes all events from eventList which do not contain a {@link Tag} in the
 	 * {@link GenrePreferenceConfiguration}
 	 * 
 	 * @param eventList
