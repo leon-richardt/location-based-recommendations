@@ -2,6 +2,8 @@ package de.nuttercode.androidprojectss2018.csi;
 
 import java.io.Serializable;
 
+import de.nuttercode.androidprojectss2018.csi.query.LBRQuery;
+
 /**
  * POJO for a Venue entry in the database
  * 
