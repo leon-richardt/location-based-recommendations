@@ -19,6 +19,7 @@ public class Event implements Serializable {
 	private final List<Tag> tagList;
 	private String description;
 	private String name;
+	@SuppressWarnings("unused")
 	private Date date;
 	private final int id;
 	private final Venue venue;
