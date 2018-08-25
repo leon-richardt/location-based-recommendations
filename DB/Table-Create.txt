@@ -22,7 +22,7 @@ CREATE TABLE lbr.Event
 event_name VARCHAR(100) NOT NULL,
 date DATE,
 time TIME,
-venue_description VARCHAR(500) DEFAULT 'No description',
+event_description VARCHAR(500) DEFAULT 'No description',
 venue_id INT NOT NULL,
 PRIMARY KEY (event_id),
 FOREIGN KEY (venue_id) REFERENCES Venue(venue_id))
