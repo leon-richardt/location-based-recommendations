@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">App</string>
+    <string name="app_name">Location Based Recommendations</string>
+    <string name="title_activity_map">Event Map and List</string>
 </resources>
