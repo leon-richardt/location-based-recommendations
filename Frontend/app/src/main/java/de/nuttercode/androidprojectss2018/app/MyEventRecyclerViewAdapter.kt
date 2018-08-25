@@ -15,10 +15,10 @@ import kotlinx.android.synthetic.main.fragment_event.view.*
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
  * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
+ * TODO: Replace the implementation with code for Event objects.
  */
 class MyEventRecyclerViewAdapter(
-        private val mValues: List<DummyItem>,
+        private val mValues: List<DummyItem>,   // TODO: Replace DummyItem with Event
         private val mListener: OnListFragmentInteractionListener?)
     : RecyclerView.Adapter<MyEventRecyclerViewAdapter.ViewHolder>() {
 
@@ -26,7 +26,7 @@ class MyEventRecyclerViewAdapter(
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as DummyItem
+            val item = v.tag as DummyItem   // TODO: Replace DummyItem with Event
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             mListener?.onListFragmentInteraction(item)
