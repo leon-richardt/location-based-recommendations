@@ -23,7 +23,7 @@ public class TagPreferenceConfiguration implements Serializable, Iterable<Tag> {
 		userChoiceTagSet = new HashSet<>();
 	}
 
-	public TagPreferenceConfiguration(TagPreferenceConfiguration genrePreferenceConfiguration) {
+	public TagPreferenceConfiguration(TagPreferenceConfiguration tagPreferenceConfiguration) {
 		this();
 		for (Tag tag : genrePreferenceConfiguration.userChoiceTagSet)
 			addTag(tag);
