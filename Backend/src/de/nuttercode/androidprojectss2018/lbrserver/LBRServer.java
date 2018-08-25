@@ -101,9 +101,9 @@ public class LBRServer implements Closeable {
 	 * @return eventList
 	 */
 	private Collection<Event> filterEvents(Collection<Event> eventList,
-			TagPreferenceConfiguration genrePreferenceConfiguration) {
+			TagPreferenceConfiguration tagPreferenceConfiguration) {
 		eventList.removeIf((Event event) -> {
-			return !genrePreferenceConfiguration.containsAny(event.getGenres());
+			return !tagPreferenceConfiguration.containsAny(event.getGenres());
 		});
 		return eventList;
 	}
