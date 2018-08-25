@@ -46,7 +46,7 @@ public class TagPreferenceConfiguration implements Serializable, Iterable<Tag> {
 
 	@Override
 	public String toString() {
-		return "GenrePreferenceConfiguration [userChoiceTagSet=" + Arrays.toString(userChoiceTagSet.toArray())
+		return "TagPreferenceConfiguration [userChoiceTagSet=" + Arrays.toString(userChoiceTagSet.toArray())
 				+ "]";
 	}
 
