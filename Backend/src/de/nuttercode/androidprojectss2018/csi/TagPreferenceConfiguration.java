@@ -25,7 +25,7 @@ public class TagPreferenceConfiguration implements Serializable, Iterable<Tag> {
 
 	public TagPreferenceConfiguration(TagPreferenceConfiguration tagPreferenceConfiguration) {
 		this();
-		for (Tag tag : genrePreferenceConfiguration.userChoiceTagSet)
+		for (Tag tag : tagPreferenceConfiguration.userChoiceTagSet)
 			addTag(tag);
 	}
 
