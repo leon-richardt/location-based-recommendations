@@ -26,6 +26,10 @@ public class QueryResult<T extends Serializable> implements Serializable, Iterab
 		tList = new ArrayList<>(tCollection);
 	}
 
+	public Collection<T> getAll() {
+		return new ArrayList<>(tList);
+	}
+
 	@Override
 	public Iterator<T> iterator() {
 		return tList.iterator();
