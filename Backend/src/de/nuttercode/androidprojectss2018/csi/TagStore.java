@@ -2,7 +2,9 @@ package de.nuttercode.androidprojectss2018.csi;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultState;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultSummary;
@@ -18,7 +20,7 @@ import de.nuttercode.androidprojectss2018.lbrserver.LBRServer;
  */
 public class TagStore {
 
-	private final List<Tag> tagList;
+	private final Set<Tag> tagList;
 	private final TagQuery tagQuery;
 
 	/**
@@ -28,7 +30,7 @@ public class TagStore {
 	 *             if {@link TagQuery#TagQuery(ClientConfiguration)} does
 	 */
 	public TagStore(ClientConfiguration clientConfiguration) {
-		tagList = new ArrayList<>();
+		tagList = new HashSet<>();
 		tagQuery = new TagQuery(clientConfiguration);
 	}
 
@@ -44,9 +46,8 @@ public class TagStore {
 	public QueryResultState refreshTags() {
 		QueryResultSummary<Tag> resultSummary = tagQuery.run();
 		if (resultSummary.getQueryResultState() == QueryResultState.OK) {
-			for (Tag tag : resultSummary.getQueryResult()) {
-				tagList.add(tag);
-			}
+			tagList.clear();
+			tagList.addAll(resultSummary.getQueryResult().getAll());
 		}
 		return resultSummary.getQueryResultState();
 	}
