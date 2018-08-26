@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  */
 public class Tag implements Serializable {
-	
+
 	private static final long serialVersionUID = 1193555989071795461L;
 
 	private final int id;
@@ -38,9 +38,7 @@ public class Tag implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -53,17 +51,7 @@ public class Tag implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Tag other = (Tag) obj;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
 		if (id != other.id)
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
