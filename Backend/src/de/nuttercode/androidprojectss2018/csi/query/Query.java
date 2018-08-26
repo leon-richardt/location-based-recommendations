@@ -16,7 +16,7 @@ import de.nuttercode.androidprojectss2018.lbrserver.LBRServer;
  * @param <T>
  *            any Serializable
  */
-public abstract class Query<T extends Serializable> implements Serializable {
+public class Query<T extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = 2130540249378192775L;
 
@@ -28,7 +28,7 @@ public abstract class Query<T extends Serializable> implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             if clientConfiguration is null
 	 */
-	public Query(ClientConfiguration clientConfiguration) {
+	protected Query(ClientConfiguration clientConfiguration) {
 		Assurance.assureNotNull(clientConfiguration);
 		this.clientConfiguration = clientConfiguration;
 	}
