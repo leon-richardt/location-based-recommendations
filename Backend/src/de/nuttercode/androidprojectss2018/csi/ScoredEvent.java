@@ -37,6 +37,30 @@ public class ScoredEvent implements Serializable {
 	}
 
 	@Override
+	public int hashCode() {
+		return event.getId() ^ Double.hashCode(score);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ScoredEvent other = (ScoredEvent) obj;
+		if (event == null) {
+			if (other.event != null)
+				return false;
+		} else if (!event.equals(other.event))
+			return false;
+		if (Double.doubleToLongBits(score) != Double.doubleToLongBits(other.score))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "ScoredEvent [event=" + event + ", score=" + score + "]";
 	}
