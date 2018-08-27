@@ -3,6 +3,7 @@ package de.nuttercode.androidprojectss2018.csi;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,9 +16,11 @@ public class Event implements Serializable {
 
 	private static final long serialVersionUID = -6794608442641090075L;
 
-	private final List<Genre> genreList;
+	private final List<Tag> tagList;
 	private String description;
 	private String name;
+	@SuppressWarnings("unused")
+	private Date date;
 	private final int id;
 	private final Venue venue;
 
@@ -33,7 +36,7 @@ public class Event implements Serializable {
 	 */
 	public Event(Venue venue, String name, String description, int id) {
 		Assurance.assureNotNull(venue);
-		this.genreList = new ArrayList<>();
+		this.tagList = new ArrayList<>();
 		this.id = id;
 		this.venue = venue;
 		setName(name);
@@ -43,24 +46,24 @@ public class Event implements Serializable {
 	/**
 	 * adds all elements to this event
 	 * 
-	 * @param genres
+	 * @param tags
 	 */
-	public void addAll(Collection<Genre> genres) {
-		genreList.addAll(genres);
+	public void addAll(Collection<Tag> tags) {
+		tagList.addAll(tags);
 	}
 
-	public List<Genre> getGenres() {
-		return new ArrayList<>(genreList);
+	public List<Tag> getGenres() {
+		return new ArrayList<>(tagList);
 	}
 
 	/**
-	 * @param genre
+	 * @param tag
 	 * @throws IllegalArgumentException
-	 *             if genre is null
+	 *             if tag is null
 	 */
-	public void addGenre(Genre genre) {
-		Assurance.assureNotNull(genre);
-		genreList.add(genre);
+	public void addGenre(Tag tag) {
+		Assurance.assureNotNull(tag);
+		tagList.add(tag);
 	}
 
 	public String getDescription() {
@@ -104,7 +107,7 @@ public class Event implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((genreList == null) ? 0 : genreList.hashCode());
+		result = prime * result + ((tagList == null) ? 0 : tagList.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((venue == null) ? 0 : venue.hashCode());
@@ -125,10 +128,10 @@ public class Event implements Serializable {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (genreList == null) {
-			if (other.genreList != null)
+		if (tagList == null) {
+			if (other.tagList != null)
 				return false;
-		} else if (!genreList.equals(other.genreList))
+		} else if (!tagList.equals(other.tagList))
 			return false;
 		if (id != other.id)
 			return false;
@@ -147,7 +150,7 @@ public class Event implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Event [genreList=" + genreList + ", description=" + description + ", name=" + name + ", id=" + id
+		return "Event [tagList=" + tagList + ", description=" + description + ", name=" + name + ", id=" + id
 				+ ", venue=" + venue + "]";
 	}
 

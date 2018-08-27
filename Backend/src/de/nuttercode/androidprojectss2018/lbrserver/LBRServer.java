@@ -12,14 +12,12 @@ import java.util.concurrent.Executors;
 
 import java.lang.Thread;
 
-import de.nuttercode.androidprojectss2018.csi.Assurance;
-import de.nuttercode.androidprojectss2018.csi.Event;
-import de.nuttercode.androidprojectss2018.csi.Genre;
-import de.nuttercode.androidprojectss2018.csi.GenrePreferenceConfiguration;
-import de.nuttercode.androidprojectss2018.csi.LBRQuery;
-import de.nuttercode.androidprojectss2018.csi.LBRResult;
-import de.nuttercode.androidprojectss2018.csi.ScoredEvent;
-import de.nuttercode.androidprojectss2018.csi.Venue;
+import de.nuttercode.androidprojectss2018.csi.*;
+import de.nuttercode.androidprojectss2018.csi.Tag;
+import de.nuttercode.androidprojectss2018.csi.query.LBRQuery;
+import de.nuttercode.androidprojectss2018.csi.query.Query;
+import de.nuttercode.androidprojectss2018.csi.query.QueryResult;
+import de.nuttercode.androidprojectss2018.csi.query.TagQuery;
 
 /**
  * LBRServer accepts incoming LBRClients and answers their requests
@@ -81,26 +79,31 @@ public class LBRServer implements Closeable {
 	 */
 	private Collection<Event> getDummyEvents() {
 		ArrayList<Event> eventList = new ArrayList<>();
-		ArrayList<Genre> genreList = new ArrayList<>();
-		genreList.add(new Genre(1, "testGenre1", "testGenre1"));
-		genreList.add(new Genre(2, "testGenre2", "testGenre2"));
+		Collection<Tag> tagCollection = getDummyTags();
 		eventList.add(new Event(new Venue("testVenue1", 1, "testVenue1", 100, 100, 1), "testEvent1", "testEvent1", 1));
-		eventList.get(0).addAll(genreList);
+		eventList.get(0).addAll(tagCollection);
 		return eventList;
 	}
 
+	private Collection<Tag> getDummyTags() {
+		ArrayList<Tag> tagList = new ArrayList<>();
+		tagList.add(new Tag(1, "testGenre1", "testGenre1"));
+		tagList.add(new Tag(2, "testGenre2", "testGenre2"));
+		return tagList;
+	}
+
 	/**
-	 * removes all events from eventList which do not contain a {@link Genre} in the
-	 * {@link GenrePreferenceConfiguration}
+	 * removes all events from eventList which do not contain a {@link Tag} in the
+	 * {@link TagPreferenceConfiguration}
 	 * 
 	 * @param eventList
 	 * @param genrePreferenceConfiguration
 	 * @return eventList
 	 */
 	private Collection<Event> filterEvents(Collection<Event> eventList,
-			GenrePreferenceConfiguration genrePreferenceConfiguration) {
+			TagPreferenceConfiguration tagPreferenceConfiguration) {
 		eventList.removeIf((Event event) -> {
-			return !genrePreferenceConfiguration.containsAny(event.getGenres());
+			return !tagPreferenceConfiguration.containsAny(event.getGenres());
 		});
 		return eventList;
 	}
@@ -118,15 +121,19 @@ public class LBRServer implements Closeable {
 		return scoredEventList;
 	}
 
+	private QueryResult<Tag> createTagResult(TagQuery tagQuery) {
+		return new QueryResult<>(getDummyTags());
+	}
+
 	/**
 	 * analyzes the LBRQuery and creates an appropriate response
 	 * 
 	 * @param lbrQuery
 	 * @return appropriate response as {@link LBRResult}
 	 */
-	private LBRResult createLBRResult(LBRQuery lbrQuery) {
-		return new LBRResult(scoreEvents(
-				filterEvents(getDummyEvents(), lbrQuery.getClientConfiguration().getGenrePreferenceConfiguration())));
+	private QueryResult<ScoredEvent> createLBRResult(LBRQuery lbrQuery) {
+		return new QueryResult<ScoredEvent>(
+				scoreEvents(filterEvents(getDummyEvents(), lbrQuery.getTagPreferenceConfiguration())));
 	}
 
 	/**
@@ -137,7 +144,7 @@ public class LBRServer implements Closeable {
 	 */
 	private void answerRequest(Socket socket) {
 
-		LBRQuery lbrQuery = null;
+		Query<?> query = null;
 		ObjectOutputStream oos = null;
 		ObjectInputStream ois = null;
 
@@ -145,7 +152,7 @@ public class LBRServer implements Closeable {
 		// close the socket prematurely
 		try {
 			ois = new ObjectInputStream(socket.getInputStream());
-			lbrQuery = (LBRQuery) ois.readObject();
+			query = (Query<?>) ois.readObject();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -153,12 +160,18 @@ public class LBRServer implements Closeable {
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
-		if (lbrQuery != null) {
+		if (query != null) {
 			try {
 				oos = new ObjectOutputStream(socket.getOutputStream());
-				oos.writeObject(createLBRResult(lbrQuery));
+				if (query.getClass().equals(LBRQuery.class)) {
+					oos.writeObject(createLBRResult((LBRQuery) query));
+				} else if (query.getClass().equals(TagQuery.class)) {
+					oos.writeObject(createTagResult((TagQuery) query));
+				}
 				oos.flush();
 			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (RuntimeException e) {
 				e.printStackTrace();
 			}
 		}

@@ -1,4 +1,4 @@
-package de.nuttercode.androidprojectss2018.csi;
+package de.nuttercode.androidprojectss2018.csi.query;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import de.nuttercode.androidprojectss2018.csi.Assurance;
 import de.nuttercode.androidprojectss2018.lbrserver.LBRServer;
 
 /**
@@ -63,30 +64,28 @@ public class ServerConnection implements Closeable {
 	}
 
 	/**
-	 * writes the {@link LBRQuery} to the {@link OutputStream} of the
-	 * {@link #socket}
+	 * writes the {@link Query} to the {@link OutputStream} of the {@link #socket}
 	 * 
-	 * @param lbrQuery
+	 * @param query
 	 * @throws IOException
 	 *             when {@link ObjectOutputStream#writeObject(Object)} does
 	 */
-	public void writeQuery(LBRQuery lbrQuery) throws IOException {
-		objectOutputStream.writeObject(lbrQuery);
+	public void writeQuery(Query<?> query) throws IOException {
+		objectOutputStream.writeObject(query);
 		objectOutputStream.flush();
 	}
 
 	/**
-	 * reads the {@link LBRResult} of the answer of the {@link LBRServer} from the
+	 * reads the {@link QueryResult} of the answer of the {@link LBRServer} from the
 	 * {@link InputStream} of the {@link #socket}
 	 * 
-	 * @param lbrQuery
 	 * @throws IOException
 	 *             when {@link ObjectInputStream#readObject()} does
 	 */
-	public LBRResult readResult() throws ClassNotFoundException, IOException, InterruptedException {
+	public QueryResult<?> readResult() throws ClassNotFoundException, IOException, InterruptedException {
 		if (objectInputStream == null)
 			objectInputStream = new ObjectInputStream(socket.getInputStream());
-		return (LBRResult) objectInputStream.readObject();
+		return (QueryResult<?>) objectInputStream.readObject();
 	}
 
 	@Override

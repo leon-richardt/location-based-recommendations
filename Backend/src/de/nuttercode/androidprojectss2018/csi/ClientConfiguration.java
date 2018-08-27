@@ -27,7 +27,7 @@ public class ClientConfiguration implements Serializable {
 	 */
 	private final static double DEFAULT_RADIUS = 1.0;
 
-	private final GenrePreferenceConfiguration genrePreferenceConfiguration;
+	private final TagPreferenceConfiguration tagPreferenceConfiguration;
 
 	/**
 	 * distance of farthest considerable event in kilometers (km)
@@ -45,14 +45,14 @@ public class ClientConfiguration implements Serializable {
 	private int serverPort;
 
 	public ClientConfiguration() {
-		genrePreferenceConfiguration = new GenrePreferenceConfiguration();
+		tagPreferenceConfiguration = new TagPreferenceConfiguration();
 		radius = DEFAULT_RADIUS;
 		serverDNSName = DEFAULT_LBR_DNS_NAME;
 		serverPort = DEFAULT_LBR_PORT;
 	}
 
-	public GenrePreferenceConfiguration getGenrePreferenceConfiguration() {
-		return genrePreferenceConfiguration;
+	public TagPreferenceConfiguration getTagPreferenceConfiguration() {
+		return tagPreferenceConfiguration;
 	}
 
 	public double getRadius() {
@@ -106,7 +106,7 @@ public class ClientConfiguration implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ClientConfiguration [genrePreferenceConfiguration=" + genrePreferenceConfiguration + ", radius="
+		return "ClientConfiguration [tagPreferenceConfiguration=" + tagPreferenceConfiguration + ", radius="
 				+ radius + ", serverDNSName=" + serverDNSName + ", serverPort=" + serverPort + "]";
 	}
 

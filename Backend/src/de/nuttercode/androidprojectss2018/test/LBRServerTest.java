@@ -3,6 +3,7 @@ package de.nuttercode.androidprojectss2018.test;
 import java.io.IOException;
 import java.lang.Thread;
 
+import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
 import de.nuttercode.androidprojectss2018.lbrserver.LBRServer;
 import de.nuttercode.androidprojectss2018.lbrserver.RandomEventScoreCalculator;
 
@@ -15,7 +16,8 @@ import de.nuttercode.androidprojectss2018.lbrserver.RandomEventScoreCalculator;
 public class LBRServerTest {
 
 	public static void main(String[] args) {
-		try (LBRServer lbrServer = new LBRServer(5445, new RandomEventScoreCalculator(42))) {
+		try (LBRServer lbrServer = new LBRServer(ClientConfiguration.DEFAULT_LBR_PORT,
+				new RandomEventScoreCalculator(42))) {
 			while (true) {
 				// nothing to do
 				Thread.sleep(10_000);
