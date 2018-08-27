@@ -38,7 +38,7 @@ public class ScoredEvent implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return event.getId() ^ Double.hashCode(score);
+		return event.hashCode();
 	}
 
 	@Override
