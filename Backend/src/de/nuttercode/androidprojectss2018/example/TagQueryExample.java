@@ -1,8 +1,9 @@
-package de.nuttercode.androidprojectss2018.test;
+package de.nuttercode.androidprojectss2018.example;
 
 import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
+import de.nuttercode.androidprojectss2018.csi.Tag;
 import de.nuttercode.androidprojectss2018.csi.TagStore;
-import de.nuttercode.androidprojectss2018.example.StoreListenerExample;
+import de.nuttercode.androidprojectss2018.csi.query.QueryResultState;
 
 /**
  * Test LBRClient connection
@@ -10,14 +11,20 @@ import de.nuttercode.androidprojectss2018.example.StoreListenerExample;
  * @author Johannes B. Latzel
  *
  */
-public class TagQueryTest {
+public class TagQueryExample {
 
 	public static void main(String[] args) {
 
 		ClientConfiguration clientConfiguration = new ClientConfiguration();
 		TagStore tagStore = new TagStore(clientConfiguration);
+
+		// register StoreListener
 		tagStore.addStoreListener(new StoreListenerExample<>());
-		System.out.println(tagStore.refresh());
+
+		// blocking until tags received or timeout
+		if (tagStore.refresh() == QueryResultState.OK)
+			for (Tag tag : tagStore.getAll())
+				System.out.println(tag);
 
 	}
 
