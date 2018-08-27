@@ -16,7 +16,6 @@ public class TagQueryTest {
 
 		ClientConfiguration clientConfiguration = new ClientConfiguration();
 		TagStore tagStore = new TagStore(clientConfiguration);
-		clientConfiguration.setServerDNSName("localhost");
 		tagStore.addStoreListener(new StoreListenerExample<>());
 		System.out.println(tagStore.refresh());
 

@@ -17,7 +17,6 @@ public class LBRQueryTest {
 
 		ClientConfiguration clientConfiguration = new ClientConfiguration();
 		EventStore eventStore = new EventStore(clientConfiguration);
-		clientConfiguration.setServerDNSName("localhost");
 		eventStore.addStoreListener(new StoreListenerExample<>());
 		System.out.println(eventStore.refresh());
 		clientConfiguration.getTagPreferenceConfiguration().addTag(new Tag(3, "testGenre3", "testGenre3"));
