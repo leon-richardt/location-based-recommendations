@@ -88,10 +88,10 @@ public class LBRServer implements Closeable {
 		// "testEvent3", "testEvent3", 1));
 		// eventList.add(new Event(new Venue("testVenue1", 1, "testVenue1", 101, 100,
 		// 1), "testEvent4", "testEvent4", 1));
-		eventList.get(0).addAll(dummyTags);
-		eventList.get(1).addAll(dummyTags);
-		eventList.get(2).addAll(dummyTags);
-		eventList.get(3).addAll(dummyTags);
+		// eventList.get(0).addAll(dummyTags);
+		// eventList.get(1).addAll(dummyTags);
+		// eventList.get(2).addAll(dummyTags);
+		// eventList.get(3).addAll(dummyTags);
 		return eventList;
 	}
 
