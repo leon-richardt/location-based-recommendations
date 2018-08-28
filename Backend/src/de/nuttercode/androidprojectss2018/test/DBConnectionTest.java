@@ -24,7 +24,7 @@ public class DBConnectionTest {
 					reader.readLine());
 			for (Tag tag : dbConnection.getAllTags())
 				System.out.println(tag);
-			for (Event event : dbConnection.getAllEventsByRadiusAndLocation(10000, 52.2951671, 8.045340530992085))
+			for (Event event : dbConnection.getAllEventsByRadiusAndLocation(10, 52.2951671, 8.045340530992085))
 				System.out.println(event);
 		} catch (SQLException e) {
 			e.printStackTrace();
