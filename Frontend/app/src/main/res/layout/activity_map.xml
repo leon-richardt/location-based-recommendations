@@ -9,14 +9,16 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.45"
         tools:context=".MapActivity" />
 
     <fragment
         android:id="@+id/list"
-        android:name="de.nuttercode.androidprojectss2018.app.EventFragment"
+        android:name="de.nuttercode.androidprojectss2018.app.EventListFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_weight="0.55" />
 
 
 </LinearLayout>

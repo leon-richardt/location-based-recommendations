@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 
-import de.nuttercode.androidprojectss2018.app.EventFragment.OnListFragmentInteractionListener
-import de.nuttercode.androidprojectss2018.app.dummy.DummyContent.DummyItem
+import de.nuttercode.androidprojectss2018.app.EventListFragment.OnListFragmentInteractionListener
+import de.nuttercode.androidprojectss2018.csi.Event
 
 import kotlinx.android.synthetic.main.fragment_event.view.*
 
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_event.view.*
  * TODO: Replace the implementation with code for Event objects.
  */
 class MyEventRecyclerViewAdapter(
-        private val mValues: List<DummyItem>,   // TODO: Replace DummyItem with Event
+        private val mValues: List<Event>,
         private val mListener: OnListFragmentInteractionListener?)
     : RecyclerView.Adapter<MyEventRecyclerViewAdapter.ViewHolder>() {
 
@@ -26,7 +26,7 @@ class MyEventRecyclerViewAdapter(
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as DummyItem   // TODO: Replace DummyItem with Event
+            val item = v.tag as Event
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             mListener?.onListFragmentInteraction(item)
@@ -41,8 +41,8 @@ class MyEventRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.mIdView.text = item.id
-        holder.mContentView.text = item.content
+        holder.mIdView.text = item.name
+        holder.mContentView.text = item.description
 
         with(holder.mView) {
             tag = item
