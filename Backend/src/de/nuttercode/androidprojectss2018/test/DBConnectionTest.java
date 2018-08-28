@@ -19,6 +19,7 @@ public class DBConnectionTest {
 
 	public static void main(String[] args) {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+			System.out.print("enter password: ");
 			DBConnection dbConnection = new DBConnection("jdbc:mysql://lbr.nuttercode.de:3306/lbr", "lbr",
 					reader.readLine());
 			for (Tag tag : dbConnection.getAllTags())
