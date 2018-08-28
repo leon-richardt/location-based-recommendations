@@ -80,10 +80,14 @@ public class LBRServer implements Closeable {
 	private Collection<Event> getDummyEvents() {
 		ArrayList<Event> eventList = new ArrayList<>();
 		ArrayList<Tag> dummyTags = new ArrayList<>(getDummyTags());
-		eventList.add(new Event(new Venue("testVenue1", 1, "testVenue1", 100, 100, 1), "testEvent1", "testEvent1", 1));
-		eventList.add(new Event(new Venue("testVenue2", 2, "testVenue2", 101, 99, 1), "testEvent2", "testEvent2", 1));
-		eventList.add(new Event(new Venue("testVenue3", 3, "testVenue3", 100, 99, 1), "testEvent3", "testEvent3", 1));
-		eventList.add(new Event(new Venue("testVenue1", 1, "testVenue1", 101, 100, 1), "testEvent4", "testEvent4", 1));
+		// eventList.add(new Event(new Venue(1, "testVenue1", "testVenue1", 100, 100,
+		// 1), "testEvent1", "testEvent1", 1));
+		// eventList.add(new Event(new Venue(2, "testVenue2", "testVenue2", 101, 99, 1),
+		// "testEvent2", "testEvent2", 1));
+		// eventList.add(new Event(new Venue("testVenue3", 3, "testVenue3", 100, 99, 1),
+		// "testEvent3", "testEvent3", 1));
+		// eventList.add(new Event(new Venue("testVenue1", 1, "testVenue1", 101, 100,
+		// 1), "testEvent4", "testEvent4", 1));
 		eventList.get(0).addAll(dummyTags);
 		eventList.get(1).addAll(dummyTags);
 		eventList.get(2).addAll(dummyTags);
@@ -109,7 +113,7 @@ public class LBRServer implements Closeable {
 	private Collection<Event> filterEvents(Collection<Event> eventList,
 			TagPreferenceConfiguration tagPreferenceConfiguration) {
 		eventList.removeIf((Event event) -> {
-			return !tagPreferenceConfiguration.containsAny(event.getGenres());
+			return !tagPreferenceConfiguration.containsAny(event.getTags());
 		});
 		return eventList;
 	}
