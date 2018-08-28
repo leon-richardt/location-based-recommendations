@@ -22,7 +22,7 @@ public class TagQueryExample {
 		tagStore.addStoreListener(new StoreListenerExample<>());
 
 		// blocking until tags received or timeout
-		if (tagStore.refresh() == QueryResultState.OK)
+		if (tagStore.refresh().getQueryResultState() == QueryResultState.OK)
 			for (Tag tag : tagStore.getAll())
 				System.out.println(tag);
 
