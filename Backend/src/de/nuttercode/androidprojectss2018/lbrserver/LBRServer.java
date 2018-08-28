@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;
@@ -18,6 +19,7 @@ import de.nuttercode.androidprojectss2018.csi.query.LBRQuery;
 import de.nuttercode.androidprojectss2018.csi.query.Query;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResult;
 import de.nuttercode.androidprojectss2018.csi.query.TagQuery;
+import de.nuttercode.androidprojectss2018.db.DBConnection;
 
 /**
  * LBRServer accepts incoming LBRClients and answers their requests
@@ -53,16 +55,33 @@ public class LBRServer implements Closeable {
 	private final EventScoreCalculator eventScoreCalculator;
 
 	/**
+	 * connection to the LBR-DB
+	 */
+	private final DBConnection dbConnection;
+
+	/**
 	 * 
 	 * @param port
 	 * @param eventScoreCalculator
+	 * @param dbDNSHostname
+	 * @param dbPort
+	 * @param dbName
+	 * @param dbUsername
+	 * @param dbPassword
 	 * @throws IOException
 	 *             can occur in the {@link ClientListener#ClientListener(int)}
+	 * @throws SQLException
+	 *             if {@link DBConnection#DBConnection(String, String, String)} does
 	 * @throws IllegalArgumentException
-	 *             when eventScoreCalculator is null
+	 *             if eventScoreCalculator, dbPassword, or dbUsername is null, if
+	 *             {@link DBConnection#createURL(String, String, String)} does, or
+	 *             if dbUsername is empty
 	 */
-	public LBRServer(int port, EventScoreCalculator eventScoreCalculator) throws IOException {
+	public LBRServer(int port, EventScoreCalculator eventScoreCalculator, String dbDNSHostname, int dbPort,
+			String dbName, String dbUsername, String dbPassword) throws IOException, SQLException {
 		Assurance.assureNotNull(eventScoreCalculator);
+		Assurance.assureNotNull(dbPassword);
+		Assurance.assureNotEmpty(dbUsername);
 		this.eventScoreCalculator = eventScoreCalculator;
 		clientListener = new ClientListener(port);
 		serverThread = new Thread(this::run);
@@ -70,36 +89,7 @@ public class LBRServer implements Closeable {
 		serverThread.start();
 		isClosed = false;
 		executorServer = Executors.newFixedThreadPool(4);
-	}
-
-	/**
-	 * creates some dummy events for test purposes
-	 * 
-	 * @return Collection<Event> dummy events
-	 */
-	private Collection<Event> getDummyEvents() {
-		ArrayList<Event> eventList = new ArrayList<>();
-		ArrayList<Tag> dummyTags = new ArrayList<>(getDummyTags());
-		// eventList.add(new Event(new Venue(1, "testVenue1", "testVenue1", 100, 100,
-		// 1), "testEvent1", "testEvent1", 1));
-		// eventList.add(new Event(new Venue(2, "testVenue2", "testVenue2", 101, 99, 1),
-		// "testEvent2", "testEvent2", 1));
-		// eventList.add(new Event(new Venue("testVenue3", 3, "testVenue3", 100, 99, 1),
-		// "testEvent3", "testEvent3", 1));
-		// eventList.add(new Event(new Venue("testVenue1", 1, "testVenue1", 101, 100,
-		// 1), "testEvent4", "testEvent4", 1));
-		// eventList.get(0).addAll(dummyTags);
-		// eventList.get(1).addAll(dummyTags);
-		// eventList.get(2).addAll(dummyTags);
-		// eventList.get(3).addAll(dummyTags);
-		return eventList;
-	}
-
-	private Collection<Tag> getDummyTags() {
-		ArrayList<Tag> tagList = new ArrayList<>();
-		tagList.add(new Tag(1, "testGenre1", "testGenre1"));
-		tagList.add(new Tag(2, "testGenre2", "testGenre2"));
-		return tagList;
+		dbConnection = new DBConnection(DBConnection.createURL(dbDNSHostname, dbPort, dbName), dbUsername, dbPassword);
 	}
 
 	/**
@@ -132,7 +122,12 @@ public class LBRServer implements Closeable {
 	}
 
 	private QueryResult<Tag> createTagResult(TagQuery tagQuery) {
-		return new QueryResult<>(getDummyTags());
+		try {
+			return new QueryResult<>(dbConnection.getAllTags());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return new QueryResult<>(new ArrayList<>());
 	}
 
 	/**
@@ -142,8 +137,17 @@ public class LBRServer implements Closeable {
 	 * @return appropriate response as {@link LBRResult}
 	 */
 	private QueryResult<ScoredEvent> createLBRResult(LBRQuery lbrQuery) {
-		return new QueryResult<ScoredEvent>(
-				scoreEvents(filterEvents(getDummyEvents(), lbrQuery.getTagPreferenceConfiguration())));
+		try {
+			return new QueryResult<ScoredEvent>(
+					scoreEvents(
+							filterEvents(
+									dbConnection.getAllEventsByRadiusAndLocation(lbrQuery.getRadius(),
+											lbrQuery.getLatitude(), lbrQuery.getLongitude()),
+									lbrQuery.getTagPreferenceConfiguration())));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return new QueryResult<>(new ArrayList<>());
 	}
 
 	/**
