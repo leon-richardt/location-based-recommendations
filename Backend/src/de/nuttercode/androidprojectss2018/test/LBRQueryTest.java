@@ -21,7 +21,6 @@ public class LBRQueryTest {
 
 		// client config
 		ClientConfiguration clientConfiguration = new ClientConfiguration();
-		clientConfiguration.setServerDNSName("localhost");
 		clientConfiguration.setRadius(10);
 
 		// eventstore and config
