@@ -43,26 +43,31 @@ public class Query<T extends Serializable> implements Serializable {
 	public QueryResultSummary<T> run() {
 		QueryResult<T> queryResult = null;
 		QueryResultState queryResultState = QueryResultState.OK;
-		String message = "";
+		String message = "OK";
 		try (ServerConnection clientConnection = new ServerConnection(clientConfiguration.getServerPort(),
 				clientConfiguration.getServerDNSName())) {
 			clientConnection.writeQuery(this);
 			queryResult = (QueryResult<T>) clientConnection.readResult();
 		} catch (ClassCastException e) {
 			queryResultState = QueryResultState.ClassCastException;
+			message = e.getMessage();
 		} catch (UnknownHostException e) {
 			queryResultState = QueryResultState.UnknownHostException;
+			message = e.getMessage();
 		} catch (IOException e) {
 			queryResultState = QueryResultState.IOException;
+			message = e.getMessage();
 		} catch (ClassNotFoundException e) {
 			queryResultState = QueryResultState.ClassNotFoundException;
+			message = e.getMessage();
 		} catch (InterruptedException e) {
 			queryResultState = QueryResultState.InterruptedException;
+			message = e.getMessage();
 		} catch (RuntimeException e) {
 			queryResultState = QueryResultState.RuntimeException;
-			message = e.toString();
+			message = e.getMessage();
 		}
-		return new QueryResultSummary<>(queryResult, queryResultState, message);
+		return new QueryResultSummary<>(queryResult, new QueryResultInformation(queryResultState, message));
 	}
 
 }

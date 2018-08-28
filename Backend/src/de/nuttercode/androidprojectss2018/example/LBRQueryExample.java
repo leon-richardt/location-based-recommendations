@@ -22,7 +22,7 @@ public class LBRQueryExample {
 		eventStore.addStoreListener(new StoreListenerExample<>());
 
 		// blocking until tags received or timeout
-		if (eventStore.refresh() == QueryResultState.OK)
+		if (eventStore.refresh().getQueryResultState() == QueryResultState.OK)
 			for (ScoredEvent scoredEvent : eventStore.getAll())
 				System.out.println(scoredEvent);
 
