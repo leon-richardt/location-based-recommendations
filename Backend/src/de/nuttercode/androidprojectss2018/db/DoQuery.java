@@ -38,7 +38,7 @@ public class DoQuery {
 	 * @throws SQLException
 	 *             If login is not successful
 	 */
-	public static void GetConnection(String url, String user, String password) throws SQLException {
+	public static void getConnection(String url, String user, String password) throws SQLException {
 		conn = DriverManager.getConnection(url, user, password);
 		stm = conn.createStatement();
 
@@ -53,10 +53,10 @@ public class DoQuery {
 	 * @throws SQLException
 	 *             SQL Error
 	 * @throws IllegalStateException
-	 *             if {@link #CheckConnection()} does
+	 *             if {@link #checkConnection()} does
 	 */
-	public static ArrayList<Event> GetEvents(String query) throws SQLException {
-		CheckConnection();
+	public static ArrayList<Event> getEvents(String query) throws SQLException {
+		checkConnection();
 		ArrayList<Event> events = new ArrayList<>();
 		ResultSet dbResult = stm.executeQuery(query);
 		while (dbResult.next())
@@ -96,14 +96,14 @@ public class DoQuery {
 	 * @throws IllegalArgumentException
 	 *             if events is null or it contains null
 	 * @throws IllegalStateException
-	 *             if {@link #CheckConnection()} does
+	 *             if {@link #checkConnection()} does
 	 */
-	public static ArrayList<Event> GetEventsWithTag(ArrayList<Event> events) throws SQLException {
-		CheckConnection();
+	public static ArrayList<Event> getEventsWithTag(ArrayList<Event> events) throws SQLException {
+		checkConnection();
 		Assurance.assureNotNull(events);
 		for (Event e : events) {
 			Assurance.assureNotNull(e);
-			ResultSet dbResult = stm.executeQuery(GenerateQuery.GenerateQueryTagsForEvent(e));
+			ResultSet dbResult = stm.executeQuery(GenerateQuery.generateQueryTagsForEvent(e));
 			while (dbResult.next())
 				e.addTag(new Tag(dbResult.getInt("tag_id"), dbResult.getString("tag_name"),
 						dbResult.getString("tag_description")));
@@ -118,9 +118,9 @@ public class DoQuery {
 	 * @throws SQLException
 	 *             SQL error
 	 */
-	public static ArrayList<Tag> GetAllTags() throws SQLException {
-		CheckConnection();
-		ResultSet dbResult = stm.executeQuery(GenerateQuery.GenerateQueryForAllTags());
+	public static ArrayList<Tag> getAllTags() throws SQLException {
+		checkConnection();
+		ResultSet dbResult = stm.executeQuery(GenerateQuery.generateQueryForAllTags());
 		ArrayList<Tag> tags = new ArrayList<>();
 		while (dbResult.next())
 			tags.add(new Tag(dbResult.getInt("tag_id"), dbResult.getString("tag_name"),
@@ -131,7 +131,7 @@ public class DoQuery {
 	/**
 	 * Checks if the Connection was initialized before working on query
 	 */
-	private static void CheckConnection() {
+	private static void checkConnection() {
 		if (conn == null || stm == null) {
 			throw new IllegalStateException("Please initialize Connection first ");
 		}

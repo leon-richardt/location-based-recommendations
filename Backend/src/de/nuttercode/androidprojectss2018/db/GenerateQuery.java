@@ -22,7 +22,7 @@ public class GenerateQuery {
 	 *            Longitude of the current position
 	 * @return String ready to be executed by a SQL Database
 	 */
-	public static String GenerateQueryEvents(double radius, double latitude, double longitude) {
+	public static String generateQueryEvents(double radius, double latitude, double longitude) {
 		StringBuilder str = new StringBuilder(500);
 		str.append(
 				"SELECT  Distinct e.event_id, e.event_name, e.date, e.time, e.event_description, v.venue_id, v.venue_name, v.venue_description, v.latitude, v.longitude, (6371 * acos( cos( radians(");
@@ -47,7 +47,7 @@ public class GenerateQuery {
 	 * @throws IllegalArgumentException
 	 *             if event is null
 	 */
-	public static String GenerateQueryTagsForEvent(Event event) {
+	public static String generateQueryTagsForEvent(Event event) {
 		Assurance.assureNotNull(event);
 		StringBuilder str = new StringBuilder(200);
 		str.append("SELECT t.tag_id, t.tag_name, t.tag_description from Event_Tag ev, Tag t where ev.event_id =");
@@ -62,7 +62,7 @@ public class GenerateQuery {
 	 * 
 	 * @return SQL Query to get all Tags
 	 */
-	public static String GenerateQueryForAllTags() {
+	public static String generateQueryForAllTags() {
 		return "Select * from Tag";
 	}
 }

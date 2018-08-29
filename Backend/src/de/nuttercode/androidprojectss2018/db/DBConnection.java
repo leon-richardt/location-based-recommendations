@@ -45,10 +45,10 @@ public class DBConnection {
 	 * @param user
 	 * @param password
 	 * @throws SQLException
-	 *             if {@link DoQuery#GetConnection(String, String, String)} does
+	 *             if {@link DoQuery#getConnection(String, String, String)} does
 	 */
 	public DBConnection(String url, String user, String password) throws SQLException {
-		DoQuery.GetConnection(url, user, password);
+		DoQuery.getConnection(url, user, password);
 	}
 
 	/**
@@ -58,22 +58,22 @@ public class DBConnection {
 	 * @param longitude
 	 * @return
 	 * @throws SQLException
-	 *             if {@link DoQuery#GetEventsWithTag(java.util.ArrayList)} does
+	 *             if {@link DoQuery#getEventsWithTag(java.util.ArrayList)} does
 	 */
 	public Collection<Event> getAllEventsByRadiusAndLocation(double radius, double latitude, double longitude)
 			throws SQLException {
 		return DoQuery
-				.GetEventsWithTag(DoQuery.GetEvents(GenerateQuery.GenerateQueryEvents(radius, latitude, longitude)));
+				.getEventsWithTag(DoQuery.getEvents(GenerateQuery.generateQueryEvents(radius, latitude, longitude)));
 	}
 
 	/**
 	 * 
 	 * @return
 	 * @throws SQLException
-	 *             if {@link DoQuery#GetAllTags()} does
+	 *             if {@link DoQuery#getAllTags()} does
 	 */
 	public Collection<Tag> getAllTags() throws SQLException {
-		return DoQuery.GetAllTags();
+		return DoQuery.getAllTags();
 	}
 
 }
