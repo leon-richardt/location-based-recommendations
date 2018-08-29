@@ -19,7 +19,8 @@ public class Query<T extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = 2130540249378192775L;
 
-	protected final ClientConfiguration clientConfiguration;
+	private final String serverDNSName;
+	private final int serverPort;
 
 	/**
 	 * 
@@ -29,7 +30,8 @@ public class Query<T extends Serializable> implements Serializable {
 	 */
 	protected Query(ClientConfiguration clientConfiguration) {
 		Assurance.assureNotNull(clientConfiguration);
-		this.clientConfiguration = clientConfiguration;
+		serverDNSName = clientConfiguration.getServerDNSName();
+		serverPort = clientConfiguration.getServerPort();
 	}
 
 	/**
@@ -44,8 +46,7 @@ public class Query<T extends Serializable> implements Serializable {
 		QueryResult<T> queryResult = null;
 		QueryResultState queryResultState = QueryResultState.OK;
 		String message = "OK";
-		try (ServerConnection clientConnection = new ServerConnection(clientConfiguration.getServerPort(),
-				clientConfiguration.getServerDNSName())) {
+		try (ServerConnection clientConnection = new ServerConnection(serverPort, serverDNSName)) {
 			clientConnection.writeQuery(this);
 			queryResult = (QueryResult<T>) clientConnection.readResult();
 		} catch (ClassCastException e) {

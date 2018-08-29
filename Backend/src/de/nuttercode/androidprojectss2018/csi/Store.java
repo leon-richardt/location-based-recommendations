@@ -25,7 +25,7 @@ import de.nuttercode.androidprojectss2018.csi.query.QueryResultSummary;
 public class Store<T extends Serializable> {
 
 	private final Set<T> tSet;
-	private final Query<T> query;
+	protected final Query<T> query;
 	private final List<StoreListener<T>> storeListenerList;
 
 	/**
