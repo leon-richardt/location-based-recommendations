@@ -20,9 +20,8 @@ public class LBRServerTest {
 
 	public static void main(String[] args) {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-			System.out.print("enter password: ");
 			try (LBRServer lbrServer = new LBRServer(ClientConfiguration.DEFAULT_LBR_PORT,
-					new RandomEventScoreCalculator(42), "lbr.nuttercode.de", 3306, "lbr", "lbr", reader.readLine())) {
+					new RandomEventScoreCalculator(42), "localhost", 3306, "lbr", "lbr", args[0])) {
 				while (true) {
 					// nothing to do
 					Thread.sleep(10_000);
