@@ -17,7 +17,7 @@
         android:id="@+id/list"
         android:name="de.nuttercode.androidprojectss2018.app.EventListFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="0.55" />
 
 
