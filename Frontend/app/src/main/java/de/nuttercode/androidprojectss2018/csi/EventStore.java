@@ -19,4 +19,16 @@ public class EventStore extends Store<ScoredEvent> {
 		super(new LBRQuery(clientConfiguration));
 	}
 
+	/**
+	 * sets the new user location
+	 * 
+	 * @param latitude
+	 * @param longitude
+	 */
+	public void setUserLocation(double latitude, double longitude) {
+		LBRQuery lbrQuery = (LBRQuery) query;
+		lbrQuery.setLatitude(latitude);
+		lbrQuery.setLongitude(longitude);
+	}
+
 }

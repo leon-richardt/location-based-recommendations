@@ -1,6 +1,7 @@
 package de.nuttercode.androidprojectss2018.app
 
 import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -10,9 +11,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import com.google.gson.Gson
 
-import de.nuttercode.androidprojectss2018.app.dummy.DummyContent
 import de.nuttercode.androidprojectss2018.csi.*
 
 /**
@@ -20,10 +20,11 @@ import de.nuttercode.androidprojectss2018.csi.*
  * Activities containing this fragment MUST implement the
  * [EventListFragment.OnListFragmentInteractionListener] interface.
  */
-class EventListFragment : Fragment() {
-
+class EventListFragment : Fragment(), FetchEventsTaskCallback {
     // TODO: Customize parameters
     private var columnCount = 1
+
+    private lateinit var contentList: ArrayList<ScoredEvent>
 
     private var listener: OnListFragmentInteractionListener? = null
 
@@ -47,23 +48,30 @@ class EventListFragment : Fragment() {
                     else -> GridLayoutManager(context, columnCount)
                 }
 
-                // TODO: Fetch Events here (in separate Thread)
-                val eventStore = EventStore(ClientConfiguration())
-                eventStore.addStoreListener(object: StoreListener<ScoredEvent> {
-                    override fun onElementAdded(newElement: ScoredEvent?) {
-                        Toast.makeText(context, "Element hinzugefügt: ${newElement?.event?.name}", Toast.LENGTH_SHORT).show()
-                        Log.i("EventListFragment", "Element hinzugefügt: ${newElement?.event?.name}")
-                    }
-
-                    override fun onElementRemoved(newElement: ScoredEvent?) {
-                        Toast.makeText(context, "Element removed: ${newElement?.event?.name}", Toast.LENGTH_SHORT).show()
-                        Log.i("EventListFragment", "Element hinzugefügt: ${newElement?.event?.name}")
+                // This creates and executes an AsyncTask fetching all Events matching the TagPreferenceConfiguration in the ClientConfiguration
+                // TODO: Fetch new Events every X seconds and only update the EventStore instead of creating a new one every time
+                val fetchEventsTask = FetchEventsTask(object: FetchEventsTaskCallback {
+                    override fun processFetchEventsResult(result: ArrayList<ScoredEvent>) {
+                        adapter = MyEventRecyclerViewAdapter(result, listener)
                     }
                 })
-                Log.i("EventListFragment", eventStore.refresh().message)
 
-                adapter = MyEventRecyclerViewAdapter(DummyContent.ITEMS, listener)
+                val clientConfigJson = (activity as MapActivity).getSharedPrefs().getString("ClientConfiguration", null)
+                        ?: throw IllegalStateException("Could not find ClientConfiguration in SharedPreferences")
 
+                Log.i(TAG, "Listing Tags from Getter:")
+                (activity as MapActivity).getClientConfig().tagPreferenceConfiguration.forEach {
+                    Log.i(TAG, it.name)
+                }
+
+                val configFromJson = Gson().fromJson(clientConfigJson, ClientConfiguration::class.java)
+                Log.i(TAG, "Listing Tags from JSON:")
+                configFromJson.tagPreferenceConfiguration.forEach {
+                    Log.i(TAG, it.name)
+                }
+
+
+                fetchEventsTask.execute((activity as MapActivity).getClientConfig())
             }
         }
 
@@ -79,9 +87,18 @@ class EventListFragment : Fragment() {
         }
     }
 
+    override fun processFetchEventsResult(result: ArrayList<ScoredEvent>) {
+        contentList.addAll(result)
+    }
+
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+    fun networkAvailable(): Boolean {
+        val cm = context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return cm.activeNetworkInfo?.isConnected == true
     }
 
     /**
@@ -96,10 +113,11 @@ class EventListFragment : Fragment() {
      * for more information.
      */
     interface OnListFragmentInteractionListener {
-        fun onListFragmentInteraction(item: Event?)
+        fun onListFragmentInteraction(item: ScoredEvent?)
     }
 
     companion object {
+        const val TAG = "EventListFragment"
 
         // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
