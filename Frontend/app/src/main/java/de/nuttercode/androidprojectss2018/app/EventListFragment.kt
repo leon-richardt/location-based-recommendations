@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import com.google.gson.Gson
 
 import de.nuttercode.androidprojectss2018.csi.*
+import java.lang.ref.WeakReference
 
 /**
  * A fragment representing a list of Items.
@@ -50,12 +51,13 @@ class EventListFragment : Fragment(), FetchEventsTaskCallback {
 
                 // This creates and executes an AsyncTask fetching all Events matching the TagPreferenceConfiguration in the ClientConfiguration
                 // TODO: Fetch new Events every X seconds and only update the EventStore instead of creating a new one every time
-                val fetchEventsTask = FetchEventsTask(object: FetchEventsTaskCallback {
+                val fetchEventsTask = FetchEventsTask(WeakReference(activity!!), object: FetchEventsTaskCallback {
                     override fun processFetchEventsResult(result: ArrayList<ScoredEvent>) {
                         adapter = MyEventRecyclerViewAdapter(result, listener)
                     }
                 })
 
+                // TODO: Decide whether to use clientConfig from JSON or from Getter
                 val clientConfigJson = (activity as MapActivity).getSharedPrefs().getString("ClientConfiguration", null)
                         ?: throw IllegalStateException("Could not find ClientConfiguration in SharedPreferences")
 

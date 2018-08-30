@@ -1,12 +1,17 @@
 package de.nuttercode.androidprojectss2018.app
 
+import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
+import android.widget.Toast
 import de.nuttercode.androidprojectss2018.csi.ClientConfiguration
 import de.nuttercode.androidprojectss2018.csi.TagStore
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultState
+import java.lang.ref.WeakReference
 
-class AddAllTagsTask(private val callback: AddAllTagsTaskCallback): AsyncTask<ClientConfiguration, Unit, ClientConfiguration>() {
+class AddAllTagsTask(private val context: WeakReference<Context>, private val callback: AddAllTagsTaskCallback): AsyncTask<ClientConfiguration, Unit, ClientConfiguration>() {
+
+    private var qrs: QueryResultState = QueryResultState.OK
 
     override fun doInBackground(vararg clientConfiguration: ClientConfiguration): ClientConfiguration {
         if (clientConfiguration.size != 1) throw IllegalArgumentException("Only one argument may be passed")
@@ -19,7 +24,7 @@ class AddAllTagsTask(private val callback: AddAllTagsTaskCallback): AsyncTask<Cl
 
         if (queryResultInformation.queryResultState != QueryResultState.OK) {
             Log.e(TAG, "QueryResultState is ${queryResultInformation.queryResultState.name}. Message: ${queryResultInformation.message}")
-            throw IllegalStateException("Bad QueryResultState (${queryResultInformation.queryResultState.name})! Check logs for more information")
+            qrs = queryResultInformation.queryResultState
         }
 
         Log.i(TAG, "Refreshing TagStore was successful! Now adding all (${tagStore.all.size}) Tags to the TagPreferenceConfiguration.")
@@ -31,6 +36,11 @@ class AddAllTagsTask(private val callback: AddAllTagsTaskCallback): AsyncTask<Cl
 
     override fun onPostExecute(result: ClientConfiguration) {
         callback.processAddAllTagsResult(result)
+        if (qrs != QueryResultState.OK) {
+            Toast.makeText(context.get(),
+                    "Bad QueryResultState: $qrs! Please check your Internet connection and try again!",
+                    Toast.LENGTH_LONG).show()
+        }
     }
 
     companion object {

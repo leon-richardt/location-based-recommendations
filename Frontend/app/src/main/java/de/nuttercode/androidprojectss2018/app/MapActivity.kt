@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
 import de.nuttercode.androidprojectss2018.csi.ClientConfiguration
 import de.nuttercode.androidprojectss2018.csi.ScoredEvent
+import java.lang.ref.WeakReference
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.OnListFragmentInteractionListener, AddAllTagsTaskCallback {
     private lateinit var mMap: GoogleMap
@@ -32,7 +33,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         // Check whether ClientConfiguration entry already exists
         if (sharedPrefs.getString("ClientConfiguration", null) == null) {
             // Custom ClientConfiguration does not exist yet, save a default ClientConfiguration
-            val clientConfigJson = Gson().toJson(ClientConfiguration())
+            val clientConfigJson = Gson().toJson(ClientConfiguration().apply { radius = 200.0 })
             sharedPrefs.edit().putString("ClientConfiguration", clientConfigJson).apply()
         }
 
@@ -42,7 +43,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
 
         // Currently, we run this on every startup
         // TODO: Implement settings menu and check whether new tags should automatically be added to ClientConfiguration
-        AddAllTagsTask(this).execute(clientConfig)
+        AddAllTagsTask(WeakReference(this), this).execute(clientConfig)
         sharedPrefs.edit().putBoolean("FirstStart", false).apply()
 
 
