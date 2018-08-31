@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_7CydQK0XEei1X-X6NYhHvA" name="csi">
+  <elementImport xmi:id="_7FiPQa0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_7FiPQq0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#byte"/>
+  </elementImport>
+  <elementImport xmi:id="_7FiPQ60XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#char"/>
+  </elementImport>
+  <elementImport xmi:id="_7FiPRK0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+  </elementImport>
+  <elementImport xmi:id="_7FiPRa0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#float"/>
+  </elementImport>
+  <elementImport xmi:id="_7FkrgK0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+  </elementImport>
+  <elementImport xmi:id="_7Fkrga0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+  </elementImport>
+  <elementImport xmi:id="_7Fkrgq0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#short"/>
+  </elementImport>
+  <elementImport xmi:id="_7Fkrg60XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_7FkrhK0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+  </elementImport>
+  <elementImport xmi:id="_7Fkrha0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+  </elementImport>
+  <elementImport xmi:id="_7Fkrhq0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#UnlimitedNatural"/>
+  </elementImport>
+  <packageImport xmi:id="_7FTlwK0XEei1X-X6NYhHvA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packageImport xmi:id="_7FiPQK0XEei1X-X6NYhHvA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Package" xmi:id="_7Fkrh60XEei1X-X6NYhHvA" name="de">
+    <packagedElement xmi:type="uml:Package" xmi:id="_7FkriK0XEei1X-X6NYhHvA" name="nuttercode">
+      <packagedElement xmi:type="uml:Package" xmi:id="_7FnHwK0XEei1X-X6NYhHvA" name="androidprojectss2018">
+        <packagedElement xmi:type="uml:Package" xmi:id="_7FnHwa0XEei1X-X6NYhHvA" name="csi">
+          <packagedElement xmi:type="uml:Package" xmi:id="_7HhMQK0XEei1X-X6NYhHvA" name="query">
+            <packagedElement xmi:type="uml:DataType" xmi:id="_7HhMQa0XEei1X-X6NYhHvA" name="Query"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_7HhMQ60XEei1X-X6NYhHvA" name="QueryResultInformation"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_7Hjoga0XEei1X-X6NYhHvA" name="QueryResultState"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_7HtZgK0XEei1X-X6NYhHvA" name="QueryResultSummary"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_7W2Bsa0XEei1X-X6NYhHvA" name="TagQuery"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="_7hhnsK0XEei1X-X6NYhHvA" name="LBRQuery"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_7F9GAK0XEei1X-X6NYhHvA" name="Store" visibility="public">
+            <eAnnotations xmi:id="_7F9GAa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_7F9GAq0XEei1X-X6NYhHvA" key="documentation" value=" stores elements locally. use {@link #addStoreListener(StoreListener)} to&#xD;&#xA; listener to new or removed elements.&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA; @param &lt;T>&#xD;&#xA;            some {@link Serializable}&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="_7HU_A60XEei1X-X6NYhHvA" importedElement="_7HU_Aq0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7HXbQq0XEei1X-X6NYhHvA" importedElement="_7HXbQa0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7HZ3ga0XEei1X-X6NYhHvA" importedElement="_7HZ3gK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7HZ3g60XEei1X-X6NYhHvA" importedElement="_7HZ3gq0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7HcTwa0XEei1X-X6NYhHvA" importedElement="_7HcTwK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7HcTw60XEei1X-X6NYhHvA" importedElement="_7HcTwq0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7HewAa0XEei1X-X6NYhHvA" importedElement="_7HewAK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7HhMQq0XEei1X-X6NYhHvA" importedElement="_7HhMQa0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7HjogK0XEei1X-X6NYhHvA" importedElement="_7HhMQ60XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7Hjogq0XEei1X-X6NYhHvA" importedElement="_7Hjoga0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7HtZga0XEei1X-X6NYhHvA" importedElement="_7HtZgK0XEei1X-X6NYhHvA" visibility="private"/>
+            <ownedTemplateSignature xmi:type="uml:RedefinableTemplateSignature" xmi:id="_7F9GA60XEei1X-X6NYhHvA" parameter="_7F9GBK0XEei1X-X6NYhHvA">
+              <ownedParameter xmi:type="uml:ClassifierTemplateParameter" xmi:id="_7F9GBK0XEei1X-X6NYhHvA" parameteredElement="_7F9GBa0XEei1X-X6NYhHvA">
+                <ownedParameteredElement xmi:type="uml:Class" xmi:id="_7F9GBa0XEei1X-X6NYhHvA" name="T" templateParameter="_7F9GBK0XEei1X-X6NYhHvA"/>
+              </ownedParameter>
+            </ownedTemplateSignature>
+            <ownedAttribute xmi:id="_7H8DAK0XEei1X-X6NYhHvA" name="tSet" visibility="private" isLeaf="true" type="_7F9GBa0XEei1X-X6NYhHvA" isOrdered="true">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_7H8DAa0XEei1X-X6NYhHvA" value="*"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7JAaAK0XEei1X-X6NYhHvA" name="query" visibility="protected" isLeaf="true" type="_7HhMQa0XEei1X-X6NYhHvA"/>
+            <ownedAttribute xmi:id="_7JWYQK0XEei1X-X6NYhHvA" name="storeListenerList" visibility="private" isLeaf="true" type="_7GEawK0XEei1X-X6NYhHvA" isOrdered="true" isUnique="false" association="_8LntkK0XEei1X-X6NYhHvA">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_7JWYQa0XEei1X-X6NYhHvA" value="*"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="_7J2HgK0XEei1X-X6NYhHvA" name="Store" visibility="protected">
+              <eAnnotations xmi:id="_7J2Hga0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7J2Hgq0XEei1X-X6NYhHvA" key="documentation" value=" @param query&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if query is null&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7J2Hg60XEei1X-X6NYhHvA" name="query" type="_7HhMQa0XEei1X-X6NYhHvA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7LQcwK0XEei1X-X6NYhHvA" name="addStoreListener" visibility="public">
+              <ownedParameter xmi:id="_7LQcwa0XEei1X-X6NYhHvA" name="storeNewElementListener" type="_7GEawK0XEei1X-X6NYhHvA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7MBRwK0XEei1X-X6NYhHvA" name="getAll" visibility="public">
+              <ownedParameter xmi:id="_7MBRwa0XEei1X-X6NYhHvA" type="_7HewAK0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7MekwK0XEei1X-X6NYhHvA" name="refresh" visibility="public">
+              <eAnnotations xmi:id="_7Mekwa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7Mekwq0XEei1X-X6NYhHvA" key="documentation" value=" retrieves all applicable elements from the {@link LBRServer}. if the&#xD;&#xA; underlying queries does not have an {@link QueryResultState#OK} then no data&#xD;&#xA; will be saved in this {@link Store}. calls all added {@link StoreListener}s&#xD;&#xA; as added by {@link #addStoreListener(StoreListener)}.&#xD;&#xA; &#xD;&#xA; @return informations about the state of the underlying query&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7Mekw60XEei1X-X6NYhHvA" type="_7HhMQ60XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7VZQMK0XEei1X-X6NYhHvA" name="toString" visibility="public">
+              <eAnnotations xmi:id="_7VZQMa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7VZQMq0XEei1X-X6NYhHvA" key="documentation" value=" Returns a string representation of the object. In general, the&#xD;&#xA; {@code toString} method returns a string that&#xD;&#xA; &quot;textually represents&quot; this object. The result should&#xD;&#xA; be a concise but informative representation that is easy for a&#xD;&#xA; person to read.&#xD;&#xA; It is recommended that all subclasses override this method.&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code toString} method for class {@code Object}&#xD;&#xA; returns a string consisting of the name of the class of which the&#xD;&#xA; object is an instance, the at-sign character `{@code @}', and&#xD;&#xA; the unsigned hexadecimal representation of the hash code of the&#xD;&#xA; object. In other words, this method returns a string equal to the&#xD;&#xA; value of:&#xD;&#xA; &lt;blockquote>&#xD;&#xA; &lt;pre>&#xD;&#xA; getClass().getName() + '@' + Integer.toHexString(hashCode())&#xD;&#xA; &lt;/pre>&lt;/blockquote>&#xD;&#xA; @return  a string representation of the object.&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7VZQM60XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Interface" xmi:id="_7GEawK0XEei1X-X6NYhHvA" name="StoreListener" visibility="public">
+            <eAnnotations xmi:id="_7GEawa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_7GEawq0XEei1X-X6NYhHvA" key="documentation" value=" Use {@link Store#addStoreListener(StoreListener)} to add this listener to a&#xD;&#xA; specific {@link Store}.&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA; @param &lt;T>&#xD;&#xA;            some type&#xD;&#xA;"/>
+            </eAnnotations>
+            <ownedTemplateSignature xmi:type="uml:RedefinableTemplateSignature" xmi:id="_7GEaw60XEei1X-X6NYhHvA" parameter="_7GEaxK0XEei1X-X6NYhHvA">
+              <ownedParameter xmi:type="uml:ClassifierTemplateParameter" xmi:id="_7GEaxK0XEei1X-X6NYhHvA" parameteredElement="_7GEaxa0XEei1X-X6NYhHvA">
+                <ownedParameteredElement xmi:type="uml:Class" xmi:id="_7GEaxa0XEei1X-X6NYhHvA" name="T" templateParameter="_7GEaxK0XEei1X-X6NYhHvA"/>
+              </ownedParameter>
+            </ownedTemplateSignature>
+            <ownedOperation xmi:id="_7WCwcK0XEei1X-X6NYhHvA" name="onElementAdded">
+              <eAnnotations xmi:id="_7WCwca0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7WCwcq0XEei1X-X6NYhHvA" key="documentation" value=" will be called every time a new element is added to a {@link Store}.&#xD;&#xA; &#xD;&#xA; @param newElement&#xD;&#xA;            the new element added to the {@link Store}&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7WCwc60XEei1X-X6NYhHvA" name="newElement" type="_7GEaxa0XEei1X-X6NYhHvA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7WWScK0XEei1X-X6NYhHvA" name="onElementRemoved">
+              <eAnnotations xmi:id="_7WWSca0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7WWScq0XEei1X-X6NYhHvA" key="documentation" value=" will be called every time an element is removed from a {@link Store}.&#xD;&#xA; &#xD;&#xA; @param newElement&#xD;&#xA;            the element that is removed from the {@link Store}&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7WWSc60XEei1X-X6NYhHvA" name="newElement" type="_7GEaxa0XEei1X-X6NYhHvA"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_7GLvgK0XEei1X-X6NYhHvA" name="TagStore" visibility="public">
+            <eAnnotations xmi:id="_7GLvga0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_7GLvgq0XEei1X-X6NYhHvA" key="documentation" value=" stores all locally available {@link Tag}s and retreives new {@link Tag}s from&#xD;&#xA; the {@link LBRServer}&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="_7W2Bsq0XEei1X-X6NYhHvA" importedElement="_7W2Bsa0XEei1X-X6NYhHvA" visibility="private"/>
+            <generalization xmi:id="_7W2BsK0XEei1X-X6NYhHvA" general="_7F9GAK0XEei1X-X6NYhHvA"/>
+            <ownedOperation xmi:id="_7XHHcK0XEei1X-X6NYhHvA" name="TagStore" visibility="public">
+              <eAnnotations xmi:id="_7XHHca0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7XHHcq0XEei1X-X6NYhHvA" key="documentation" value=" @param clientConfiguration&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if {@link Store#Store(Query)} does&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7XHHc60XEei1X-X6NYhHvA" name="clientConfiguration" type="_7GTEQK0XEei1X-X6NYhHvA"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_7GTEQK0XEei1X-X6NYhHvA" name="ClientConfiguration" visibility="public">
+            <eAnnotations xmi:id="_7GTEQa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_7GTEQq0XEei1X-X6NYhHvA" key="documentation" value=" represents the configuration of a LBRClient - may be saved locally by&#xD;&#xA; serialization&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="_7XOcMK0XEei1X-X6NYhHvA" importedElement="_7HU_Aq0XEei1X-X6NYhHvA" visibility="private"/>
+            <ownedAttribute xmi:id="_7XOcMa0XEei1X-X6NYhHvA" name="RADIUS_UPPER_BOUND" visibility="private" isLeaf="true" isStatic="true">
+              <eAnnotations xmi:id="_7XQ4cK0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7XQ4ca0XEei1X-X6NYhHvA" key="documentation" value=" this upper bound constraints the radius to a maximum of this value - the unit&#xD;&#xA; is the same as of {@link #radius}&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_7XQ4cq0XEei1X-X6NYhHvA" name="" value="100.0">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </defaultValue>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7XQ4c60XEei1X-X6NYhHvA" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_7XTUsK0XEei1X-X6NYhHvA" name="" value="135520319529800968L">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              </defaultValue>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7XTUsa0XEei1X-X6NYhHvA" name="DEFAULT_LBR_PORT" visibility="public" isLeaf="true" isStatic="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_7XTUsq0XEei1X-X6NYhHvA" name="" value="5445">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </defaultValue>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7XVw8K0XEei1X-X6NYhHvA" name="DEFAULT_LBR_DNS_NAME" visibility="private" isLeaf="true" isStatic="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_7XVw8a0XEei1X-X6NYhHvA" name="" value="&quot;lbr.nuttercode.de&quot;">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </defaultValue>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7XYNMK0XEei1X-X6NYhHvA" name="DEFAULT_RADIUS" visibility="private" isLeaf="true" isStatic="true">
+              <eAnnotations xmi:id="_7XYNMa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7XYNMq0XEei1X-X6NYhHvA" key="documentation" value=" default value for {@link #radius} - same unit as {@link #radius}&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_7XYNM60XEei1X-X6NYhHvA" name="" value="1.0">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </defaultValue>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7Xfh8K0XEei1X-X6NYhHvA" name="tagPreferenceConfiguration" visibility="private" isLeaf="true" type="_7GkKAK0XEei1X-X6NYhHvA" association="_8LqJ0K0XEei1X-X6NYhHvA"/>
+            <ownedAttribute xmi:id="_7Xfh8a0XEei1X-X6NYhHvA" name="radius" visibility="private">
+              <eAnnotations xmi:id="_7Xh-MK0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7Xh-Ma0XEei1X-X6NYhHvA" key="documentation" value=" distance of farthest considerable event in kilometers (km)&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7Xh-Mq0XEei1X-X6NYhHvA" name="serverDNSName" visibility="private">
+              <eAnnotations xmi:id="_7XkacK0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7Xkaca0XEei1X-X6NYhHvA" key="documentation" value=" DNS hostname of the LBRServer&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7Xkacq0XEei1X-X6NYhHvA" name="serverPort" visibility="private">
+              <eAnnotations xmi:id="_7Xm2sK0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7Xm2sa0XEei1X-X6NYhHvA" key="documentation" value=" TCP-Port of the LBRServer&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="_7X6YsK0XEei1X-X6NYhHvA" name="ClientConfiguration" visibility="public"/>
+            <ownedOperation xmi:id="_7YQW8K0XEei1X-X6NYhHvA" name="getTagPreferenceConfiguration" visibility="public">
+              <ownedParameter xmi:id="_7YQW8a0XEei1X-X6NYhHvA" type="_7GkKAK0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7YhcsK0XEei1X-X6NYhHvA" name="getRadius" visibility="public">
+              <ownedParameter xmi:id="_7Yhcsa0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7Y0-sK0XEei1X-X6NYhHvA" name="getServerDNSName" visibility="public">
+              <ownedParameter xmi:id="_7Y0-sa0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7ZNZMK0XEei1X-X6NYhHvA" name="getServerPort" visibility="public">
+              <ownedParameter xmi:id="_7ZNZMa0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7ZcCsK0XEei1X-X6NYhHvA" name="setRadius" visibility="public">
+              <eAnnotations xmi:id="_7ZcCsa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7ZcCsq0XEei1X-X6NYhHvA" key="documentation" value=" setter for radius&#xD;&#xA; &#xD;&#xA; @param radius&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             when 0 &lt;= radius &lt;= RADIUS_UPPER_BOUND&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7ZcCs60XEei1X-X6NYhHvA" name="radius">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7Zg7MK0XEei1X-X6NYhHvA" name="setServerDNSName" visibility="public">
+              <eAnnotations xmi:id="_7Zg7Ma0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7Zg7Mq0XEei1X-X6NYhHvA" key="documentation" value=" setter for serverDNSName&#xD;&#xA; &#xD;&#xA; @param serverDNSName&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             when serverDNSName is empty or null&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7Zg7M60XEei1X-X6NYhHvA" name="serverDNSName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7ZoP8K0XEei1X-X6NYhHvA" name="setServerPort" visibility="public">
+              <eAnnotations xmi:id="_7ZoP8a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7ZoP8q0XEei1X-X6NYhHvA" key="documentation" value=" setter for serverPort&#xD;&#xA; &#xD;&#xA; @param serverPort&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             when serverPort &lt;= 0&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7ZoP860XEei1X-X6NYhHvA" name="serverPort">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7Z0dMK0XEei1X-X6NYhHvA" name="toString" visibility="public">
+              <eAnnotations xmi:id="_7Z0dMa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7Z0dMq0XEei1X-X6NYhHvA" key="documentation" value=" Returns a string representation of the object. In general, the&#xD;&#xA; {@code toString} method returns a string that&#xD;&#xA; &quot;textually represents&quot; this object. The result should&#xD;&#xA; be a concise but informative representation that is easy for a&#xD;&#xA; person to read.&#xD;&#xA; It is recommended that all subclasses override this method.&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code toString} method for class {@code Object}&#xD;&#xA; returns a string consisting of the name of the class of which the&#xD;&#xA; object is an instance, the at-sign character `{@code @}', and&#xD;&#xA; the unsigned hexadecimal representation of the hash code of the&#xD;&#xA; object. In other words, this method returns a string equal to the&#xD;&#xA; value of:&#xD;&#xA; &lt;blockquote>&#xD;&#xA; &lt;pre>&#xD;&#xA; getClass().getName() + '@' + Integer.toHexString(hashCode())&#xD;&#xA; &lt;/pre>&lt;/blockquote>&#xD;&#xA; @return  a string representation of the object.&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7Z0dM60XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_7GTEQ60XEei1X-X6NYhHvA" name="Assurance" visibility="public">
+            <eAnnotations xmi:id="_7GTERK0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_7GTERa0XEei1X-X6NYhHvA" key="documentation" value=" provides parameter checks and throws IllegalArgumentException if appropriate&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <ownedOperation xmi:id="_7bOycK0XEei1X-X6NYhHvA" name="assureNotNull" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_7bOyca0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7bOycq0XEei1X-X6NYhHvA" key="documentation" value=" @param object&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if and only if the object is null&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7bOyc60XEei1X-X6NYhHvA" name="object" type="_7bHdsa0XEei1X-X6NYhHvA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7bYjcK0XEei1X-X6NYhHvA" name="assureNotEmpty" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_7dNvcK0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7dNvca0XEei1X-X6NYhHvA" key="documentation" value=" @param s&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if and only if the object is null or the {@link String} is empty&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7dNvcq0XEei1X-X6NYhHvA" name="s">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7dXgcK0XEei1X-X6NYhHvA" name="assurePositive" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_7dXgca0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7dXgcq0XEei1X-X6NYhHvA" key="documentation" value=" @param i&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if and only if the argument is not positive&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7dXgc60XEei1X-X6NYhHvA" name="i">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7de1MK0XEei1X-X6NYhHvA" name="assureNotNegative" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_7de1Ma0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7de1Mq0XEei1X-X6NYhHvA" key="documentation" value=" @param i&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if and only if the argument is negative&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7de1M60XEei1X-X6NYhHvA" name="i">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7djtsK0XEei1X-X6NYhHvA" name="assureNotNegative" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_7djtsa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7djtsq0XEei1X-X6NYhHvA" key="documentation" value=" @param i&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if and only if the argument is negative&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7djts60XEei1X-X6NYhHvA" name="i">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7ex1sK0XEei1X-X6NYhHvA" name="assurePositive" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_7ex1sa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7ex1sq0XEei1X-X6NYhHvA" key="documentation" value=" @param i&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if and only if the argument is not positive&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7ex1s60XEei1X-X6NYhHvA" name="i">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7fAfMK0XEei1X-X6NYhHvA" name="assureBoundaries" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_7fAfMa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7fAfMq0XEei1X-X6NYhHvA" key="documentation" value=" &#xD;&#xA; @param value&#xD;&#xA; @param leftBoundary&#xD;&#xA; @param rightBoundary&#xD;&#xA; @throws IllegalArugmentException&#xD;&#xA;             if score is not element of [leftBoundary, rightBoundary]&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7fAfM60XEei1X-X6NYhHvA" name="value">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_7fAfNK0XEei1X-X6NYhHvA" name="leftBoundary">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_7fAfNa0XEei1X-X6NYhHvA" name="rightBoundary">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_7Gc1QK0XEei1X-X6NYhHvA" name="EventStore" visibility="public">
+            <eAnnotations xmi:id="_7Gc1Qa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_7Gc1Qq0XEei1X-X6NYhHvA" key="documentation" value=" stores all {@link ScoredEvent}s received from the {@link LBRServer}&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="_7hhnsa0XEei1X-X6NYhHvA" importedElement="_7hhnsK0XEei1X-X6NYhHvA" visibility="private"/>
+            <generalization xmi:id="_7hfLcK0XEei1X-X6NYhHvA" general="_7F9GAK0XEei1X-X6NYhHvA"/>
+            <ownedOperation xmi:id="_7icNsK0XEei1X-X6NYhHvA" name="EventStore" visibility="public">
+              <eAnnotations xmi:id="_7icNsa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7icNsq0XEei1X-X6NYhHvA" key="documentation" value=" @param clientConfiguration&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if {@link Store#Store(Query)} does&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7icNs60XEei1X-X6NYhHvA" name="clientConfiguration" type="_7GTEQK0XEei1X-X6NYhHvA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7iyL8K0XEei1X-X6NYhHvA" name="setUserLocation" visibility="public">
+              <eAnnotations xmi:id="_7iyL8a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7iyL8q0XEei1X-X6NYhHvA" key="documentation" value=" sets the new user location&#xD;&#xA; &#xD;&#xA; @param latitude&#xD;&#xA; @param longitude&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7iyL860XEei1X-X6NYhHvA" name="latitude">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_7iyL9K0XEei1X-X6NYhHvA" name="longitude">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_7GkKAK0XEei1X-X6NYhHvA" name="TagPreferenceConfiguration" visibility="public">
+            <eAnnotations xmi:id="_7GkKAa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_7GkKAq0XEei1X-X6NYhHvA" key="documentation" value=" saves all event-genres the user wants to see&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="_7lL_sK0XEei1X-X6NYhHvA" importedElement="_7HU_Aq0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7lOb8K0XEei1X-X6NYhHvA" importedElement="_7HZ3gK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7lOb8a0XEei1X-X6NYhHvA" importedElement="_7HZ3gq0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7lOb8q0XEei1X-X6NYhHvA" importedElement="_7HcTwK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7lh98a0XEei1X-X6NYhHvA" importedElement="_7lh98K0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7lkaMK0XEei1X-X6NYhHvA" importedElement="_7HewAK0XEei1X-X6NYhHvA" visibility="private"/>
+            <ownedAttribute xmi:id="_7lkaMa0XEei1X-X6NYhHvA" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_7lm2cK0XEei1X-X6NYhHvA" name="" value="4061390806054215254L">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              </defaultValue>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7lzDsK0XEei1X-X6NYhHvA" name="userChoiceTagSet" visibility="private" isLeaf="true" type="_7GpCg60XEei1X-X6NYhHvA" isOrdered="true" association="_8LqJ0q0XEei1X-X6NYhHvA">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_7lzDsa0XEei1X-X6NYhHvA" value="*"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="_7m-vcK0XEei1X-X6NYhHvA" name="TagPreferenceConfiguration" visibility="public"/>
+            <ownedOperation xmi:id="_7oKbMK0XEei1X-X6NYhHvA" name="TagPreferenceConfiguration" visibility="public">
+              <ownedParameter xmi:id="_7oKbMa0XEei1X-X6NYhHvA" name="tagPreferenceConfiguration" type="_7GkKAK0XEei1X-X6NYhHvA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7qevYK0XEei1X-X6NYhHvA" name="addTag" visibility="public">
+              <ownedParameter xmi:id="_7qevYa0XEei1X-X6NYhHvA" name="tag" type="_7GpCg60XEei1X-X6NYhHvA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7rlioK0XEei1X-X6NYhHvA" name="containsAny" visibility="public">
+              <eAnnotations xmi:id="_7rlioa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7rlioq0XEei1X-X6NYhHvA" key="documentation" value=" @param tags&#xD;&#xA; @return true if any configured genre is contained in the given Collection&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7rlio60XEei1X-X6NYhHvA" name="tags" type="_7HZ3gq0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="_7rlipK0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7sWXoK0XEei1X-X6NYhHvA" name="toString" visibility="public">
+              <eAnnotations xmi:id="_7sWXoa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7sWXoq0XEei1X-X6NYhHvA" key="documentation" value=" Returns a string representation of the object. In general, the&#xD;&#xA; {@code toString} method returns a string that&#xD;&#xA; &quot;textually represents&quot; this object. The result should&#xD;&#xA; be a concise but informative representation that is easy for a&#xD;&#xA; person to read.&#xD;&#xA; It is recommended that all subclasses override this method.&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code toString} method for class {@code Object}&#xD;&#xA; returns a string consisting of the name of the class of which the&#xD;&#xA; object is an instance, the at-sign character `{@code @}', and&#xD;&#xA; the unsigned hexadecimal representation of the hash code of the&#xD;&#xA; object. In other words, this method returns a string equal to the&#xD;&#xA; value of:&#xD;&#xA; &lt;blockquote>&#xD;&#xA; &lt;pre>&#xD;&#xA; getClass().getName() + '@' + Integer.toHexString(hashCode())&#xD;&#xA; &lt;/pre>&lt;/blockquote>&#xD;&#xA; @return  a string representation of the object.&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7sWXo60XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7xum4K0XEei1X-X6NYhHvA" name="iterator" visibility="public">
+              <eAnnotations xmi:id="_7xum4a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7xum4q0XEei1X-X6NYhHvA" key="documentation" value=" Returns an iterator over elements of type {@code T}.&#xD;&#xA; @return an Iterator.&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7xum460XEei1X-X6NYhHvA" type="_7lh98K0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_7GpCgK0XEei1X-X6NYhHvA" name="Venue" visibility="public">
+            <eAnnotations xmi:id="_7GpCga0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_7GpCgq0XEei1X-X6NYhHvA" key="documentation" value=" POJO for a Venue entry in the database&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="_7yJdoK0XEei1X-X6NYhHvA" importedElement="_7HU_Aq0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_7yJdoa0XEei1X-X6NYhHvA" importedElement="_7hhnsK0XEei1X-X6NYhHvA" visibility="private"/>
+            <ownedAttribute xmi:id="_7yL54K0XEei1X-X6NYhHvA" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_7yL54a0XEei1X-X6NYhHvA" name="" value="-2902776286525562764L">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              </defaultValue>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7yQyYK0XEei1X-X6NYhHvA" name="description" visibility="private" isLeaf="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7yTOoK0XEei1X-X6NYhHvA" name="id" visibility="private" isLeaf="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7yTOoa0XEei1X-X6NYhHvA" name="name" visibility="private" isLeaf="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7yVq4K0XEei1X-X6NYhHvA" name="longitude" visibility="private" isLeaf="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7yYHIK0XEei1X-X6NYhHvA" name="latitude" visibility="private" isLeaf="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_7yajYK0XEei1X-X6NYhHvA" name="initialDistance" visibility="private" isLeaf="true">
+              <eAnnotations xmi:id="_7yajYa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7yajYq0XEei1X-X6NYhHvA" key="documentation" value=" the distance of this venue to the user in kilometers (km) at the time when&#xD;&#xA; {@link LBRQuery#run()} was run&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="_7ymwoK0XEei1X-X6NYhHvA" name="Venue" visibility="public">
+              <eAnnotations xmi:id="_7ymwoa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_7ymwoq0XEei1X-X6NYhHvA" key="documentation" value=" &#xD;&#xA; @param description&#xD;&#xA; @param id&#xD;&#xA; @param name&#xD;&#xA; @param longitude&#xD;&#xA; @param latitude&#xD;&#xA; @param initialDistance&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if description or name is name, name is empty, or initialDistance&#xD;&#xA;             &lt; 0&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_7ymwo60XEei1X-X6NYhHvA" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_7ymwpK0XEei1X-X6NYhHvA" name="name">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_7ymwpa0XEei1X-X6NYhHvA" name="description">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_7ymwpq0XEei1X-X6NYhHvA" name="longitude">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_7ymwp60XEei1X-X6NYhHvA" name="latitude">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_7ymwqK0XEei1X-X6NYhHvA" name="initialDistance">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7yy94K0XEei1X-X6NYhHvA" name="getDescription" visibility="public">
+              <ownedParameter xmi:id="_7yy94a0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7zI8IK0XEei1X-X6NYhHvA" name="getId" visibility="public">
+              <ownedParameter xmi:id="_7zI8Ia0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_7z5xIK0XEei1X-X6NYhHvA" name="getName" visibility="public">
+              <ownedParameter xmi:id="_7z5xIa0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_70PvYK0XEei1X-X6NYhHvA" name="getLongitude" visibility="public">
+              <ownedParameter xmi:id="_70PvYa0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_70g1IK0XEei1X-X6NYhHvA" name="getLatitude" visibility="public">
+              <ownedParameter xmi:id="_70g1Ia0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_71KVYK0XEei1X-X6NYhHvA" name="getInitialDistance" visibility="public">
+              <ownedParameter xmi:id="_71KVYa0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_71qEoK0XEei1X-X6NYhHvA" name="toString" visibility="public">
+              <eAnnotations xmi:id="_71qEoa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_71qEoq0XEei1X-X6NYhHvA" key="documentation" value=" Returns a string representation of the object. In general, the&#xD;&#xA; {@code toString} method returns a string that&#xD;&#xA; &quot;textually represents&quot; this object. The result should&#xD;&#xA; be a concise but informative representation that is easy for a&#xD;&#xA; person to read.&#xD;&#xA; It is recommended that all subclasses override this method.&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code toString} method for class {@code Object}&#xD;&#xA; returns a string consisting of the name of the class of which the&#xD;&#xA; object is an instance, the at-sign character `{@code @}', and&#xD;&#xA; the unsigned hexadecimal representation of the hash code of the&#xD;&#xA; object. In other words, this method returns a string equal to the&#xD;&#xA; value of:&#xD;&#xA; &lt;blockquote>&#xD;&#xA; &lt;pre>&#xD;&#xA; getClass().getName() + '@' + Integer.toHexString(hashCode())&#xD;&#xA; &lt;/pre>&lt;/blockquote>&#xD;&#xA; @return  a string representation of the object.&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_71qEo60XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_72E7YK0XEei1X-X6NYhHvA" name="hashCode" visibility="public">
+              <eAnnotations xmi:id="_72E7Ya0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_72E7Yq0XEei1X-X6NYhHvA" key="documentation" value=" Returns a hash code value for the object. This method is&#xD;&#xA; supported for the benefit of hash tables such as those provided by&#xD;&#xA; {@link java.util.HashMap}.&#xD;&#xA; &lt;p>&#xD;&#xA; The general contract of {@code hashCode} is:&#xD;&#xA; &lt;ul>&#xD;&#xA; &lt;li>Whenever it is invoked on the same object more than once during&#xD;&#xA;     an execution of a Java application, the {@code hashCode} method&#xD;&#xA;     must consistently return the same integer, provided no information&#xD;&#xA;     used in {@code equals} comparisons on the object is modified.&#xD;&#xA;     This integer need not remain consistent from one execution of an&#xD;&#xA;     application to another execution of the same application.&#xD;&#xA; &lt;li>If two objects are equal according to the {@code equals(Object)}&#xD;&#xA;     method, then calling the {@code hashCode} method on each of&#xD;&#xA;     the two objects must produce the same integer result.&#xD;&#xA; &lt;li>It is &lt;em>not&lt;/em> required that if two objects are unequal&#xD;&#xA;     according to the {@link java.lang.Object#equals(java.lang.Object)}&#xD;&#xA;     method, then calling the {@code hashCode} method on each of the&#xD;&#xA;     two objects must produce distinct integer results.  However, the&#xD;&#xA;     programmer should be aware that producing distinct integer results&#xD;&#xA;     for unequal objects may improve the performance of hash tables.&#xD;&#xA; &lt;/ul>&#xD;&#xA; &lt;p>&#xD;&#xA; As much as is reasonably practical, the hashCode method defined&#xD;&#xA; by class {@code Object} does return distinct integers for&#xD;&#xA; distinct objects. (The hashCode may or may not be implemented&#xD;&#xA; as some function of an object's memory address at some point&#xD;&#xA; in time.)&#xD;&#xA; @return  a hash code value for this object.&#xD;&#xA; @see     java.lang.Object#equals(java.lang.Object)&#xD;&#xA; @see     java.lang.System#identityHashCode&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_72E7Y60XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_72nG4K0XEei1X-X6NYhHvA" name="equals" visibility="public">
+              <eAnnotations xmi:id="_72nG4a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_72nG4q0XEei1X-X6NYhHvA" key="documentation" value=" Indicates whether some other object is &quot;equal to&quot; this one.&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code equals} method implements an equivalence relation&#xD;&#xA; on non-null object references:&#xD;&#xA; &lt;ul>&#xD;&#xA; &lt;li>It is &lt;i>reflexive&lt;/i>: for any non-null reference value&#xD;&#xA;     {@code x}, {@code x.equals(x)} should return&#xD;&#xA;     {@code true}.&#xD;&#xA; &lt;li>It is &lt;i>symmetric&lt;/i>: for any non-null reference values&#xD;&#xA;     {@code x} and {@code y}, {@code x.equals(y)}&#xD;&#xA;     should return {@code true} if and only if&#xD;&#xA;     {@code y.equals(x)} returns {@code true}.&#xD;&#xA; &lt;li>It is &lt;i>transitive&lt;/i>: for any non-null reference values&#xD;&#xA;     {@code x}, {@code y}, and {@code z}, if&#xD;&#xA;     {@code x.equals(y)} returns {@code true} and&#xD;&#xA;     {@code y.equals(z)} returns {@code true}, then&#xD;&#xA;     {@code x.equals(z)} should return {@code true}.&#xD;&#xA; &lt;li>It is &lt;i>consistent&lt;/i>: for any non-null reference values&#xD;&#xA;     {@code x} and {@code y}, multiple invocations of&#xD;&#xA;     {@code x.equals(y)} consistently return {@code true}&#xD;&#xA;     or consistently return {@code false}, provided no&#xD;&#xA;     information used in {@code equals} comparisons on the&#xD;&#xA;     objects is modified.&#xD;&#xA; &lt;li>For any non-null reference value {@code x},&#xD;&#xA;     {@code x.equals(null)} should return {@code false}.&#xD;&#xA; &lt;/ul>&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code equals} method for class {@code Object} implements&#xD;&#xA; the most discriminating possible equivalence relation on objects;&#xD;&#xA; that is, for any non-null reference values {@code x} and&#xD;&#xA; {@code y}, this method returns {@code true} if and only&#xD;&#xA; if {@code x} and {@code y} refer to the same object&#xD;&#xA; ({@code x == y} has the value {@code true}).&#xD;&#xA; &lt;p>&#xD;&#xA; Note that it is generally necessary to override the {@code hashCode}&#xD;&#xA; method whenever this method is overridden, so as to maintain the&#xD;&#xA; general contract for the {@code hashCode} method, which states&#xD;&#xA; that equal objects must have equal hash codes.&#xD;&#xA; @param   obj   the reference object with which to compare.&#xD;&#xA; @return  {@code true} if this object is the same as the obj&#xD;&#xA;          argument; {@code false} otherwise.&#xD;&#xA; @see     #hashCode()&#xD;&#xA; @see     java.util.HashMap&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_72nG460XEei1X-X6NYhHvA" name="obj" type="_7bHdsa0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="_72nG5K0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_7GpCg60XEei1X-X6NYhHvA" name="Tag" visibility="public">
+            <eAnnotations xmi:id="_7GpChK0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_7GpCha0XEei1X-X6NYhHvA" key="documentation" value=" POJO for a Tag entry in the database&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="_73EZ4K0XEei1X-X6NYhHvA" importedElement="_7HU_Aq0XEei1X-X6NYhHvA" visibility="private"/>
+            <ownedAttribute xmi:id="_73G2IK0XEei1X-X6NYhHvA" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_73G2Ia0XEei1X-X6NYhHvA" name="" value="1193555989071795461L">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              </defaultValue>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_73JSYK0XEei1X-X6NYhHvA" name="id" visibility="private" isLeaf="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_73OK4K0XEei1X-X6NYhHvA" name="name" visibility="private" isLeaf="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_73OK4a0XEei1X-X6NYhHvA" name="description" visibility="private" isLeaf="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="_73rd4K0XEei1X-X6NYhHvA" name="Tag" visibility="public">
+              <ownedParameter xmi:id="_73rd4a0XEei1X-X6NYhHvA" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_73rd4q0XEei1X-X6NYhHvA" name="name">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_73rd460XEei1X-X6NYhHvA" name="description">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_731O4K0XEei1X-X6NYhHvA" name="getId" visibility="public">
+              <ownedParameter xmi:id="_731O4a0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_75gp4K0XEei1X-X6NYhHvA" name="getName" visibility="public">
+              <ownedParameter xmi:id="_75gp4a0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_75xvoK0XEei1X-X6NYhHvA" name="getDescription" visibility="public">
+              <ownedParameter xmi:id="_75xvoa0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_76PCoK0XEei1X-X6NYhHvA" name="hashCode" visibility="public">
+              <eAnnotations xmi:id="_76PCoa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_76PCoq0XEei1X-X6NYhHvA" key="documentation" value=" Returns a hash code value for the object. This method is&#xD;&#xA; supported for the benefit of hash tables such as those provided by&#xD;&#xA; {@link java.util.HashMap}.&#xD;&#xA; &lt;p>&#xD;&#xA; The general contract of {@code hashCode} is:&#xD;&#xA; &lt;ul>&#xD;&#xA; &lt;li>Whenever it is invoked on the same object more than once during&#xD;&#xA;     an execution of a Java application, the {@code hashCode} method&#xD;&#xA;     must consistently return the same integer, provided no information&#xD;&#xA;     used in {@code equals} comparisons on the object is modified.&#xD;&#xA;     This integer need not remain consistent from one execution of an&#xD;&#xA;     application to another execution of the same application.&#xD;&#xA; &lt;li>If two objects are equal according to the {@code equals(Object)}&#xD;&#xA;     method, then calling the {@code hashCode} method on each of&#xD;&#xA;     the two objects must produce the same integer result.&#xD;&#xA; &lt;li>It is &lt;em>not&lt;/em> required that if two objects are unequal&#xD;&#xA;     according to the {@link java.lang.Object#equals(java.lang.Object)}&#xD;&#xA;     method, then calling the {@code hashCode} method on each of the&#xD;&#xA;     two objects must produce distinct integer results.  However, the&#xD;&#xA;     programmer should be aware that producing distinct integer results&#xD;&#xA;     for unequal objects may improve the performance of hash tables.&#xD;&#xA; &lt;/ul>&#xD;&#xA; &lt;p>&#xD;&#xA; As much as is reasonably practical, the hashCode method defined&#xD;&#xA; by class {@code Object} does return distinct integers for&#xD;&#xA; distinct objects. (The hashCode may or may not be implemented&#xD;&#xA; as some function of an object's memory address at some point&#xD;&#xA; in time.)&#xD;&#xA; @return  a hash code value for this object.&#xD;&#xA; @see     java.lang.Object#equals(java.lang.Object)&#xD;&#xA; @see     java.lang.System#identityHashCode&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_76PCo60XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_77kfYK0XEei1X-X6NYhHvA" name="equals" visibility="public">
+              <eAnnotations xmi:id="_77kfYa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_77kfYq0XEei1X-X6NYhHvA" key="documentation" value=" Indicates whether some other object is &quot;equal to&quot; this one.&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code equals} method implements an equivalence relation&#xD;&#xA; on non-null object references:&#xD;&#xA; &lt;ul>&#xD;&#xA; &lt;li>It is &lt;i>reflexive&lt;/i>: for any non-null reference value&#xD;&#xA;     {@code x}, {@code x.equals(x)} should return&#xD;&#xA;     {@code true}.&#xD;&#xA; &lt;li>It is &lt;i>symmetric&lt;/i>: for any non-null reference values&#xD;&#xA;     {@code x} and {@code y}, {@code x.equals(y)}&#xD;&#xA;     should return {@code true} if and only if&#xD;&#xA;     {@code y.equals(x)} returns {@code true}.&#xD;&#xA; &lt;li>It is &lt;i>transitive&lt;/i>: for any non-null reference values&#xD;&#xA;     {@code x}, {@code y}, and {@code z}, if&#xD;&#xA;     {@code x.equals(y)} returns {@code true} and&#xD;&#xA;     {@code y.equals(z)} returns {@code true}, then&#xD;&#xA;     {@code x.equals(z)} should return {@code true}.&#xD;&#xA; &lt;li>It is &lt;i>consistent&lt;/i>: for any non-null reference values&#xD;&#xA;     {@code x} and {@code y}, multiple invocations of&#xD;&#xA;     {@code x.equals(y)} consistently return {@code true}&#xD;&#xA;     or consistently return {@code false}, provided no&#xD;&#xA;     information used in {@code equals} comparisons on the&#xD;&#xA;     objects is modified.&#xD;&#xA; &lt;li>For any non-null reference value {@code x},&#xD;&#xA;     {@code x.equals(null)} should return {@code false}.&#xD;&#xA; &lt;/ul>&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code equals} method for class {@code Object} implements&#xD;&#xA; the most discriminating possible equivalence relation on objects;&#xD;&#xA; that is, for any non-null reference values {@code x} and&#xD;&#xA; {@code y}, this method returns {@code true} if and only&#xD;&#xA; if {@code x} and {@code y} refer to the same object&#xD;&#xA; ({@code x == y} has the value {@code true}).&#xD;&#xA; &lt;p>&#xD;&#xA; Note that it is generally necessary to override the {@code hashCode}&#xD;&#xA; method whenever this method is overridden, so as to maintain the&#xD;&#xA; general contract for the {@code hashCode} method, which states&#xD;&#xA; that equal objects must have equal hash codes.&#xD;&#xA; @param   obj   the reference object with which to compare.&#xD;&#xA; @return  {@code true} if this object is the same as the obj&#xD;&#xA;          argument; {@code false} otherwise.&#xD;&#xA; @see     #hashCode()&#xD;&#xA; @see     java.util.HashMap&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_77kfY60XEei1X-X6NYhHvA" name="obj" type="_7bHdsa0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="_77kfZK0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_78S4IK0XEei1X-X6NYhHvA" name="toString" visibility="public">
+              <eAnnotations xmi:id="_78S4Ia0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_78S4Iq0XEei1X-X6NYhHvA" key="documentation" value=" Returns a string representation of the object. In general, the&#xD;&#xA; {@code toString} method returns a string that&#xD;&#xA; &quot;textually represents&quot; this object. The result should&#xD;&#xA; be a concise but informative representation that is easy for a&#xD;&#xA; person to read.&#xD;&#xA; It is recommended that all subclasses override this method.&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code toString} method for class {@code Object}&#xD;&#xA; returns a string consisting of the name of the class of which the&#xD;&#xA; object is an instance, the at-sign character `{@code @}', and&#xD;&#xA; the unsigned hexadecimal representation of the hash code of the&#xD;&#xA; object. In other words, this method returns a string equal to the&#xD;&#xA; value of:&#xD;&#xA; &lt;blockquote>&#xD;&#xA; &lt;pre>&#xD;&#xA; getClass().getName() + '@' + Integer.toHexString(hashCode())&#xD;&#xA; &lt;/pre>&lt;/blockquote>&#xD;&#xA; @return  a string representation of the object.&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_78S4I60XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_7GwXQK0XEei1X-X6NYhHvA" name="ScoredEvent" visibility="public">
+            <eAnnotations xmi:id="_7GwXQa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_7GwXQq0XEei1X-X6NYhHvA" key="documentation" value=" an {@link Event} and its score. the score must be an element of [0, 1].&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="_79yF4K0XEei1X-X6NYhHvA" importedElement="_7HU_Aq0XEei1X-X6NYhHvA" visibility="private"/>
+            <ownedAttribute xmi:id="_790iIK0XEei1X-X6NYhHvA" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_790iIa0XEei1X-X6NYhHvA" name="" value="-1442060615555625349L">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              </defaultValue>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_79-TIK0XEei1X-X6NYhHvA" name="event" visibility="private" isLeaf="true" type="_7GyzgK0XEei1X-X6NYhHvA" association="_8LqJ1K0XEei1X-X6NYhHvA"/>
+            <ownedAttribute xmi:id="_7_9QIK0XEei1X-X6NYhHvA" name="score" visibility="private" isLeaf="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="_8AOV4K0XEei1X-X6NYhHvA" name="ScoredEvent" visibility="public">
+              <eAnnotations xmi:id="_8AOV4a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_8AOV4q0XEei1X-X6NYhHvA" key="documentation" value=" @param event&#xD;&#xA; @param score&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if event == null or score not an element of [0, 1]&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_8AOV460XEei1X-X6NYhHvA" name="event" type="_7GyzgK0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="_8AOV5K0XEei1X-X6NYhHvA" name="score">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8AajIK0XEei1X-X6NYhHvA" name="getEvent" visibility="public">
+              <ownedParameter xmi:id="_8AajIa0XEei1X-X6NYhHvA" type="_7GyzgK0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8BtjoK0XEei1X-X6NYhHvA" name="getScore" visibility="public">
+              <ownedParameter xmi:id="_8Btjoa0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8CxTkK0XEei1X-X6NYhHvA" name="hashCode" visibility="public">
+              <eAnnotations xmi:id="_8Czv0K0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_8Czv0a0XEei1X-X6NYhHvA" key="documentation" value=" Returns a hash code value for the object. This method is&#xD;&#xA; supported for the benefit of hash tables such as those provided by&#xD;&#xA; {@link java.util.HashMap}.&#xD;&#xA; &lt;p>&#xD;&#xA; The general contract of {@code hashCode} is:&#xD;&#xA; &lt;ul>&#xD;&#xA; &lt;li>Whenever it is invoked on the same object more than once during&#xD;&#xA;     an execution of a Java application, the {@code hashCode} method&#xD;&#xA;     must consistently return the same integer, provided no information&#xD;&#xA;     used in {@code equals} comparisons on the object is modified.&#xD;&#xA;     This integer need not remain consistent from one execution of an&#xD;&#xA;     application to another execution of the same application.&#xD;&#xA; &lt;li>If two objects are equal according to the {@code equals(Object)}&#xD;&#xA;     method, then calling the {@code hashCode} method on each of&#xD;&#xA;     the two objects must produce the same integer result.&#xD;&#xA; &lt;li>It is &lt;em>not&lt;/em> required that if two objects are unequal&#xD;&#xA;     according to the {@link java.lang.Object#equals(java.lang.Object)}&#xD;&#xA;     method, then calling the {@code hashCode} method on each of the&#xD;&#xA;     two objects must produce distinct integer results.  However, the&#xD;&#xA;     programmer should be aware that producing distinct integer results&#xD;&#xA;     for unequal objects may improve the performance of hash tables.&#xD;&#xA; &lt;/ul>&#xD;&#xA; &lt;p>&#xD;&#xA; As much as is reasonably practical, the hashCode method defined&#xD;&#xA; by class {@code Object} does return distinct integers for&#xD;&#xA; distinct objects. (The hashCode may or may not be implemented&#xD;&#xA; as some function of an object's memory address at some point&#xD;&#xA; in time.)&#xD;&#xA; @return  a hash code value for this object.&#xD;&#xA; @see     java.lang.Object#equals(java.lang.Object)&#xD;&#xA; @see     java.lang.System#identityHashCode&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_8C4oUK0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8DV7UK0XEei1X-X6NYhHvA" name="equals" visibility="public">
+              <eAnnotations xmi:id="_8DV7Ua0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_8DYXkK0XEei1X-X6NYhHvA" key="documentation" value=" Indicates whether some other object is &quot;equal to&quot; this one.&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code equals} method implements an equivalence relation&#xD;&#xA; on non-null object references:&#xD;&#xA; &lt;ul>&#xD;&#xA; &lt;li>It is &lt;i>reflexive&lt;/i>: for any non-null reference value&#xD;&#xA;     {@code x}, {@code x.equals(x)} should return&#xD;&#xA;     {@code true}.&#xD;&#xA; &lt;li>It is &lt;i>symmetric&lt;/i>: for any non-null reference values&#xD;&#xA;     {@code x} and {@code y}, {@code x.equals(y)}&#xD;&#xA;     should return {@code true} if and only if&#xD;&#xA;     {@code y.equals(x)} returns {@code true}.&#xD;&#xA; &lt;li>It is &lt;i>transitive&lt;/i>: for any non-null reference values&#xD;&#xA;     {@code x}, {@code y}, and {@code z}, if&#xD;&#xA;     {@code x.equals(y)} returns {@code true} and&#xD;&#xA;     {@code y.equals(z)} returns {@code true}, then&#xD;&#xA;     {@code x.equals(z)} should return {@code true}.&#xD;&#xA; &lt;li>It is &lt;i>consistent&lt;/i>: for any non-null reference values&#xD;&#xA;     {@code x} and {@code y}, multiple invocations of&#xD;&#xA;     {@code x.equals(y)} consistently return {@code true}&#xD;&#xA;     or consistently return {@code false}, provided no&#xD;&#xA;     information used in {@code equals} comparisons on the&#xD;&#xA;     objects is modified.&#xD;&#xA; &lt;li>For any non-null reference value {@code x},&#xD;&#xA;     {@code x.equals(null)} should return {@code false}.&#xD;&#xA; &lt;/ul>&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code equals} method for class {@code Object} implements&#xD;&#xA; the most discriminating possible equivalence relation on objects;&#xD;&#xA; that is, for any non-null reference values {@code x} and&#xD;&#xA; {@code y}, this method returns {@code true} if and only&#xD;&#xA; if {@code x} and {@code y} refer to the same object&#xD;&#xA; ({@code x == y} has the value {@code true}).&#xD;&#xA; &lt;p>&#xD;&#xA; Note that it is generally necessary to override the {@code hashCode}&#xD;&#xA; method whenever this method is overridden, so as to maintain the&#xD;&#xA; general contract for the {@code hashCode} method, which states&#xD;&#xA; that equal objects must have equal hash codes.&#xD;&#xA; @param   obj   the reference object with which to compare.&#xD;&#xA; @return  {@code true} if this object is the same as the obj&#xD;&#xA;          argument; {@code false} otherwise.&#xD;&#xA; @see     #hashCode()&#xD;&#xA; @see     java.util.HashMap&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_8DYXka0XEei1X-X6NYhHvA" name="obj" type="_7bHdsa0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="_8DYXkq0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8DpdUK0XEei1X-X6NYhHvA" name="toString" visibility="public">
+              <eAnnotations xmi:id="_8DpdUa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_8DpdUq0XEei1X-X6NYhHvA" key="documentation" value=" Returns a string representation of the object. In general, the&#xD;&#xA; {@code toString} method returns a string that&#xD;&#xA; &quot;textually represents&quot; this object. The result should&#xD;&#xA; be a concise but informative representation that is easy for a&#xD;&#xA; person to read.&#xD;&#xA; It is recommended that all subclasses override this method.&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code toString} method for class {@code Object}&#xD;&#xA; returns a string consisting of the name of the class of which the&#xD;&#xA; object is an instance, the at-sign character `{@code @}', and&#xD;&#xA; the unsigned hexadecimal representation of the hash code of the&#xD;&#xA; object. In other words, this method returns a string equal to the&#xD;&#xA; value of:&#xD;&#xA; &lt;blockquote>&#xD;&#xA; &lt;pre>&#xD;&#xA; getClass().getName() + '@' + Integer.toHexString(hashCode())&#xD;&#xA; &lt;/pre>&lt;/blockquote>&#xD;&#xA; @return  a string representation of the object.&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_8DpdU60XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_7GyzgK0XEei1X-X6NYhHvA" name="Event" visibility="public">
+            <eAnnotations xmi:id="_7Gyzga0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_7Gyzgq0XEei1X-X6NYhHvA" key="documentation" value=" POJO for an Event entry in the database&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="_8D8_UK0XEei1X-X6NYhHvA" importedElement="_7HU_Aq0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_8D8_U60XEei1X-X6NYhHvA" importedElement="_8D8_Uq0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_8D8_VK0XEei1X-X6NYhHvA" importedElement="_7HXbQa0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_8D_bkK0XEei1X-X6NYhHvA" importedElement="_7HZ3gK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_8D_bka0XEei1X-X6NYhHvA" importedElement="_7HcTwq0XEei1X-X6NYhHvA" visibility="private"/>
+            <ownedAttribute xmi:id="_8D_bkq0XEei1X-X6NYhHvA" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_8EEUEK0XEei1X-X6NYhHvA" name="" value="-6794608442641090075L">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              </defaultValue>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_8EOFEK0XEei1X-X6NYhHvA" name="tagList" visibility="private" isLeaf="true" type="_7GpCg60XEei1X-X6NYhHvA" isOrdered="true" isUnique="false" association="_8LsmEK0XEei1X-X6NYhHvA">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8EOFEa0XEei1X-X6NYhHvA" value="*"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_8EQhUK0XEei1X-X6NYhHvA" name="description" visibility="private">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_8ES9kK0XEei1X-X6NYhHvA" name="name" visibility="private">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_8EX2EK0XEei1X-X6NYhHvA" name="localDateTime" visibility="private" type="_8D8_Uq0XEei1X-X6NYhHvA"/>
+            <ownedAttribute xmi:id="_8EaSUK0XEei1X-X6NYhHvA" name="id" visibility="private" isLeaf="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_8EmfkK0XEei1X-X6NYhHvA" name="venue" visibility="private" isLeaf="true" type="_7GpCgK0XEei1X-X6NYhHvA" association="_8LsmEq0XEei1X-X6NYhHvA"/>
+            <ownedOperation xmi:id="_8FBWUK0XEei1X-X6NYhHvA" name="Event" visibility="public">
+              <eAnnotations xmi:id="_8FBWUa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_8FBWUq0XEei1X-X6NYhHvA" key="documentation" value=" &#xD;&#xA; @param venue&#xD;&#xA; @param name&#xD;&#xA; @param description&#xD;&#xA; @param id&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if name is null or empty, if description is null, if or if venue&#xD;&#xA;             is null&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_8FBWU60XEei1X-X6NYhHvA" name="venue" type="_7GpCgK0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="_8FBWVK0XEei1X-X6NYhHvA" name="name">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_8FBWVa0XEei1X-X6NYhHvA" name="description">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_8FBWVq0XEei1X-X6NYhHvA" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_8FBWV60XEei1X-X6NYhHvA" name="localDateTime" type="_8D8_Uq0XEei1X-X6NYhHvA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8FXUkK0XEei1X-X6NYhHvA" name="getTags" visibility="public">
+              <ownedParameter xmi:id="_8FXUka0XEei1X-X6NYhHvA" type="_7HcTwq0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8GDREK0XEei1X-X6NYhHvA" name="addTag" visibility="public">
+              <eAnnotations xmi:id="_8GDREa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_8GDREq0XEei1X-X6NYhHvA" key="documentation" value=" @param tag&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if tag is null&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_8GDRE60XEei1X-X6NYhHvA" name="tag" type="_7GpCg60XEei1X-X6NYhHvA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8GUW0K0XEei1X-X6NYhHvA" name="getDescription" visibility="public">
+              <ownedParameter xmi:id="_8GUW0a0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8Gxp0K0XEei1X-X6NYhHvA" name="getName" visibility="public">
+              <ownedParameter xmi:id="_8Gxp0a0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8HHoEK0XEei1X-X6NYhHvA" name="getId" visibility="public">
+              <ownedParameter xmi:id="_8HHoEa0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8HsP0K0XEei1X-X6NYhHvA" name="getVenue" visibility="public">
+              <ownedParameter xmi:id="_8HsP0a0XEei1X-X6NYhHvA" type="_7GpCgK0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8ITT0K0XEei1X-X6NYhHvA" name="getLocalDateTime" visibility="public">
+              <ownedParameter xmi:id="_8ITT0a0XEei1X-X6NYhHvA" type="_8D8_Uq0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8JN50K0XEei1X-X6NYhHvA" name="setLocalDateTime" visibility="public">
+              <ownedParameter xmi:id="_8JN50a0XEei1X-X6NYhHvA" name="localDateTime" type="_8D8_Uq0XEei1X-X6NYhHvA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8J3aEK0XEei1X-X6NYhHvA" name="setName" visibility="public">
+              <eAnnotations xmi:id="_8J3aEa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_8J3aEq0XEei1X-X6NYhHvA" key="documentation" value=" @param name&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if name is null or empty&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_8J3aE60XEei1X-X6NYhHvA" name="name">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8KBLEK0XEei1X-X6NYhHvA" name="setDescription" visibility="public">
+              <eAnnotations xmi:id="_8KBLEa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_8KBLEq0XEei1X-X6NYhHvA" key="documentation" value=" @param description&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if description is null&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_8KBLE60XEei1X-X6NYhHvA" name="description">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8KP0kK0XEei1X-X6NYhHvA" name="hashCode" visibility="public">
+              <eAnnotations xmi:id="_8KP0ka0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_8KP0kq0XEei1X-X6NYhHvA" key="documentation" value=" Returns a hash code value for the object. This method is&#xD;&#xA; supported for the benefit of hash tables such as those provided by&#xD;&#xA; {@link java.util.HashMap}.&#xD;&#xA; &lt;p>&#xD;&#xA; The general contract of {@code hashCode} is:&#xD;&#xA; &lt;ul>&#xD;&#xA; &lt;li>Whenever it is invoked on the same object more than once during&#xD;&#xA;     an execution of a Java application, the {@code hashCode} method&#xD;&#xA;     must consistently return the same integer, provided no information&#xD;&#xA;     used in {@code equals} comparisons on the object is modified.&#xD;&#xA;     This integer need not remain consistent from one execution of an&#xD;&#xA;     application to another execution of the same application.&#xD;&#xA; &lt;li>If two objects are equal according to the {@code equals(Object)}&#xD;&#xA;     method, then calling the {@code hashCode} method on each of&#xD;&#xA;     the two objects must produce the same integer result.&#xD;&#xA; &lt;li>It is &lt;em>not&lt;/em> required that if two objects are unequal&#xD;&#xA;     according to the {@link java.lang.Object#equals(java.lang.Object)}&#xD;&#xA;     method, then calling the {@code hashCode} method on each of the&#xD;&#xA;     two objects must produce distinct integer results.  However, the&#xD;&#xA;     programmer should be aware that producing distinct integer results&#xD;&#xA;     for unequal objects may improve the performance of hash tables.&#xD;&#xA; &lt;/ul>&#xD;&#xA; &lt;p>&#xD;&#xA; As much as is reasonably practical, the hashCode method defined&#xD;&#xA; by class {@code Object} does return distinct integers for&#xD;&#xA; distinct objects. (The hashCode may or may not be implemented&#xD;&#xA; as some function of an object's memory address at some point&#xD;&#xA; in time.)&#xD;&#xA; @return  a hash code value for this object.&#xD;&#xA; @see     java.lang.Object#equals(java.lang.Object)&#xD;&#xA; @see     java.lang.System#identityHashCode&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_8KP0k60XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8K5U0K0XEei1X-X6NYhHvA" name="equals" visibility="public">
+              <eAnnotations xmi:id="_8K5U0a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_8K5U0q0XEei1X-X6NYhHvA" key="documentation" value=" Indicates whether some other object is &quot;equal to&quot; this one.&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code equals} method implements an equivalence relation&#xD;&#xA; on non-null object references:&#xD;&#xA; &lt;ul>&#xD;&#xA; &lt;li>It is &lt;i>reflexive&lt;/i>: for any non-null reference value&#xD;&#xA;     {@code x}, {@code x.equals(x)} should return&#xD;&#xA;     {@code true}.&#xD;&#xA; &lt;li>It is &lt;i>symmetric&lt;/i>: for any non-null reference values&#xD;&#xA;     {@code x} and {@code y}, {@code x.equals(y)}&#xD;&#xA;     should return {@code true} if and only if&#xD;&#xA;     {@code y.equals(x)} returns {@code true}.&#xD;&#xA; &lt;li>It is &lt;i>transitive&lt;/i>: for any non-null reference values&#xD;&#xA;     {@code x}, {@code y}, and {@code z}, if&#xD;&#xA;     {@code x.equals(y)} returns {@code true} and&#xD;&#xA;     {@code y.equals(z)} returns {@code true}, then&#xD;&#xA;     {@code x.equals(z)} should return {@code true}.&#xD;&#xA; &lt;li>It is &lt;i>consistent&lt;/i>: for any non-null reference values&#xD;&#xA;     {@code x} and {@code y}, multiple invocations of&#xD;&#xA;     {@code x.equals(y)} consistently return {@code true}&#xD;&#xA;     or consistently return {@code false}, provided no&#xD;&#xA;     information used in {@code equals} comparisons on the&#xD;&#xA;     objects is modified.&#xD;&#xA; &lt;li>For any non-null reference value {@code x},&#xD;&#xA;     {@code x.equals(null)} should return {@code false}.&#xD;&#xA; &lt;/ul>&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code equals} method for class {@code Object} implements&#xD;&#xA; the most discriminating possible equivalence relation on objects;&#xD;&#xA; that is, for any non-null reference values {@code x} and&#xD;&#xA; {@code y}, this method returns {@code true} if and only&#xD;&#xA; if {@code x} and {@code y} refer to the same object&#xD;&#xA; ({@code x == y} has the value {@code true}).&#xD;&#xA; &lt;p>&#xD;&#xA; Note that it is generally necessary to override the {@code hashCode}&#xD;&#xA; method whenever this method is overridden, so as to maintain the&#xD;&#xA; general contract for the {@code hashCode} method, which states&#xD;&#xA; that equal objects must have equal hash codes.&#xD;&#xA; @param   obj   the reference object with which to compare.&#xD;&#xA; @return  {@code true} if this object is the same as the obj&#xD;&#xA;          argument; {@code false} otherwise.&#xD;&#xA; @see     #hashCode()&#xD;&#xA; @see     java.util.HashMap&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_8K5U060XEei1X-X6NYhHvA" name="obj" type="_7bHdsa0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="_8K5U1K0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_8LbgUK0XEei1X-X6NYhHvA" name="toString" visibility="public">
+              <eAnnotations xmi:id="_8LbgUa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_8LbgUq0XEei1X-X6NYhHvA" key="documentation" value=" Returns a string representation of the object. In general, the&#xD;&#xA; {@code toString} method returns a string that&#xD;&#xA; &quot;textually represents&quot; this object. The result should&#xD;&#xA; be a concise but informative representation that is easy for a&#xD;&#xA; person to read.&#xD;&#xA; It is recommended that all subclasses override this method.&#xD;&#xA; &lt;p>&#xD;&#xA; The {@code toString} method for class {@code Object}&#xD;&#xA; returns a string consisting of the name of the class of which the&#xD;&#xA; object is an instance, the at-sign character `{@code @}', and&#xD;&#xA; the unsigned hexadecimal representation of the hash code of the&#xD;&#xA; object. In other words, this method returns a string equal to the&#xD;&#xA; value of:&#xD;&#xA; &lt;blockquote>&#xD;&#xA; &lt;pre>&#xD;&#xA; getClass().getName() + '@' + Integer.toHexString(hashCode())&#xD;&#xA; &lt;/pre>&lt;/blockquote>&#xD;&#xA; @return  a string representation of the object.&#xD;&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_8LbgU60XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="_8LntkK0XEei1X-X6NYhHvA" name="storeListenerList_target" memberEnd="_7JWYQK0XEei1X-X6NYhHvA _8Lntka0XEei1X-X6NYhHvA">
+            <ownedEnd xmi:id="_8Lntka0XEei1X-X6NYhHvA" name="target" type="_7F9GAK0XEei1X-X6NYhHvA" association="_8LntkK0XEei1X-X6NYhHvA"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="_8LqJ0K0XEei1X-X6NYhHvA" name="tagPreferenceConfiguration_target" memberEnd="_7Xfh8K0XEei1X-X6NYhHvA _8LqJ0a0XEei1X-X6NYhHvA">
+            <ownedEnd xmi:id="_8LqJ0a0XEei1X-X6NYhHvA" name="target" type="_7GTEQK0XEei1X-X6NYhHvA" association="_8LqJ0K0XEei1X-X6NYhHvA"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="_8LqJ0q0XEei1X-X6NYhHvA" name="userChoiceTagSet_target" memberEnd="_7lzDsK0XEei1X-X6NYhHvA _8LqJ060XEei1X-X6NYhHvA">
+            <ownedEnd xmi:id="_8LqJ060XEei1X-X6NYhHvA" name="target" type="_7GkKAK0XEei1X-X6NYhHvA" association="_8LqJ0q0XEei1X-X6NYhHvA"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="_8LqJ1K0XEei1X-X6NYhHvA" name="event_target" memberEnd="_79-TIK0XEei1X-X6NYhHvA _8LqJ1a0XEei1X-X6NYhHvA">
+            <ownedEnd xmi:id="_8LqJ1a0XEei1X-X6NYhHvA" name="target" type="_7GwXQK0XEei1X-X6NYhHvA" association="_8LqJ1K0XEei1X-X6NYhHvA"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="_8LsmEK0XEei1X-X6NYhHvA" name="tagList_target" memberEnd="_8EOFEK0XEei1X-X6NYhHvA _8LsmEa0XEei1X-X6NYhHvA">
+            <ownedEnd xmi:id="_8LsmEa0XEei1X-X6NYhHvA" name="target" type="_7GyzgK0XEei1X-X6NYhHvA" association="_8LsmEK0XEei1X-X6NYhHvA"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="_8LsmEq0XEei1X-X6NYhHvA" name="venue_target" memberEnd="_8EmfkK0XEei1X-X6NYhHvA _8LsmE60XEei1X-X6NYhHvA">
+            <ownedEnd xmi:id="_8LsmE60XEei1X-X6NYhHvA" name="target" type="_7GyzgK0XEei1X-X6NYhHvA" association="_8LsmEq0XEei1X-X6NYhHvA"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Usage" xmi:id="_8Lz60K0XEei1X-X6NYhHvA" name="csi_io" client="_7FnHwa0XEei1X-X6NYhHvA" supplier="_7HU_Aa0XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="_8L4zUK0XEei1X-X6NYhHvA" name="csi_util" client="_7FnHwa0XEei1X-X6NYhHvA" supplier="_7HXbQK0XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="_8L4zUa0XEei1X-X6NYhHvA" name="csi_query" client="_7FnHwa0XEei1X-X6NYhHvA" supplier="_7HhMQK0XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="_8L4zUq0XEei1X-X6NYhHvA" name="csi_time" client="_7FnHwa0XEei1X-X6NYhHvA" supplier="_8D8_Ua0XEei1X-X6NYhHvA"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_7HU_AK0XEei1X-X6NYhHvA" name="java">
+    <packagedElement xmi:type="uml:Package" xmi:id="_7HU_Aa0XEei1X-X6NYhHvA" name="io">
+      <packagedElement xmi:type="uml:DataType" xmi:id="_7HU_Aq0XEei1X-X6NYhHvA" name="Serializable"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_7HXbQK0XEei1X-X6NYhHvA" name="util">
+      <packagedElement xmi:type="uml:DataType" xmi:id="_7HXbQa0XEei1X-X6NYhHvA" name="ArrayList"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_7HZ3gK0XEei1X-X6NYhHvA" name="Arrays"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_7HZ3gq0XEei1X-X6NYhHvA" name="Collection"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_7HcTwK0XEei1X-X6NYhHvA" name="HashSet"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_7HcTwq0XEei1X-X6NYhHvA" name="List"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_7HewAK0XEei1X-X6NYhHvA" name="Set"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_7lh98K0XEei1X-X6NYhHvA" name="Iterator"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_7bHdsK0XEei1X-X6NYhHvA" name="lang">
+      <packagedElement xmi:type="uml:DataType" xmi:id="_7bHdsa0XEei1X-X6NYhHvA" name="Object"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_7lEq8K0XEei1X-X6NYhHvA" name="Iterable"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_8D8_Ua0XEei1X-X6NYhHvA" name="time">
+      <packagedElement xmi:type="uml:DataType" xmi:id="_8D8_Uq0XEei1X-X6NYhHvA" name="LocalDateTime"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:DataType" xmi:id="_7VvOcK0XEei1X-X6NYhHvA" name="T"/>
+</uml:Model>
