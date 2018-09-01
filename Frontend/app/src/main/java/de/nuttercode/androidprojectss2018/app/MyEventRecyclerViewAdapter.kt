@@ -43,7 +43,7 @@ class MyEventRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
         holder.mIdView.text = item.event.name
-        holder.mContentView.text = item.event.description
+        holder.mContentView.text = item.event.venue.name
 
         with(holder.mView) {
             tag = item

@@ -18,6 +18,8 @@ class FetchEventsTask(private val context: WeakReference<Context>, private val c
         val clientConfig = clientConfiguration[0]
         val out = ArrayList<ScoredEvent>()
 
+        Log.i(TAG, "Radius in clientConfig: ${clientConfig.radius}")
+
         Log.i(TAG, "Now listing tags in tagPreferenceConfiguration:")
         for (tag in clientConfig.tagPreferenceConfiguration) {
             Log.i(TAG, tag.name)
