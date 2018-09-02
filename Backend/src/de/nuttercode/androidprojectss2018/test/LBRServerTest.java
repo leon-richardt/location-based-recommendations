@@ -26,7 +26,7 @@ public class LBRServerTest {
 		Logger logger = Logger.getLogger(LBRServerTest.class.getCanonicalName() + "::Test");
 		logger.setLevel(Level.ALL);
 		try (LBRServer lbrServer = new LBRServer(ClientConfiguration.DEFAULT_LBR_PORT,
-				new RandomEventScoreCalculator(42), "lbr.nuttercode.de", 3306, "lbr", "lbr", args[0], logger)) {
+				new RandomEventScoreCalculator(42), "localhost", 3306, "lbr", "lbr", args[0], logger)) {
 			fileHandler = new FileHandler(
 					Paths.get(System.getProperty("user.dir"), "LBRServer.xml").toFile().getAbsolutePath(), false);
 			logger.addHandler(fileHandler);
