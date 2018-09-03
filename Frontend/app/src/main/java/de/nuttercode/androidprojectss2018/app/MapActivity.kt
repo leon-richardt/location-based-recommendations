@@ -1,5 +1,6 @@
 package de.nuttercode.androidprojectss2018.app
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -64,6 +65,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         // TODO: Make this method open an overview activity for the selected item
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
         Log.i("MapActivity", msg)
+        val intent = Intent(this, EventOverviewActivity::class.java)
+        intent.putExtra("EXTRA_EVENT", item)
+        startActivity(intent)
     }
 
     /**

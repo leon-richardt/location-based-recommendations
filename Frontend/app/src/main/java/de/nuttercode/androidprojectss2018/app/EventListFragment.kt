@@ -98,7 +98,7 @@ class EventListFragment : Fragment(), FetchEventsTaskCallback {
         listener = null
     }
 
-    fun networkAvailable(): Boolean {
+    fun networkAvailable(): Boolean {       // TODO: Remove?
         val cm = context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return cm.activeNetworkInfo?.isConnected == true
     }
