@@ -62,9 +62,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
 
     override fun onListFragmentInteraction(item: ScoredEvent?) {
         val msg = "List interaction registered on Event ${item?.event?.id}: Name = ${item?.event?.name}, Description = ${item?.event?.description}"
-        // TODO: Make this method open an overview activity for the selected item
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
         Log.i("MapActivity", msg)
+
+        // Create an Intent for that specific event and start the overview activity
         val intent = Intent(this, EventOverviewActivity::class.java)
         intent.putExtra("EXTRA_EVENT", item)
         startActivity(intent)
