@@ -8,7 +8,6 @@ import android.widget.TextView
 
 
 import de.nuttercode.androidprojectss2018.app.EventListFragment.OnListFragmentInteractionListener
-import de.nuttercode.androidprojectss2018.csi.Event
 import de.nuttercode.androidprojectss2018.csi.ScoredEvent
 
 import kotlinx.android.synthetic.main.fragment_event.view.*
@@ -54,8 +53,8 @@ class MyEventRecyclerViewAdapter(
     override fun getItemCount(): Int = mValues.size
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mIdView: TextView = mView.item_number
-        val mContentView: TextView = mView.content
+        val mIdView: TextView = mView.event_name
+        val mContentView: TextView = mView.event_venue_name
 
         override fun toString(): String {
             return super.toString() + " '" + mContentView.text + "'"
