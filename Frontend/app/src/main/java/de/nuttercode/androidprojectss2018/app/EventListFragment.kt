@@ -7,11 +7,9 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.gson.Gson
 
 import de.nuttercode.androidprojectss2018.csi.*
 import java.lang.ref.WeakReference
@@ -56,22 +54,6 @@ class EventListFragment : Fragment(), FetchEventsTaskCallback {
                         adapter = MyEventRecyclerViewAdapter(result, listener)
                     }
                 })
-
-                // TODO: Decide whether to use clientConfig from JSON or from Getter
-                val clientConfigJson = (activity as MapActivity).getSharedPrefs().getString("ClientConfiguration", null)
-                        ?: throw IllegalStateException("Could not find ClientConfiguration in SharedPreferences")
-
-                Log.i(TAG, "Listing Tags from Getter:")
-                (activity as MapActivity).getClientConfig().tagPreferenceConfiguration.forEach {
-                    Log.i(TAG, it.name)
-                }
-
-                val configFromJson = Gson().fromJson(clientConfigJson, ClientConfiguration::class.java)
-                Log.i(TAG, "Listing Tags from JSON:")
-                configFromJson.tagPreferenceConfiguration.forEach {
-                    Log.i(TAG, it.name)
-                }
-
 
                 fetchEventsTask.execute((activity as MapActivity).getClientConfig())
             }

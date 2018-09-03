@@ -42,7 +42,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         clientConfig = Gson().fromJson(sharedPrefs.getString("ClientConfiguration", null), ClientConfiguration::class.java)
 
 
-        // Currently, we run this on every startup
+        // Add all available tags to the passed clientConfig. Currently, we run this on every startup.
         // TODO: Implement settings menu and check whether new tags should automatically be added to ClientConfiguration
         AddAllTagsTask(WeakReference(this), this).execute(clientConfig)
         sharedPrefs.edit().putBoolean("FirstStart", false).apply()
