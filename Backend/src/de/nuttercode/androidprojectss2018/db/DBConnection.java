@@ -22,8 +22,8 @@ import java.util.Collection;
 public class DBConnection implements Closeable {
 
 	private Properties info;
-	private static Connection conn;
-	private static Statement stm;
+	private Connection conn;
+	private Statement stm;
 
 
 	/**
@@ -204,7 +204,7 @@ public class DBConnection implements Closeable {
 	/**
 	 * Checks if the Connection was initialized before working on query
 	 */
-	private static void checkConnection() {
+	private void checkConnection() {
 		if (conn == null || stm == null) {
 			throw new IllegalStateException("Please initialize Connection first ");
 		}
