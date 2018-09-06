@@ -3,6 +3,7 @@ package de.nuttercode.androidprojectss2018.csi.query;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
 import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
@@ -43,32 +44,36 @@ public class Query<T extends Serializable> implements Serializable {
 	 */
 	@SuppressWarnings("unchecked")
 	public QueryResultSummary<T> run() {
-		QueryResult<T> queryResult = null;
-		QueryResultState queryResultState = QueryResultState.OK;
+		QueryResponse<T> queryResponse = null;
+		QueryResultState clientQueryResultState = QueryResultState.OK;
 		String message = "OK";
 		try (ServerConnection clientConnection = new ServerConnection(serverPort, serverDNSName)) {
 			clientConnection.writeQuery(this);
-			queryResult = (QueryResult<T>) clientConnection.readResult();
+			queryResponse = (QueryResponse<T>) clientConnection.readResponse();
+			if (queryResponse.getServerQueryResultState() != QueryResultState.OK)
+				message = "Server Problem - please try again later";
 		} catch (ClassCastException e) {
-			queryResultState = QueryResultState.ClassCastException;
+			clientQueryResultState = QueryResultState.ClassCastException;
 			message = e.getMessage();
 		} catch (UnknownHostException e) {
-			queryResultState = QueryResultState.UnknownHostException;
+			clientQueryResultState = QueryResultState.UnknownHostException;
 			message = e.getMessage();
 		} catch (IOException e) {
-			queryResultState = QueryResultState.IOException;
+			clientQueryResultState = QueryResultState.IOException;
 			message = e.getMessage();
 		} catch (ClassNotFoundException e) {
-			queryResultState = QueryResultState.ClassNotFoundException;
-			message = e.getMessage();
-		} catch (InterruptedException e) {
-			queryResultState = QueryResultState.InterruptedException;
+			clientQueryResultState = QueryResultState.ClassNotFoundException;
 			message = e.getMessage();
 		} catch (RuntimeException e) {
-			queryResultState = QueryResultState.RuntimeException;
+			clientQueryResultState = QueryResultState.RuntimeException;
 			message = e.getMessage();
 		}
-		return new QueryResultSummary<>(queryResult, new QueryResultInformation(queryResultState, message));
+		if (queryResponse != null)
+			return new QueryResultSummary<>(queryResponse.getQueryResult(), new QueryResultInformation(
+					clientQueryResultState, queryResponse.getServerQueryResultState(), message));
+		else
+			return new QueryResultSummary<>(new QueryResult<>(new ArrayList<>()),
+					new QueryResultInformation(clientQueryResultState, QueryResultState.Null, message));
 	}
 
 }
