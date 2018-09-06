@@ -3,7 +3,6 @@ package de.nuttercode.androidprojectss2018.example;
 import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
 import de.nuttercode.androidprojectss2018.csi.EventStore;
 import de.nuttercode.androidprojectss2018.csi.ScoredEvent;
-import de.nuttercode.androidprojectss2018.csi.query.QueryResultState;
 
 /**
  * example for LBRQuery connection
@@ -22,7 +21,7 @@ public class LBRQueryExample {
 		eventStore.addStoreListener(new StoreListenerExample<>());
 
 		// blocking until tags received or timeout
-		if (eventStore.refresh().getQueryResultState() == QueryResultState.OK)
+		if (eventStore.refresh().isOK())
 			for (ScoredEvent scoredEvent : eventStore.getAll())
 				System.out.println(scoredEvent);
 
