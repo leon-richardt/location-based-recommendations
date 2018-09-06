@@ -1,10 +1,11 @@
 package de.nuttercode.androidprojectss2018.test;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.Thread;
-import java.sql.SQLException;
+import java.nio.file.Paths;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
 import de.nuttercode.androidprojectss2018.lbrserver.LBRServer;
@@ -19,23 +20,30 @@ import de.nuttercode.androidprojectss2018.lbrserver.RandomEventScoreCalculator;
 public class LBRServerTest {
 
 	public static void main(String[] args) {
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-			try (LBRServer lbrServer = new LBRServer(ClientConfiguration.DEFAULT_LBR_PORT,
-					new RandomEventScoreCalculator(42), "localhost", 3306, "lbr", "lbr", args[0])) {
-				while (true) {
-					// nothing to do
-					Thread.sleep(10_000);
+		final FileHandler fileHandler;
+		final Logger logger = Logger.getLogger(LBRServerTest.class.getCanonicalName() + "::Test");
+		logger.info("starting server");
+		logger.setLevel(Level.ALL);
+		LBRServer lbrServer = new LBRServer(ClientConfiguration.DEFAULT_LBR_PORT, new RandomEventScoreCalculator(42),
+				"localhost", 3306, "lbr", "lbr", args[0], logger);
+		try {
+			fileHandler = new FileHandler(
+					Paths.get(System.getProperty("user.dir"), "LBRServer.xml").toFile().getAbsolutePath(), false);
+			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+				logger.info("shutting down");
+				try {
+					lbrServer.close();
+				} catch (IOException e) {
+					logger.log(Level.SEVERE, "LBRServer not closeable", e);
 				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
+				fileHandler.flush();
+				fileHandler.close();
+			}));
+			logger.addHandler(fileHandler);
+		} catch (IOException | IllegalArgumentException | IllegalStateException e) {
+			logger.log(Level.SEVERE, e.toString(), e);
 		}
+
 	}
 
 }

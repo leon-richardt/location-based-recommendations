@@ -8,7 +8,7 @@ import de.nuttercode.androidprojectss2018.csi.query.LBRQuery;
  * @author Johannes B. Latzel
  *
  */
-public class EventStore extends Store<ScoredEvent> {
+public class EventStore extends Store<ScoredEvent, LBRQuery> {
 
 	/**
 	 * @param clientConfiguration
@@ -26,9 +26,8 @@ public class EventStore extends Store<ScoredEvent> {
 	 * @param longitude
 	 */
 	public void setUserLocation(double latitude, double longitude) {
-		LBRQuery lbrQuery = (LBRQuery) query;
-		lbrQuery.setLatitude(latitude);
-		lbrQuery.setLongitude(longitude);
+		query.setLatitude(latitude);
+		query.setLongitude(longitude);
 	}
 
 }

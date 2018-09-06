@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="__Ldi0K0XEei1X-X6NYhHvA" name="lbrserver">
+  <elementImport xmi:id="__NmQ0a0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+  </elementImport>
+  <elementImport xmi:id="__NmQ0q0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#byte"/>
+  </elementImport>
+  <elementImport xmi:id="__NmQ060XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#char"/>
+  </elementImport>
+  <elementImport xmi:id="__NmQ1K0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+  </elementImport>
+  <elementImport xmi:id="__NmQ1a0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#float"/>
+  </elementImport>
+  <elementImport xmi:id="__NmQ1q0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+  </elementImport>
+  <elementImport xmi:id="__NmQ160XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+  </elementImport>
+  <elementImport xmi:id="__NotEK0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#short"/>
+  </elementImport>
+  <elementImport xmi:id="__NotEa0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+  </elementImport>
+  <elementImport xmi:id="__NotEq0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+  </elementImport>
+  <elementImport xmi:id="__NotE60XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+  </elementImport>
+  <elementImport xmi:id="__NotFK0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#UnlimitedNatural"/>
+  </elementImport>
+  <packageImport xmi:id="__Nj0kK0XEei1X-X6NYhHvA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packageImport xmi:id="__NmQ0K0XEei1X-X6NYhHvA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Package" xmi:id="__NotFa0XEei1X-X6NYhHvA" name="de">
+    <packagedElement xmi:type="uml:Package" xmi:id="__NotFq0XEei1X-X6NYhHvA" name="nuttercode">
+      <packagedElement xmi:type="uml:Package" xmi:id="__NotF60XEei1X-X6NYhHvA" name="androidprojectss2018">
+        <packagedElement xmi:type="uml:Package" xmi:id="__NotGK0XEei1X-X6NYhHvA" name="lbrserver">
+          <packagedElement xmi:type="uml:Class" xmi:id="__N5y0K0XEei1X-X6NYhHvA" name="ClientListener" visibility="public">
+            <eAnnotations xmi:id="__N5y0a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="__N5y0q0XEei1X-X6NYhHvA" key="documentation" value=" &#xD;&#xA; listens for incoming LBRClient requests and stores them temporary. poll&#xD;&#xA; requests by using {@link #getRequest()}&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="__OjTEK0XEei1X-X6NYhHvA" importedElement="__Og20q0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__OjTEq0XEei1X-X6NYhHvA" importedElement="__OjTEa0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__OlvUq0XEei1X-X6NYhHvA" importedElement="__OlvUa0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__OlvVK0XEei1X-X6NYhHvA" importedElement="__OlvU60XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__OoLka0XEei1X-X6NYhHvA" importedElement="__OoLkK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__OoLlK0XEei1X-X6NYhHvA" importedElement="__OoLk60XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__OoLlq0XEei1X-X6NYhHvA" importedElement="__OoLla0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__Oqn0q0XEei1X-X6NYhHvA" importedElement="__Oqn0a0XEei1X-X6NYhHvA" visibility="private"/>
+            <ownedAttribute xmi:id="__OtEEK0XEei1X-X6NYhHvA" name="SERVER_SOCKET_TIMEOUT" visibility="private" isLeaf="true" isStatic="true">
+              <eAnnotations xmi:id="__OtEEa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__OtEEq0XEei1X-X6NYhHvA" key="documentation" value=" determines the milliseconds after which a socket will be closed if the&#xD;&#xA; LBRClient sends no data&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__OtEE60XEei1X-X6NYhHvA" name="" value="30_000">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </defaultValue>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__Ox8kK0XEei1X-X6NYhHvA" name="serverSocket" visibility="private" isLeaf="true" type="__OlvUa0XEei1X-X6NYhHvA">
+              <eAnnotations xmi:id="__Ox8ka0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__Ox8kq0XEei1X-X6NYhHvA" key="documentation" value=" used to accept LBRClient connections&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__O7tka0XEei1X-X6NYhHvA" name="listenerThread" visibility="private" isLeaf="true" type="__O7tkK0XEei1X-X6NYhHvA">
+              <eAnnotations xmi:id="__O7tkq0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__O7tk60XEei1X-X6NYhHvA" key="documentation" value=" collects LBRClient connections&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__O7tlK0XEei1X-X6NYhHvA" name="isClosed" visibility="private">
+              <eAnnotations xmi:id="__O7tla0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__O7tlq0XEei1X-X6NYhHvA" key="documentation" value=" true if this instance has been closed&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__PPPkK0XEei1X-X6NYhHvA" name="pendingClientQueue" visibility="private" isLeaf="true" type="__OlvU60XEei1X-X6NYhHvA" isUnique="false">
+              <eAnnotations xmi:id="__PPPka0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__PPPkq0XEei1X-X6NYhHvA" key="documentation" value=" a queue of all non-processed LBRClient connections&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__PPPk60XEei1X-X6NYhHvA" value="*"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="__PRr0K0XEei1X-X6NYhHvA" name="ClientListener" visibility="public">
+              <eAnnotations xmi:id="__PRr0a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__PRr0q0XEei1X-X6NYhHvA" key="documentation" value=" &#xD;&#xA; @param port&#xD;&#xA; @throws IOException&#xD;&#xA;             if {@link ServerSocket} does&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if port &lt;= 0&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="__PRr060XEei1X-X6NYhHvA" name="port">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PWkUK0XEei1X-X6NYhHvA" name="run" visibility="private">
+              <eAnnotations xmi:id="__PWkUa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__PWkUq0XEei1X-X6NYhHvA" key="documentation" value=" accepts sockets and queues them in {@link #pendingClientQueue}&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Pbc0K0XEei1X-X6NYhHvA" name="getRequest" visibility="public">
+              <eAnnotations xmi:id="__Pbc0a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__Pbc0q0XEei1X-X6NYhHvA" key="documentation" value=" blocks until a request by a LBRClient is available&#xD;&#xA; &#xD;&#xA; @return socket of LBRClient connection&#xD;&#xA; @throws InterruptedException&#xD;&#xA;             on {@link #wait()} of {@link #pendingClientQueue}&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="__Pbc060XEei1X-X6NYhHvA" type="__OlvU60XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__QksUK0XEei1X-X6NYhHvA" name="close" visibility="public">
+              <eAnnotations xmi:id="__QksUa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__QksUq0XEei1X-X6NYhHvA" key="documentation" value=" Closes this stream and releases any system resources associated&#xD;&#xA; with it. If the stream is already closed then invoking this&#xD;&#xA; method has no effect.&#xD;&#xA; &lt;p> As noted in {@link AutoCloseable#close()}, cases where the&#xD;&#xA; close may fail require careful attention. It is strongly advised&#xD;&#xA; to relinquish the underlying resources and to internally&#xD;&#xA; &lt;em>mark&lt;/em> the {@code Closeable} as closed, prior to throwing&#xD;&#xA; the {@code IOException}.&#xD;&#xA; @throws IOException if an I/O error occurs&#xD;&#xA; "/>
+              </eAnnotations>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Interface" xmi:id="__OIcUK0XEei1X-X6NYhHvA" name="EventScoreCalculator" visibility="public">
+            <eAnnotations xmi:id="__OIcUa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="__OIcUq0XEei1X-X6NYhHvA" key="documentation" value=" interface for different Event scoring mechanisms&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <ownedOperation xmi:id="__RB_UK0XEei1X-X6NYhHvA" name="scoreEvent">
+              <eAnnotations xmi:id="__RB_Ua0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__RB_Uq0XEei1X-X6NYhHvA" key="documentation" value=" processes the event and calculates its score - the score must satisfy the&#xD;&#xA; boundaries specified in {@link ScoredEvent}&#xD;&#xA; &#xD;&#xA; @param event&#xD;&#xA; @return event + score&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="__RB_U60XEei1X-X6NYhHvA" name="event" type="__Q1yEK0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="__RB_VK0XEei1X-X6NYhHvA" type="__Q4OUK0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="__OSNUK0XEei1X-X6NYhHvA" name="LBRServer" visibility="public">
+            <eAnnotations xmi:id="__OSNUa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="__OSNUq0XEei1X-X6NYhHvA" key="documentation" value=" LBRServer accepts incoming LBRClients and answers their requests&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="__RrfkK0XEei1X-X6NYhHvA" importedElement="__Og20q0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__Rrfka0XEei1X-X6NYhHvA" importedElement="__OjTEa0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__Rrfk60XEei1X-X6NYhHvA" importedElement="__Rrfkq0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__Rt70a0XEei1X-X6NYhHvA" importedElement="__Rt70K0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__Rt70q0XEei1X-X6NYhHvA" importedElement="__OlvU60XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__RwYEK0XEei1X-X6NYhHvA" importedElement="__Rt71K0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__RwYEq0XEei1X-X6NYhHvA" importedElement="__RwYEa0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__RwYFK0XEei1X-X6NYhHvA" importedElement="__RwYE60XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__Ry0Uq0XEei1X-X6NYhHvA" importedElement="__Ry0Ua0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__R1Qka0XEei1X-X6NYhHvA" importedElement="__R1QkK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__R1Qkq0XEei1X-X6NYhHvA" importedElement="__O7tkK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__R3s0a0XEei1X-X6NYhHvA" importedElement="__R3s0K0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__R3s1K0XEei1X-X6NYhHvA" importedElement="__R3s060XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__R6JEK0XEei1X-X6NYhHvA" importedElement="__R3s1a0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__R6JEq0XEei1X-X6NYhHvA" importedElement="__R6JEa0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__R8lUK0XEei1X-X6NYhHvA" importedElement="__R6JE60XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__R8lU60XEei1X-X6NYhHvA" importedElement="__R8lUq0XEei1X-X6NYhHvA" visibility="private"/>
+            <packageImport xmi:id="__R1Qk60XEei1X-X6NYhHvA" importedPackage="__Oqn0K0XEei1X-X6NYhHvA" visibility="private"/>
+            <ownedAttribute xmi:id="__SGWUK0XEei1X-X6NYhHvA" name="clientListener" visibility="private" isLeaf="true" type="__N5y0K0XEei1X-X6NYhHvA" association="__cscwK0XEei1X-X6NYhHvA">
+              <eAnnotations xmi:id="__SIykK0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__SIyka0XEei1X-X6NYhHvA" key="documentation" value=" listens for LBRClients&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__ScUkK0XEei1X-X6NYhHvA" name="serverThread" visibility="private" isLeaf="true" type="__O7tkK0XEei1X-X6NYhHvA">
+              <eAnnotations xmi:id="__Sew0K0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__Sew0a0XEei1X-X6NYhHvA" key="documentation" value=" polls LBRClients and initiates the answering-process&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__ShNEK0XEei1X-X6NYhHvA" name="isClosed" visibility="private">
+              <eAnnotations xmi:id="__ShNEa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__ShNEq0XEei1X-X6NYhHvA" key="documentation" value=" true, if the server has been closed&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__StaUK0XEei1X-X6NYhHvA" name="executorServer" visibility="private" isLeaf="true" type="__Ry0Ua0XEei1X-X6NYhHvA">
+              <eAnnotations xmi:id="__StaUa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__StaUq0XEei1X-X6NYhHvA" key="documentation" value=" executes answering-process-instances&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__S5nkK0XEei1X-X6NYhHvA" name="eventScoreCalculator" visibility="private" isLeaf="true" type="__OIcUK0XEei1X-X6NYhHvA" association="__cscwq0XEei1X-X6NYhHvA">
+              <eAnnotations xmi:id="__S5nka0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__S5nkq0XEei1X-X6NYhHvA" key="documentation" value=" calculates the event scores in the answering process&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__TDYkK0XEei1X-X6NYhHvA" name="dbConnection" visibility="private" isLeaf="true" type="__R8lUq0XEei1X-X6NYhHvA">
+              <eAnnotations xmi:id="__TDYka0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__TDYkq0XEei1X-X6NYhHvA" key="documentation" value=" connection to the LBR-DB&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+            </ownedAttribute>
+            <ownedOperation xmi:id="__TgrkK0XEei1X-X6NYhHvA" name="LBRServer" visibility="public">
+              <eAnnotations xmi:id="__Tgrka0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__Tgrkq0XEei1X-X6NYhHvA" key="documentation" value=" &#xD;&#xA; @param port&#xD;&#xA; @param eventScoreCalculator&#xD;&#xA; @param dbDNSHostname&#xD;&#xA; @param dbPort&#xD;&#xA; @param dbName&#xD;&#xA; @param dbUsername&#xD;&#xA; @param dbPassword&#xD;&#xA; @throws IOException&#xD;&#xA;             can occur in the {@link ClientListener#ClientListener(int)}&#xD;&#xA; @throws SQLException&#xD;&#xA;             if {@link DBConnection#DBConnection(String, String, String)} does&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if eventScoreCalculator, dbPassword, or dbUsername is null, if&#xD;&#xA;             {@link DBConnection#createURL(String, String, String)} does, or&#xD;&#xA;             if dbUsername is empty&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="__Tgrk60XEei1X-X6NYhHvA" name="port">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__TgrlK0XEei1X-X6NYhHvA" name="eventScoreCalculator" type="__OIcUK0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="__Tgrla0XEei1X-X6NYhHvA" name="dbDNSHostname">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__Tgrlq0XEei1X-X6NYhHvA" name="dbPort">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__Tgrl60XEei1X-X6NYhHvA" name="dbName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__TgrmK0XEei1X-X6NYhHvA" name="dbUsername">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__Tgrma0XEei1X-X6NYhHvA" name="dbPassword">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__U2IUK0XEei1X-X6NYhHvA" name="filterEvents" visibility="private">
+              <eAnnotations xmi:id="__U2IUa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__U2IUq0XEei1X-X6NYhHvA" key="documentation" value=" removes all events from eventList which do not contain a {@link Tag} in the&#xD;&#xA; {@link TagPreferenceConfiguration}&#xD;&#xA; &#xD;&#xA; @param eventList&#xD;&#xA; @param genrePreferenceConfiguration&#xD;&#xA; @return eventList&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="__U2IU60XEei1X-X6NYhHvA" name="eventList" type="__RwYE60XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="__U2IVK0XEei1X-X6NYhHvA" name="tagPreferenceConfiguration" type="__UY1UK0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="__U2IVa0XEei1X-X6NYhHvA" type="__RwYE60XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__VfokK0XEei1X-X6NYhHvA" name="scoreEvents" visibility="private">
+              <eAnnotations xmi:id="__Vfoka0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__Vfokq0XEei1X-X6NYhHvA" key="documentation" value=" scores all events in eventList&#xD;&#xA; &#xD;&#xA; @param eventList&#xD;&#xA; @return scored events&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="__Vfok60XEei1X-X6NYhHvA" name="eventList" type="__RwYE60XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="__VfolK0XEei1X-X6NYhHvA" type="__RwYE60XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__XelkK0XEei1X-X6NYhHvA" name="createTagResult" visibility="private">
+              <ownedParameter xmi:id="__Xelka0XEei1X-X6NYhHvA" name="tagQuery" type="__R6JE60XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="__Xelkq0XEei1X-X6NYhHvA" type="__R6JEa0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Y0CUK0XEei1X-X6NYhHvA" name="createLBRResult" visibility="private">
+              <eAnnotations xmi:id="__Y0CUa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__Y0CUq0XEei1X-X6NYhHvA" key="documentation" value=" analyzes the LBRQuery and creates an appropriate response&#xD;&#xA; &#xD;&#xA; @param lbrQuery&#xD;&#xA; @return appropriate response as {@link LBRResult}&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="__Y0CU60XEei1X-X6NYhHvA" name="lbrQuery" type="__R3s060XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="__Y0CVK0XEei1X-X6NYhHvA" type="__R6JEa0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__ZWN0K0XEei1X-X6NYhHvA" name="answerRequest" visibility="private">
+              <eAnnotations xmi:id="__ZWN0a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__ZWN0q0XEei1X-X6NYhHvA" key="documentation" value=" reads a LBRClient request and answers appropriately&#xD;&#xA; &#xD;&#xA; @param socket&#xD;&#xA;            socket of the LBRClient connection&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="__ZWN060XEei1X-X6NYhHvA" name="socket" type="__OlvU60XEei1X-X6NYhHvA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Zf-0K0XEei1X-X6NYhHvA" name="run" visibility="private">
+              <eAnnotations xmi:id="__Zf-0a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__Zf-0q0XEei1X-X6NYhHvA" key="documentation" value=" used by the {@link #serverThread} - polls requests and processes them&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+            </ownedOperation>
+            <ownedOperation xmi:id="__atfwK0XEei1X-X6NYhHvA" name="close" visibility="public">
+              <eAnnotations xmi:id="__atfwa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__atfwq0XEei1X-X6NYhHvA" key="documentation" value=" Closes this stream and releases any system resources associated&#xD;&#xA; with it. If the stream is already closed then invoking this&#xD;&#xA; method has no effect.&#xD;&#xA; &lt;p> As noted in {@link AutoCloseable#close()}, cases where the&#xD;&#xA; close may fail require careful attention. It is strongly advised&#xD;&#xA; to relinquish the underlying resources and to internally&#xD;&#xA; &lt;em>mark&lt;/em> the {@code Closeable} as closed, prior to throwing&#xD;&#xA; the {@code IOException}.&#xD;&#xA; @throws IOException if an I/O error occurs&#xD;&#xA; "/>
+              </eAnnotations>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="__OXF0K0XEei1X-X6NYhHvA" name="RandomEventScoreCalculator" visibility="public">
+            <eAnnotations xmi:id="__OXF0a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="__OXF0q0XEei1X-X6NYhHvA" key="documentation" value=" random implementation of {@link EventScoreCalculator}&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="__bs-Qa0XEei1X-X6NYhHvA" importedElement="__bs-QK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__bvagK0XEei1X-X6NYhHvA" importedElement="__Q1yEK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="__bvaga0XEei1X-X6NYhHvA" importedElement="__Q4OUK0XEei1X-X6NYhHvA" visibility="private"/>
+            <ownedAttribute xmi:id="__b5LgK0XEei1X-X6NYhHvA" name="random" visibility="private" isLeaf="true" type="__bs-QK0XEei1X-X6NYhHvA"/>
+            <interfaceRealization xmi:id="__bqiAK0XEei1X-X6NYhHvA" name="de.nuttercode.androidprojectss2018.lbrserver.EventScoreCalculator" client="__OXF0K0XEei1X-X6NYhHvA" supplier="__OIcUK0XEei1X-X6NYhHvA" contract="__OIcUK0XEei1X-X6NYhHvA"/>
+            <ownedOperation xmi:id="__cC8gK0XEei1X-X6NYhHvA" name="RandomEventScoreCalculator" visibility="public">
+              <ownedParameter xmi:id="__cC8ga0XEei1X-X6NYhHvA" name="seed">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__clIAK0XEei1X-X6NYhHvA" name="scoreEvent" visibility="public">
+              <eAnnotations xmi:id="__clIAa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="__clIAq0XEei1X-X6NYhHvA" key="documentation" value=" processes the event and calculates its score - the score must satisfy the&#xD;&#xA; boundaries specified in {@link ScoredEvent}&#xD;&#xA; &#xD;&#xA; @param event&#xD;&#xA; @return event + score&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="__clIA60XEei1X-X6NYhHvA" name="event" type="__Q1yEK0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="__clIBK0XEei1X-X6NYhHvA" type="__Q4OUK0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__cscwK0XEei1X-X6NYhHvA" name="clientListener_target" memberEnd="__SGWUK0XEei1X-X6NYhHvA __cscwa0XEei1X-X6NYhHvA">
+            <ownedEnd xmi:id="__cscwa0XEei1X-X6NYhHvA" name="target" type="__OSNUK0XEei1X-X6NYhHvA" association="__cscwK0XEei1X-X6NYhHvA"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__cscwq0XEei1X-X6NYhHvA" name="eventScoreCalculator_target" memberEnd="__S5nkK0XEei1X-X6NYhHvA __cscw60XEei1X-X6NYhHvA">
+            <ownedEnd xmi:id="__cscw60XEei1X-X6NYhHvA" name="target" type="__OSNUK0XEei1X-X6NYhHvA" association="__cscwq0XEei1X-X6NYhHvA"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Usage" xmi:id="__czxgK0XEei1X-X6NYhHvA" name="lbrserver_io" client="__NotGK0XEei1X-X6NYhHvA" supplier="__Og20a0XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="__czxga0XEei1X-X6NYhHvA" name="lbrserver_net" client="__NotGK0XEei1X-X6NYhHvA" supplier="__OlvUK0XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="__czxgq0XEei1X-X6NYhHvA" name="lbrserver_util" client="__NotGK0XEei1X-X6NYhHvA" supplier="__OoLkq0XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="__czxg60XEei1X-X6NYhHvA" name="lbrserver_csi" client="__NotGK0XEei1X-X6NYhHvA" supplier="__Oqn0K0XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="__czxhK0XEei1X-X6NYhHvA" name="lbrserver_sql" client="__NotGK0XEei1X-X6NYhHvA" supplier="__Rt7060XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="__czxha0XEei1X-X6NYhHvA" name="lbrserver_concurrent" client="__NotGK0XEei1X-X6NYhHvA" supplier="__Ry0UK0XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="__c2NwK0XEei1X-X6NYhHvA" name="lbrserver_lang" client="__NotGK0XEei1X-X6NYhHvA" supplier="__O5RUK0XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="__c2Nwa0XEei1X-X6NYhHvA" name="lbrserver_query" client="__NotGK0XEei1X-X6NYhHvA" supplier="__R3s0q0XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="__c2Nwq0XEei1X-X6NYhHvA" name="lbrserver_db" client="__NotGK0XEei1X-X6NYhHvA" supplier="__R8lUa0XEei1X-X6NYhHvA"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="__Oqn0K0XEei1X-X6NYhHvA" name="csi">
+          <packagedElement xmi:type="uml:Package" xmi:id="__R3s0q0XEei1X-X6NYhHvA" name="query">
+            <packagedElement xmi:type="uml:DataType" xmi:id="__R3s060XEei1X-X6NYhHvA" name="LBRQuery"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="__R3s1a0XEei1X-X6NYhHvA" name="Query"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="__R6JEa0XEei1X-X6NYhHvA" name="QueryResult"/>
+            <packagedElement xmi:type="uml:DataType" xmi:id="__R6JE60XEei1X-X6NYhHvA" name="TagQuery"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:DataType" xmi:id="__Oqn0a0XEei1X-X6NYhHvA" name="Assurance"/>
+          <packagedElement xmi:type="uml:DataType" xmi:id="__Q1yEK0XEei1X-X6NYhHvA" name="Event"/>
+          <packagedElement xmi:type="uml:DataType" xmi:id="__Q4OUK0XEei1X-X6NYhHvA" name="ScoredEvent"/>
+          <packagedElement xmi:type="uml:DataType" xmi:id="__R3s0K0XEei1X-X6NYhHvA" name="Tag"/>
+          <packagedElement xmi:type="uml:DataType" xmi:id="__UY1UK0XEei1X-X6NYhHvA" name="TagPreferenceConfiguration"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="__R8lUa0XEei1X-X6NYhHvA" name="db">
+          <packagedElement xmi:type="uml:DataType" xmi:id="__R8lUq0XEei1X-X6NYhHvA" name="DBConnection"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="__Og20K0XEei1X-X6NYhHvA" name="java">
+    <packagedElement xmi:type="uml:Package" xmi:id="__Og20a0XEei1X-X6NYhHvA" name="io">
+      <packagedElement xmi:type="uml:DataType" xmi:id="__Og20q0XEei1X-X6NYhHvA" name="Closeable"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="__OjTEa0XEei1X-X6NYhHvA" name="IOException"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="__Rrfkq0XEei1X-X6NYhHvA" name="ObjectInputStream"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="__Rt70K0XEei1X-X6NYhHvA" name="ObjectOutputStream"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="__OlvUK0XEei1X-X6NYhHvA" name="net">
+      <packagedElement xmi:type="uml:DataType" xmi:id="__OlvUa0XEei1X-X6NYhHvA" name="ServerSocket"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="__OlvU60XEei1X-X6NYhHvA" name="Socket"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="__OoLkK0XEei1X-X6NYhHvA" name="SocketTimeoutException"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="__OoLkq0XEei1X-X6NYhHvA" name="util">
+      <packagedElement xmi:type="uml:Package" xmi:id="__Ry0UK0XEei1X-X6NYhHvA" name="concurrent">
+        <packagedElement xmi:type="uml:DataType" xmi:id="__Ry0Ua0XEei1X-X6NYhHvA" name="ExecutorService"/>
+        <packagedElement xmi:type="uml:DataType" xmi:id="__R1QkK0XEei1X-X6NYhHvA" name="Executors"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:DataType" xmi:id="__OoLk60XEei1X-X6NYhHvA" name="LinkedList"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="__OoLla0XEei1X-X6NYhHvA" name="Queue"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="__RwYEa0XEei1X-X6NYhHvA" name="ArrayList"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="__RwYE60XEei1X-X6NYhHvA" name="Collection"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="__bs-QK0XEei1X-X6NYhHvA" name="Random"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="__O5RUK0XEei1X-X6NYhHvA" name="lang">
+      <packagedElement xmi:type="uml:DataType" xmi:id="__O7tkK0XEei1X-X6NYhHvA" name="Thread"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="__Rt7060XEei1X-X6NYhHvA" name="sql">
+      <packagedElement xmi:type="uml:DataType" xmi:id="__Rt71K0XEei1X-X6NYhHvA" name="SQLException"/>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Sd9jsK0XEei1X-X6NYhHvA" name="db">
+  <elementImport xmi:id="_SlyC8K0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_SlyC8a0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#byte"/>
+  </elementImport>
+  <elementImport xmi:id="_SlyC8q0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#char"/>
+  </elementImport>
+  <elementImport xmi:id="_Sl0fMK0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+  </elementImport>
+  <elementImport xmi:id="_Sl0fMa0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#float"/>
+  </elementImport>
+  <elementImport xmi:id="_Sl0fMq0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+  </elementImport>
+  <elementImport xmi:id="_Sl0fM60XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+  </elementImport>
+  <elementImport xmi:id="_Sl0fNK0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#short"/>
+  </elementImport>
+  <elementImport xmi:id="_Sl0fNa0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_Sl27cK0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+  </elementImport>
+  <elementImport xmi:id="_Sl27ca0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+  </elementImport>
+  <elementImport xmi:id="_Sl27cq0XEei1X-X6NYhHvA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#UnlimitedNatural"/>
+  </elementImport>
+  <packageImport xmi:id="_Slg9MK0XEei1X-X6NYhHvA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packageImport xmi:id="_SloR8K0XEei1X-X6NYhHvA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Package" xmi:id="_Sl27c60XEei1X-X6NYhHvA" name="de">
+    <packagedElement xmi:type="uml:Package" xmi:id="_Sl27dK0XEei1X-X6NYhHvA" name="nuttercode">
+      <packagedElement xmi:type="uml:Package" xmi:id="_Sl27da0XEei1X-X6NYhHvA" name="androidprojectss2018">
+        <packagedElement xmi:type="uml:Package" xmi:id="_Sl5XsK0XEei1X-X6NYhHvA" name="db">
+          <packagedElement xmi:type="uml:Class" xmi:id="_SmKdcK0XEei1X-X6NYhHvA" name="DBConnection" visibility="public">
+            <eAnnotations xmi:id="_SmM5sK0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_SmM5sa0XEei1X-X6NYhHvA" key="documentation" value=" provides a Connection to MySQL LBR-DB via JDBC&#xD;&#xA; &#xD;&#xA; @author Johannes B. Latzel, Henrik Gerdes&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="_SnViIK0XEei1X-X6NYhHvA" importedElement="_SnTF4a0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_SnX-Ya0XEei1X-X6NYhHvA" importedElement="_SnX-YK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_Snaaoa0XEei1X-X6NYhHvA" importedElement="_SnaaoK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_Snc2460XEei1X-X6NYhHvA" importedElement="_Snc24q0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_SnfTIq0XEei1X-X6NYhHvA" importedElement="_SnfTIa0XEei1X-X6NYhHvA" visibility="private"/>
+            <ownedOperation xmi:id="_SoGXIK0XEei1X-X6NYhHvA" name="createURL" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_SoGXIa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_SoIzYK0XEei1X-X6NYhHvA" key="documentation" value=" &#xD;&#xA; @param dbDNSHostname&#xD;&#xA; @param dbPort&#xD;&#xA; @param dbName&#xD;&#xA; @return db connection url in jdbc mysql format&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if dbDNSHostname or dbName is empty or if dbPort is not in [0,&#xD;&#xA;             65535]&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_SoIzYa0XEei1X-X6NYhHvA" name="dbDNSHostname">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_SoIzYq0XEei1X-X6NYhHvA" name="dbPort">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_SoIzY60XEei1X-X6NYhHvA" name="dbName">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_SoIzZK0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_SoQIIK0XEei1X-X6NYhHvA" name="DBConnection" visibility="public">
+              <eAnnotations xmi:id="_SoQIIa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_SoQIIq0XEei1X-X6NYhHvA" key="documentation" value=" &#xD;&#xA; @param url&#xD;&#xA; @param user&#xD;&#xA; @param password&#xD;&#xA; @throws SQLException&#xD;&#xA;             if {@link DoQuery#getConnection(String, String, String)} does&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_SoQII60XEei1X-X6NYhHvA" name="url">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_SoQIJK0XEei1X-X6NYhHvA" name="user">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_SoQIJa0XEei1X-X6NYhHvA" name="password">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_SohN4K0XEei1X-X6NYhHvA" name="getAllEventsByRadiusAndLocation" visibility="public">
+              <eAnnotations xmi:id="_SohN4a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_SohN4q0XEei1X-X6NYhHvA" key="documentation" value=" &#xD;&#xA; @param radius&#xD;&#xA; @param latitude&#xD;&#xA; @param longitude&#xD;&#xA; @return&#xD;&#xA; @throws SQLException&#xD;&#xA;             if {@link DoQuery#getEventsWithTag(java.util.ArrayList)} does&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_SohN460XEei1X-X6NYhHvA" name="radius">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_SohN5K0XEei1X-X6NYhHvA" name="latitude">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_SohN5a0XEei1X-X6NYhHvA" name="longitude">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_SohN5q0XEei1X-X6NYhHvA" type="_SnfTIa0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_SotbIK0XEei1X-X6NYhHvA" name="getAllTags" visibility="public">
+              <eAnnotations xmi:id="_SotbIa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_SotbIq0XEei1X-X6NYhHvA" key="documentation" value=" &#xD;&#xA; @return&#xD;&#xA; @throws SQLException&#xD;&#xA;             if {@link DoQuery#getAllTags()} does&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_SotbI60XEei1X-X6NYhHvA" type="_SnfTIa0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_SmZG8K0XEei1X-X6NYhHvA" name="DoQuery" visibility="public">
+            <eAnnotations xmi:id="_SmZG8a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_SmZG8q0XEei1X-X6NYhHvA" key="documentation" value=" provides static access to MySQL DB for LBR-Instances&#xD;&#xA; &#xD;&#xA; @author Henrik Gerdes, Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="_SpDZYK0XEei1X-X6NYhHvA" importedElement="_SnTF4a0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_SpNKYK0XEei1X-X6NYhHvA" importedElement="_SnX-YK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_SpPmoK0XEei1X-X6NYhHvA" importedElement="_SnaaoK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_SpPmoq0XEei1X-X6NYhHvA" importedElement="_SpPmoa0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_SpSC4a0XEei1X-X6NYhHvA" importedElement="_SpSC4K0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_SpUfIa0XEei1X-X6NYhHvA" importedElement="_SpUfIK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_SpW7YK0XEei1X-X6NYhHvA" importedElement="_SpUfIq0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_SpW7Yq0XEei1X-X6NYhHvA" importedElement="_SpW7Ya0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_SpW7Y60XEei1X-X6NYhHvA" importedElement="_Snc24q0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_SpZXoa0XEei1X-X6NYhHvA" importedElement="_SpZXoK0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_Spbz4K0XEei1X-X6NYhHvA" importedElement="_SpZXoq0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_Spbz460XEei1X-X6NYhHvA" importedElement="_Spbz4q0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_SpeQIa0XEei1X-X6NYhHvA" importedElement="_SpeQIK0XEei1X-X6NYhHvA" visibility="private"/>
+            <ownedAttribute xmi:id="_Sp0OYK0XEei1X-X6NYhHvA" name="conn" visibility="private" isStatic="true" type="_SpSC4K0XEei1X-X6NYhHvA">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_Sp2qoK0XEei1X-X6NYhHvA" name="" type="_SpSC4K0XEei1X-X6NYhHvA" value="null"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_SqKMoK0XEei1X-X6NYhHvA" name="stm" visibility="private" isStatic="true" type="_SpZXoK0XEei1X-X6NYhHvA">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_SqKMoa0XEei1X-X6NYhHvA" name="" type="_SpZXoK0XEei1X-X6NYhHvA" value="null"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="_SqlDYK0XEei1X-X6NYhHvA" name="getConnection" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_SqlDYa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_SqlDYq0XEei1X-X6NYhHvA" key="documentation" value=" Initializes the DB Connection&#xD;&#xA; &#xD;&#xA; @param url&#xD;&#xA;            The DB URL, Port and DB-Name&#xD;&#xA; @param user&#xD;&#xA;            Username&#xD;&#xA; @param password&#xD;&#xA;            Password for Username&#xD;&#xA; @throws SQLException&#xD;&#xA;             If login is not successful&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_SqlDY60XEei1X-X6NYhHvA" name="url">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_SqlDZK0XEei1X-X6NYhHvA" name="user">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_SqlDZa0XEei1X-X6NYhHvA" name="password">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Sq2JIK0XEei1X-X6NYhHvA" name="getEvents" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_Sq2JIa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_Sq2JIq0XEei1X-X6NYhHvA" key="documentation" value=" Gets all Events for the given query&#xD;&#xA; &#xD;&#xA; @param query&#xD;&#xA;            The query that specifics the Events&#xD;&#xA; @return ArrayList of Events&#xD;&#xA; @throws SQLException&#xD;&#xA;             SQL Error&#xD;&#xA; @throws IllegalStateException&#xD;&#xA;             if {@link #checkConnection()} does&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_Sq2JI60XEei1X-X6NYhHvA" name="query">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_Sq2JJK0XEei1X-X6NYhHvA" type="_SpeQIK0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Sr_YoK0XEei1X-X6NYhHvA" name="getLocalDateTime" visibility="private" isStatic="true">
+              <eAnnotations xmi:id="_Sr_Yoa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_Sr_Yoq0XEei1X-X6NYhHvA" key="documentation" value=" provides default values for nullable date and time&#xD;&#xA; &#xD;&#xA; @param date&#xD;&#xA; @param time&#xD;&#xA; @return LocalDateTime with default values if parameters are null&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_Sr_Yo60XEei1X-X6NYhHvA" name="date" type="_SpUfIK0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="_Sr_YpK0XEei1X-X6NYhHvA" name="time" type="_SpZXoq0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="_Sr_Ypa0XEei1X-X6NYhHvA" type="_Spbz4q0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_SswNoK0XEei1X-X6NYhHvA" name="getEventsWithTag" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_SswNoa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_SswNoq0XEei1X-X6NYhHvA" key="documentation" value=" Gets the Tags for every Event&#xD;&#xA; &#xD;&#xA; @param events&#xD;&#xA;            List of Events&#xD;&#xA; @return ArrayList of Events with Tags&#xD;&#xA; @throws SQLException&#xD;&#xA;             SQL error&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if events is null or it contains null&#xD;&#xA; @throws IllegalStateException&#xD;&#xA;             if {@link #checkConnection()} does&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_SswNo60XEei1X-X6NYhHvA" name="events" type="_SpeQIK0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="_SswNpK0XEei1X-X6NYhHvA" type="_SpeQIK0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Ss-3IK0XEei1X-X6NYhHvA" name="getAllTags" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_Ss-3Ia0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_Ss-3Iq0XEei1X-X6NYhHvA" key="documentation" value=" Gets all Tags&#xD;&#xA; &#xD;&#xA; @return ArrayList of all Tags&#xD;&#xA; @throws SQLException&#xD;&#xA;             SQL error&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_Ss-3I60XEei1X-X6NYhHvA" type="_SpeQIK0XEei1X-X6NYhHvA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_StNgoK0XEei1X-X6NYhHvA" name="checkConnection" visibility="private" isStatic="true">
+              <eAnnotations xmi:id="_StNgoa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_StNgoq0XEei1X-X6NYhHvA" key="documentation" value=" Checks if the Connection was initialized before working on query&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_SmiQ4K0XEei1X-X6NYhHvA" name="GenerateQuery" visibility="public">
+            <eAnnotations xmi:id="_SmiQ4a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+              <details xmi:id="_SmiQ4q0XEei1X-X6NYhHvA" key="documentation" value=" static DB-Query-Generator&#xD;&#xA; &#xD;&#xA; @author Henrik Gerdes, Johannes B. Latzel&#xD;&#xA;"/>
+            </eAnnotations>
+            <elementImport xmi:id="_StU1YK0XEei1X-X6NYhHvA" importedElement="_SnTF4a0XEei1X-X6NYhHvA" visibility="private"/>
+            <elementImport xmi:id="_StU1Ya0XEei1X-X6NYhHvA" importedElement="_SnX-YK0XEei1X-X6NYhHvA" visibility="private"/>
+            <ownedOperation xmi:id="_Stje4K0XEei1X-X6NYhHvA" name="generateQueryEvents" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_Stje4a0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_Stje4q0XEei1X-X6NYhHvA" key="documentation" value=" Generates a SQL Query to get Events near the given latitude and longitude&#xD;&#xA; &#xD;&#xA; @param radius&#xD;&#xA;            The radius that matches the Event location to the current location&#xD;&#xA; @param latitude&#xD;&#xA;            Latitude of the current position&#xD;&#xA; @param longitude&#xD;&#xA;            Longitude of the current position&#xD;&#xA; @return String ready to be executed by a SQL Database&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_Stje460XEei1X-X6NYhHvA" name="radius">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_Stje5K0XEei1X-X6NYhHvA" name="latitude">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_Stje5a0XEei1X-X6NYhHvA" name="longitude">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_Stje5q0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_StvsIK0XEei1X-X6NYhHvA" name="generateQueryTagsForEvent" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_StvsIa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_StvsIq0XEei1X-X6NYhHvA" key="documentation" value=" Generates a SQL Query to get ALL Tags for one Event&#xD;&#xA; &#xD;&#xA; @param event&#xD;&#xA;            The Event to get the Tags for&#xD;&#xA; @return String ready to be executed by a SQL Database&#xD;&#xA; @throws IllegalArgumentException&#xD;&#xA;             if event is null&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_StvsI60XEei1X-X6NYhHvA" name="event" type="_SnX-YK0XEei1X-X6NYhHvA"/>
+              <ownedParameter xmi:id="_StvsJK0XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_StyIYK0XEei1X-X6NYhHvA" name="generateQueryForAllTags" visibility="public" isStatic="true">
+              <eAnnotations xmi:id="_StyIYa0XEei1X-X6NYhHvA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_StyIYq0XEei1X-X6NYhHvA" key="documentation" value=" Generates Query to get all Tags form DB&#xD;&#xA; &#xD;&#xA; @return SQL Query to get all Tags&#xD;&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_StyIY60XEei1X-X6NYhHvA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Usage" xmi:id="_SuAx4K0XEei1X-X6NYhHvA" name="db_csi" client="_Sl5XsK0XEei1X-X6NYhHvA" supplier="_SnTF4K0XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="_SuAx4a0XEei1X-X6NYhHvA" name="db_sql" client="_Sl5XsK0XEei1X-X6NYhHvA" supplier="_Snc24a0XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="_SuAx4q0XEei1X-X6NYhHvA" name="db_util" client="_Sl5XsK0XEei1X-X6NYhHvA" supplier="_SnfTIK0XEei1X-X6NYhHvA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="_SuAx460XEei1X-X6NYhHvA" name="db_time" client="_Sl5XsK0XEei1X-X6NYhHvA" supplier="_Spbz4a0XEei1X-X6NYhHvA"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_SnTF4K0XEei1X-X6NYhHvA" name="csi">
+          <packagedElement xmi:type="uml:DataType" xmi:id="_SnTF4a0XEei1X-X6NYhHvA" name="Assurance"/>
+          <packagedElement xmi:type="uml:DataType" xmi:id="_SnX-YK0XEei1X-X6NYhHvA" name="Event"/>
+          <packagedElement xmi:type="uml:DataType" xmi:id="_SnaaoK0XEei1X-X6NYhHvA" name="Tag"/>
+          <packagedElement xmi:type="uml:DataType" xmi:id="_SpPmoa0XEei1X-X6NYhHvA" name="Venue"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_Snc24K0XEei1X-X6NYhHvA" name="java">
+    <packagedElement xmi:type="uml:Package" xmi:id="_Snc24a0XEei1X-X6NYhHvA" name="sql">
+      <packagedElement xmi:type="uml:DataType" xmi:id="_Snc24q0XEei1X-X6NYhHvA" name="SQLException"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_SpSC4K0XEei1X-X6NYhHvA" name="Connection"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_SpUfIK0XEei1X-X6NYhHvA" name="Date"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_SpUfIq0XEei1X-X6NYhHvA" name="DriverManager"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_SpW7Ya0XEei1X-X6NYhHvA" name="ResultSet"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_SpZXoK0XEei1X-X6NYhHvA" name="Statement"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_SpZXoq0XEei1X-X6NYhHvA" name="Time"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_SnfTIK0XEei1X-X6NYhHvA" name="util">
+      <packagedElement xmi:type="uml:DataType" xmi:id="_SnfTIa0XEei1X-X6NYhHvA" name="Collection"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_SpeQIK0XEei1X-X6NYhHvA" name="ArrayList"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_Spbz4a0XEei1X-X6NYhHvA" name="time">
+      <packagedElement xmi:type="uml:DataType" xmi:id="_Spbz4q0XEei1X-X6NYhHvA" name="LocalDateTime"/>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>
