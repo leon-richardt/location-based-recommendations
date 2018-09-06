@@ -113,6 +113,37 @@ public class LBRServer implements Closeable {
 	}
 
 	/**
+	 * thrad-safe reconnect of {@link #dbConnection}
+	 * 
+	 * @return {@link DBConnection#reconnect()}
+	 */
+	private boolean reconnectDB() {
+		synchronized (dbConnection) {
+			return dbConnection.reconnect();
+		}
+	}
+
+	/**
+	 * thread-safe use of {@link DBConnection#getAllTags()}
+	 * 
+	 * @return {@link DBConnection#getAllTags()}
+	 * @throws SQLException
+	 *             when {@link DBConnection#getAllTags()} does
+	 */
+	private Collection<Tag> getAllTags() throws SQLException {
+		synchronized (dbConnection) {
+			return dbConnection.getAllTags();
+		}
+	}
+
+	private Collection<Event> getAllEventsByRadiusAndLocation(LBRQuery lbrQuery) throws SQLException {
+		synchronized (dbConnection) {
+			return dbConnection.getAllEventsByRadiusAndLocation(lbrQuery.getRadius(), lbrQuery.getLatitude(),
+					lbrQuery.getLongitude());
+		}
+	}
+
+	/**
 	 * removes all events from eventList which do not contain a {@link Tag} in the
 	 * {@link TagPreferenceConfiguration}
 	 * 
@@ -143,14 +174,17 @@ public class LBRServer implements Closeable {
 		return scoredEventList;
 	}
 
-	private QueryResponse<Tag> createTagResponse(TagQuery tagQuery) {
+	private QueryResponse<Tag> createTagResponse(TagQuery tagQuery, boolean tryReconnect) {
 		logger.log(Level.FINER, "creating tag result");
 		QueryResult<Tag> queryResult;
 		QueryResultState serverQueryResultState = QueryResultState.OK;
 		try {
-			queryResult = new QueryResult<>(dbConnection.getAllTags());
+			queryResult = new QueryResult<>(getAllTags());
 		} catch (SQLException e) {
 			logger.log(Level.WARNING, e.toString(), e);
+			if (tryReconnect && reconnectDB()) {
+				return createTagResponse(tagQuery, false);
+			}
 			queryResult = new QueryResult<>(new ArrayList<>());
 			serverQueryResultState = QueryResultState.SQLException;
 		}
@@ -164,19 +198,18 @@ public class LBRServer implements Closeable {
 	 * @return appropriate response as {@link LBRResult}
 	 * @throws SQLException
 	 */
-	private QueryResponse<ScoredEvent> createLBRResponse(LBRQuery lbrQuery) {
+	private QueryResponse<ScoredEvent> createLBRResponse(LBRQuery lbrQuery, boolean tryReconnect) {
 		logger.log(Level.FINER, "creating LBR result");
 		QueryResult<ScoredEvent> queryResult;
 		QueryResultState serverQueryResultState = QueryResultState.OK;
 		try {
-			queryResult = new QueryResult<ScoredEvent>(
-					scoreEvents(
-							filterEvents(
-									dbConnection.getAllEventsByRadiusAndLocation(lbrQuery.getRadius(),
-											lbrQuery.getLatitude(), lbrQuery.getLongitude()),
-									lbrQuery.getTagPreferenceConfiguration())));
+			queryResult = new QueryResult<ScoredEvent>(scoreEvents(
+					filterEvents(getAllEventsByRadiusAndLocation(lbrQuery), lbrQuery.getTagPreferenceConfiguration())));
 		} catch (SQLException e) {
 			logger.log(Level.WARNING, e.toString(), e);
+			if (tryReconnect && reconnectDB()) {
+				return createLBRResponse(lbrQuery, false);
+			}
 			queryResult = new QueryResult<>(new ArrayList<>());
 			serverQueryResultState = QueryResultState.SQLException;
 		}
@@ -212,10 +245,10 @@ public class LBRServer implements Closeable {
 				oos = new ObjectOutputStream(socket.getOutputStream());
 				if (query.getClass().equals(LBRQuery.class)) {
 					logger.log(Level.FINER, "request is LBRQuery: " + socket.toString());
-					oos.writeObject(createLBRResponse((LBRQuery) query));
+					oos.writeObject(createLBRResponse((LBRQuery) query, true));
 				} else if (query.getClass().equals(TagQuery.class)) {
 					logger.log(Level.FINER, "request is TagQuery: " + socket.toString());
-					oos.writeObject(createTagResponse((TagQuery) query));
+					oos.writeObject(createTagResponse((TagQuery) query, true));
 				}
 				oos.flush();
 			} catch (IOException | RuntimeException e) {
@@ -246,7 +279,7 @@ public class LBRServer implements Closeable {
 					answerRequest(socket);
 				});
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				// ignore
 			}
 		}
 	}
@@ -267,6 +300,9 @@ public class LBRServer implements Closeable {
 			return;
 		isClosed = true;
 		clientListener.close();
+		synchronized (dbConnection) {
+			dbConnection.close();
+		}
 		serverThread.interrupt();
 	}
 
