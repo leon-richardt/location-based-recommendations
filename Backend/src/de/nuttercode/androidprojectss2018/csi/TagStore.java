@@ -9,7 +9,7 @@ import de.nuttercode.androidprojectss2018.csi.query.TagQuery;
  * @author Johannes B. Latzel
  *
  */
-public class TagStore extends Store<Tag> {
+public class TagStore extends Store<Tag, TagQuery> {
 
 	/**
 	 * @param clientConfiguration

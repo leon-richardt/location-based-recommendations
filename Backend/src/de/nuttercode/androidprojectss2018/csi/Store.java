@@ -22,10 +22,10 @@ import de.nuttercode.androidprojectss2018.csi.query.QueryResultSummary;
  * @param <T>
  *            some {@link Serializable}
  */
-public class Store<T extends Serializable> {
+public class Store<T extends Serializable, Q extends Query<T>> {
 
 	private final Set<T> tSet;
-	protected final Query<T> query;
+	protected final Q query;
 	private final List<StoreListener<T>> storeListenerList;
 
 	/**
@@ -33,7 +33,7 @@ public class Store<T extends Serializable> {
 	 * @throws IllegalArgumentException
 	 *             if query is null
 	 */
-	protected Store(Query<T> query) {
+	protected Store(Q query) {
 		Assurance.assureNotNull(query);
 		tSet = new HashSet<>();
 		this.query = query;
