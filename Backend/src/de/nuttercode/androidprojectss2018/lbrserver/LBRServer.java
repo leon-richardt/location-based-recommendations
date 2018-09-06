@@ -17,8 +17,10 @@ import java.lang.Thread;
 import de.nuttercode.androidprojectss2018.csi.*;
 import de.nuttercode.androidprojectss2018.csi.Tag;
 import de.nuttercode.androidprojectss2018.csi.query.LBRQuery;
+import de.nuttercode.androidprojectss2018.csi.query.QueryResponse;
 import de.nuttercode.androidprojectss2018.csi.query.Query;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResult;
+import de.nuttercode.androidprojectss2018.csi.query.QueryResultState;
 import de.nuttercode.androidprojectss2018.csi.query.TagQuery;
 import de.nuttercode.androidprojectss2018.db.DBConnection;
 
@@ -141,14 +143,18 @@ public class LBRServer implements Closeable {
 		return scoredEventList;
 	}
 
-	private QueryResult<Tag> createTagResult(TagQuery tagQuery) {
+	private QueryResponse<Tag> createTagResponse(TagQuery tagQuery) {
 		logger.log(Level.FINER, "creating tag result");
+		QueryResult<Tag> queryResult;
+		QueryResultState serverQueryResultState = QueryResultState.OK;
 		try {
-			return new QueryResult<>(dbConnection.getAllTags());
+			queryResult = new QueryResult<>(dbConnection.getAllTags());
 		} catch (SQLException e) {
 			logger.log(Level.WARNING, e.toString(), e);
+			queryResult = new QueryResult<>(new ArrayList<>());
+			serverQueryResultState = QueryResultState.SQLException;
 		}
-		return new QueryResult<>(new ArrayList<>());
+		return new QueryResponse<>(queryResult, serverQueryResultState);
 	}
 
 	/**
@@ -156,11 +162,14 @@ public class LBRServer implements Closeable {
 	 * 
 	 * @param lbrQuery
 	 * @return appropriate response as {@link LBRResult}
+	 * @throws SQLException
 	 */
-	private QueryResult<ScoredEvent> createLBRResult(LBRQuery lbrQuery) {
+	private QueryResponse<ScoredEvent> createLBRResponse(LBRQuery lbrQuery) {
 		logger.log(Level.FINER, "creating LBR result");
+		QueryResult<ScoredEvent> queryResult;
+		QueryResultState serverQueryResultState = QueryResultState.OK;
 		try {
-			return new QueryResult<ScoredEvent>(
+			queryResult = new QueryResult<ScoredEvent>(
 					scoreEvents(
 							filterEvents(
 									dbConnection.getAllEventsByRadiusAndLocation(lbrQuery.getRadius(),
@@ -168,8 +177,10 @@ public class LBRServer implements Closeable {
 									lbrQuery.getTagPreferenceConfiguration())));
 		} catch (SQLException e) {
 			logger.log(Level.WARNING, e.toString(), e);
+			queryResult = new QueryResult<>(new ArrayList<>());
+			serverQueryResultState = QueryResultState.SQLException;
 		}
-		return new QueryResult<>(new ArrayList<>());
+		return new QueryResponse<>(queryResult, serverQueryResultState);
 	}
 
 	/**
@@ -201,10 +212,10 @@ public class LBRServer implements Closeable {
 				oos = new ObjectOutputStream(socket.getOutputStream());
 				if (query.getClass().equals(LBRQuery.class)) {
 					logger.log(Level.FINER, "request is LBRQuery: " + socket.toString());
-					oos.writeObject(createLBRResult((LBRQuery) query));
+					oos.writeObject(createLBRResponse((LBRQuery) query));
 				} else if (query.getClass().equals(TagQuery.class)) {
 					logger.log(Level.FINER, "request is TagQuery: " + socket.toString());
-					oos.writeObject(createTagResult((TagQuery) query));
+					oos.writeObject(createTagResponse((TagQuery) query));
 				}
 				oos.flush();
 			} catch (IOException | RuntimeException e) {
