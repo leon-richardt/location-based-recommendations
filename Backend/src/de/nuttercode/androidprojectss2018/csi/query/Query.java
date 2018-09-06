@@ -73,7 +73,7 @@ public class Query<T extends Serializable> implements Serializable {
 					clientQueryResultState, queryResponse.getServerQueryResultState(), message));
 		else {
 			// kotlin type inference problem - use of T directly
-			return new QueryResultSummary<T>(new QueryResult<T>(new ArrayList<T>()),
+			return new QueryResultSummary<>(new QueryResult<>(new ArrayList<T>()),
 					new QueryResultInformation(clientQueryResultState, QueryResultState.Null, message));
 		}
 	}
