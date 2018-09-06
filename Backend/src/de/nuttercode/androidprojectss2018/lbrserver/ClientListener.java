@@ -27,6 +27,12 @@ public class ClientListener implements Closeable {
 	private final static int SERVER_SOCKET_TIMEOUT = 30_000;
 
 	/**
+	 * max time in milliseconds a {@link #getRequest()} will wait for the
+	 * {@link #pendingClientQueue} to be filled with at least 1 pending connection
+	 */
+	private final static int PENDING_QUEUE_WAIT = 5_000;
+
+	/**
 	 * used to accept LBRClient connections
 	 */
 	private final ServerSocket serverSocket;
@@ -95,7 +101,7 @@ public class ClientListener implements Closeable {
 	public Socket getRequest() throws InterruptedException {
 		synchronized (pendingClientQueue) {
 			while (pendingClientQueue.isEmpty())
-				pendingClientQueue.wait();
+				pendingClientQueue.wait(PENDING_QUEUE_WAIT);
 			return pendingClientQueue.poll();
 		}
 	}
