@@ -60,7 +60,7 @@ public class Store<T extends Serializable> {
 		QueryResultSummary<T> resultSummary = query.run();
 		QueryResultInformation resultInformation = resultSummary.getQueryResultInformation();
 		Collection<T> receivedElements;
-		if (resultInformation.getQueryResultState() == QueryResultState.OK) {
+		if (resultInformation.isOK()) {
 			receivedElements = resultSummary.getQueryResult().getAll();
 			for (T newElement : receivedElements)
 				if (!tSet.contains(newElement))
