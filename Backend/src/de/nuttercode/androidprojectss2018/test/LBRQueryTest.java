@@ -6,7 +6,6 @@ import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
 import de.nuttercode.androidprojectss2018.csi.EventStore;
 import de.nuttercode.androidprojectss2018.csi.Tag;
 import de.nuttercode.androidprojectss2018.csi.TagStore;
-import de.nuttercode.androidprojectss2018.csi.query.QueryResultState;
 import de.nuttercode.androidprojectss2018.example.StoreListenerExample;
 
 /**
@@ -30,7 +29,7 @@ public class LBRQueryTest {
 
 		// tagstore for tagfilter testing
 		TagStore tagStore = new TagStore(clientConfiguration);
-		if (tagStore.refresh().getQueryResultState() != QueryResultState.OK)
+		if (!tagStore.refresh().isOK())
 			throw new IllegalStateException();
 		ArrayList<Tag> tags = new ArrayList<>(tagStore.getAll());
 		if (tags.size() < 2)
