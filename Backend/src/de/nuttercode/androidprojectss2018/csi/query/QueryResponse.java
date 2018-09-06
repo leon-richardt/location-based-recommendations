@@ -3,7 +3,16 @@ package de.nuttercode.androidprojectss2018.csi.query;
 import java.io.Serializable;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
+import de.nuttercode.androidprojectss2018.lbrserver.LBRServer;
 
+/**
+ * encapsulates {@link QueryResult} and {@link QueryResultState} as send by
+ * {@link LBRServer}
+ * 
+ * @author Johannes B. Latzel
+ *
+ * @param <T>
+ */
 public class QueryResponse<T extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = -3074134072459244746L;
