@@ -11,7 +11,8 @@ import java.lang.ref.WeakReference
 
 class AddAllTagsTask(private val context: WeakReference<Context>, private val callback: AddAllTagsTaskCallback): AsyncTask<ClientConfiguration, Unit, ClientConfiguration>() {
 
-    private var qrs: QueryResultState = QueryResultState.OK
+    private var cqrs = QueryResultState.OK
+    private var sqrs = QueryResultState.OK
 
     override fun doInBackground(vararg clientConfiguration: ClientConfiguration): ClientConfiguration {
         if (clientConfiguration.size != 1) throw IllegalArgumentException("Only one argument may be passed")
@@ -22,9 +23,12 @@ class AddAllTagsTask(private val context: WeakReference<Context>, private val ca
         val tagStore = TagStore(clientConfig)
         val queryResultInformation = tagStore.refresh()
 
-        if (queryResultInformation.queryResultState != QueryResultState.OK) {
-            Log.e(TAG, "QueryResultState is ${queryResultInformation.queryResultState.name}. Message: ${queryResultInformation.message}")
-            qrs = queryResultInformation.queryResultState
+        if (!queryResultInformation.isOK) {
+            Log.e(TAG, "ClientQueryResultState is ${queryResultInformation.clientQueryResultState}, " +
+                    "ServerQueryResultState is ${queryResultInformation.serverQueryResultState}. " +
+                    "Message: ${queryResultInformation.message}")
+            cqrs = queryResultInformation.clientQueryResultState
+            sqrs = queryResultInformation.serverQueryResultState
         }
 
         Log.i(TAG, "Refreshing TagStore was successful! Now adding all (${tagStore.all.size}) Tags to the TagPreferenceConfiguration.")
@@ -36,10 +40,10 @@ class AddAllTagsTask(private val context: WeakReference<Context>, private val ca
 
     override fun onPostExecute(result: ClientConfiguration) {
         callback.processAddAllTagsResult(result)
-        if (qrs != QueryResultState.OK) {
+        if (cqrs != QueryResultState.OK || sqrs != QueryResultState.OK) {
             Toast.makeText(context.get(),
-                    "Bad QueryResultState: $qrs! Please check your Internet connection and try again!",
-                    Toast.LENGTH_LONG).show()
+                    "Bad QueryResultState! ClientQueryResultState = $cqrs, ServerQueryResultStae = $sqrs. " +
+                            "Please check your Internet connection and try again!", Toast.LENGTH_LONG).show()
         }
     }
 

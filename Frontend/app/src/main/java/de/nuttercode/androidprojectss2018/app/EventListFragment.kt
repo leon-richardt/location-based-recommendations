@@ -1,18 +1,17 @@
 package de.nuttercode.androidprojectss2018.app
 
 import android.content.Context
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import de.nuttercode.androidprojectss2018.csi.*
-import java.lang.ref.WeakReference
 
 /**
  * A fragment representing a list of Items.
@@ -20,10 +19,11 @@ import java.lang.ref.WeakReference
  * [EventListFragment.OnListFragmentInteractionListener] interface.
  */
 class EventListFragment : Fragment(), FetchEventsTaskCallback {
-    // TODO: Customize parameters
     private var columnCount = 1
 
-    private lateinit var contentList: ArrayList<ScoredEvent>
+    private val contentList: ArrayList<ScoredEvent> = ArrayList()
+
+    private lateinit var recyclerView: RecyclerView
 
     private var listener: OnListFragmentInteractionListener? = null
 
@@ -41,25 +41,37 @@ class EventListFragment : Fragment(), FetchEventsTaskCallback {
 
         // Set the adapter
         if (view is RecyclerView) {
+            recyclerView = view
+
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
 
-                // This creates and executes an AsyncTask fetching all Events matching the TagPreferenceConfiguration in the ClientConfiguration
-                // TODO: Fetch new Events every X seconds and only update the EventStore instead of creating a new one every time
-                val fetchEventsTask = FetchEventsTask(WeakReference(activity!!), object: FetchEventsTaskCallback {
-                    override fun processFetchEventsResult(result: ArrayList<ScoredEvent>) {
-                        adapter = MyEventRecyclerViewAdapter(result, listener)
-                    }
-                })
-
-                fetchEventsTask.execute((activity as MapActivity).getClientConfig())
+                adapter = MyEventRecyclerViewAdapter(contentList, listener)
             }
         }
 
         return view
+    }
+
+    fun clearList() {
+        contentList.clear()
+    }
+
+    fun addElement(scoredEvent: ScoredEvent) {
+        contentList.add(scoredEvent)
+    }
+
+    fun addAllElements(collection: Collection<ScoredEvent>) {
+        contentList.addAll(collection)
+    }
+
+    fun refreshList() {
+        // notifyDataSetChanged() needs to be run the UI thread
+        Log.i(TAG, "activity = $activity, recyclerView.adapter = ${recyclerView.adapter}")
+        activity!!.runOnUiThread { recyclerView.adapter!!.notifyDataSetChanged() }
     }
 
     override fun onAttach(context: Context) {
@@ -80,11 +92,6 @@ class EventListFragment : Fragment(), FetchEventsTaskCallback {
         listener = null
     }
 
-    fun networkAvailable(): Boolean {       // TODO: Remove?
-        val cm = context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return cm.activeNetworkInfo?.isConnected == true
-    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -103,10 +110,8 @@ class EventListFragment : Fragment(), FetchEventsTaskCallback {
     companion object {
         const val TAG = "EventListFragment"
 
-        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 
-        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
                 EventListFragment().apply {

@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.fragment_event.view.*
 /**
  * [RecyclerView.Adapter] that can display a [ScoredEvent] and makes a call to the
  * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for Event objects.
  */
 class MyEventRecyclerViewAdapter(
         private val mValues: List<ScoredEvent>,
