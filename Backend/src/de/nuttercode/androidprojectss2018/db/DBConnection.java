@@ -39,8 +39,11 @@ public class DBConnection implements Closeable {
 		info.put("url", url);
 		info.put("user",user);
 		info.put("password",password);
+		info.put("autoReconnect","true");
+		info.put("useUnicode","true");
+		info.put("characterEncoding","utf8");
 
-		conn = DriverManager.getConnection(url, user, password);
+		conn = DriverManager.getConnection(url,info);
 		stm = conn.createStatement();
 	}
 
@@ -128,7 +131,7 @@ public class DBConnection implements Closeable {
 	 */
 	public boolean reconnect(){
 		try {
-			conn = DriverManager.getConnection(info.getProperty("url"), info.getProperty("user"),info.getProperty("password"));
+			conn = DriverManager.getConnection(info.getProperty("url"),info);
 			stm = conn.createStatement();
 		} catch (SQLException e) {
 			return false;
