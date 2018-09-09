@@ -7,7 +7,13 @@ import de.nuttercode.androidprojectss2018.csi.Venue;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -25,35 +31,43 @@ public class DBConnection implements Closeable {
 	private Connection conn;
 	private Statement stm;
 
-
 	/**
 	 * Initializes the DB Connection
 	 *
-	 * @param url The DB URL, Port and DB-Name
-	 * @param user Username
-	 * @param password Password for Username
-	 * @throws SQLException If login is not successful
+	 * @param url
+	 *            The DB URL, Port and DB-Name
+	 * @param user
+	 *            Username
+	 * @param password
+	 *            Password for Username
+	 * @throws SQLException
+	 *             If login is not successful
 	 */
 	public DBConnection(String url, String user, String password) throws SQLException {
 		this.info = new Properties();
 		info.put("url", url);
-		info.put("user",user);
-		info.put("password",password);
-		info.put("autoReconnect","true");
-		info.put("useUnicode","true");
-		info.put("characterEncoding","utf8");
+		info.put("user", user);
+		info.put("password", password);
+		info.put("autoReconnect", "true");
+		info.put("useUnicode", "true");
+		info.put("characterEncoding", "utf8");
 
-		conn = DriverManager.getConnection(url,info);
+		conn = DriverManager.getConnection(url, info);
 		stm = conn.createStatement();
 	}
 
 	/**
-	 *  Gets all Events (with Tags) within the radius
-	 * @param radius The radius to look for the events
-	 * @param latitude current position
-	 * @param longitude current position
+	 * Gets all Events (with Tags) within the radius
+	 * 
+	 * @param radius
+	 *            The radius to look for the events
+	 * @param latitude
+	 *            current position
+	 * @param longitude
+	 *            current position
 	 * @return Collection of Events with Tags
-	 * @throws SQLException if SQL Error
+	 * @throws SQLException
+	 *             if SQL Error
 	 */
 	public Collection<Event> getAllEventsByRadiusAndLocation(double radius, double latitude, double longitude)
 			throws SQLException {
@@ -62,8 +76,10 @@ public class DBConnection implements Closeable {
 
 	/**
 	 * Gets all Tags on the DB
+	 * 
 	 * @return Collection of tags
-	 * @throws SQLException if SQL Error
+	 * @throws SQLException
+	 *             if SQL Error
 	 */
 	public Collection<Tag> getAllTags() throws SQLException {
 		checkConnection();
@@ -127,11 +143,12 @@ public class DBConnection implements Closeable {
 
 	/**
 	 * Reinitialize the DB Connection
+	 * 
 	 * @return true if successfully else false
 	 */
-	public boolean reconnect(){
+	public boolean reconnect() {
 		try {
-			conn = DriverManager.getConnection(info.getProperty("url"),info);
+			conn = DriverManager.getConnection(info.getProperty("url"), info);
 			stm = conn.createStatement();
 		} catch (SQLException e) {
 			return false;
@@ -140,17 +157,17 @@ public class DBConnection implements Closeable {
 	}
 
 	/**
-	 * Closes this stream and releases any system resources associated
-	 * with it. If the stream is already closed then invoking this
-	 * method has no effect.
+	 * Closes this stream and releases any system resources associated with it. If
+	 * the stream is already closed then invoking this method has no effect.
 	 *
-	 * <p> As noted in {@link AutoCloseable#close()}, cases where the
-	 * close may fail require careful attention. It is strongly advised
-	 * to relinquish the underlying resources and to internally
-	 * <em>mark</em> the {@code Closeable} as closed, prior to throwing
-	 * the {@code IOException}.
+	 * <p>
+	 * As noted in {@link AutoCloseable#close()}, cases where the close may fail
+	 * require careful attention. It is strongly advised to relinquish the
+	 * underlying resources and to internally <em>mark</em> the {@code Closeable} as
+	 * closed, prior to throwing the {@code IOException}.
 	 *
-	 * @throws IOException if an I/O error occurs
+	 * @throws IOException
+	 *             if an I/O error occurs
 	 */
 	@Override
 	public void close() throws IOException {
@@ -158,16 +175,20 @@ public class DBConnection implements Closeable {
 			stm.close();
 			conn.close();
 		} catch (SQLException e) {
-			throw new IOException("SQL Close Fehler",e);
+			throw new IOException("SQL Close Fehler", e);
 		}
 
 	}
 
 	/**
 	 * Creates a String containing a url matching the JDBC URL schema
-	 * @param dbDNSHostname Host or IP the the DB
-	 * @param dbPort The Port where the DB is listening
-	 * @param dbName Name of the DB witch contains the data
+	 * 
+	 * @param dbDNSHostname
+	 *            Host or IP the the DB
+	 * @param dbPort
+	 *            The Port where the DB is listening
+	 * @param dbName
+	 *            Name of the DB witch contains the data
 	 * @return db connection url in jdbc mysql format
 	 * @throws IllegalArgumentException
 	 *             if dbDNSHostname or dbName is empty or if dbPort is not in [0,
@@ -190,8 +211,10 @@ public class DBConnection implements Closeable {
 	/**
 	 * provides default values for nullable date and time
 	 *
-	 * @param date The SQL Result Date may be null
-	 * @param time The SQL Result Time may be null
+	 * @param date
+	 *            The SQL Result Date may be null
+	 * @param time
+	 *            The SQL Result Time may be null
 	 * @return LocalDateTime with default values if parameters are null
 	 */
 	private static LocalDateTime getLocalDateTime(Date date, Time time) {
