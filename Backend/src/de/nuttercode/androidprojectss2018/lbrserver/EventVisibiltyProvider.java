@@ -2,39 +2,37 @@ package de.nuttercode.androidprojectss2018.lbrserver;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
 import de.nuttercode.androidprojectss2018.csi.Event;
 
 /**
- * randomly assigns visibility states to known event ids
+ * assigns visibility states to events with id 1 and 2. event with id 1 will be
+ * visible if and only if event with id 2 is not visible.
  * 
  * @author Johannes B. Latzel
  *
  */
-public class RandomEventVisibiltyProvider implements Closeable {
-
-	private final static int MAX_SLEEP_TIME = 30 * 60 * 1000;
-
-	private final Thread eventProviderThread;
+public class EventVisibiltyProvider implements Closeable {
 
 	/**
-	 * contains the visibility-state of known event ids
+	 * time in milliseconds until {@link #idVisibility} will be switched
 	 */
-	private final Map<Integer, Boolean> visibilityMap;
+	private final static int SLEEP_TIME = 30 * 60 * 1000;
 
+	private final Thread eventProviderThread;
 	private boolean isRunning;
-	private final Random random;
 
-	public RandomEventVisibiltyProvider() {
+	/**
+	 * true if and only if event with id 1 is visible
+	 */
+	private boolean idVisibility;
+
+	public EventVisibiltyProvider() {
 		isRunning = true;
-		visibilityMap = new HashMap<>();
+		idVisibility = false;
 		eventProviderThread = new Thread(this::run);
 		eventProviderThread.start();
-		random = new Random(System.currentTimeMillis());
 	}
 
 	/**
@@ -42,12 +40,9 @@ public class RandomEventVisibiltyProvider implements Closeable {
 	 */
 	private void run() {
 		while (isRunning) {
-			synchronized (visibilityMap) {
-				for (int key : visibilityMap.keySet())
-					visibilityMap.put(key, random.nextBoolean());
-			}
+			idVisibility = !idVisibility;
 			try {
-				Thread.sleep(MAX_SLEEP_TIME);
+				Thread.sleep(SLEEP_TIME);
 			} catch (InterruptedException e) {
 				// ignore
 			}
@@ -55,6 +50,9 @@ public class RandomEventVisibiltyProvider implements Closeable {
 	}
 
 	/**
+	 * all events with id != 1 or 2 will be visible. events with 1 or 2 will be
+	 * visible as described in the class description {@link EventVisibiltyProvider}
+	 * 
 	 * @param event
 	 * @return true if the event is visible
 	 * @throws IllegalArgumentException
@@ -63,11 +61,12 @@ public class RandomEventVisibiltyProvider implements Closeable {
 	public boolean isVisible(Event event) {
 		Assurance.assureNotNull(event);
 		int id = event.getId();
-		synchronized (visibilityMap) {
-			if (!visibilityMap.containsKey(id))
-				visibilityMap.put(id, random.nextBoolean());
-			return visibilityMap.get(event.getId());
+		if (id == 1) {
+			return idVisibility;
+		} else if (id == 2) {
+			return !idVisibility;
 		}
+		return true;
 	}
 
 	@Override

@@ -68,9 +68,9 @@ public class LBRServer implements Closeable {
 	private final Logger logger;
 
 	/**
-	 * @see RandomEventVisibiltyProvider
+	 * @see EventVisibiltyProvider
 	 */
-	private final RandomEventVisibiltyProvider randomEventVisibiltyProvider;
+	private final EventVisibiltyProvider eventVisibiltyProvider;
 
 	/**
 	 * 
@@ -94,7 +94,7 @@ public class LBRServer implements Closeable {
 		Assurance.assureNotNull(dbPassword);
 		Assurance.assureNotEmpty(dbUsername);
 		Assurance.assureNotNull(logger);
-		randomEventVisibiltyProvider = new RandomEventVisibiltyProvider();
+		eventVisibiltyProvider = new EventVisibiltyProvider();
 		this.logger = logger;
 		logger.log(Level.INFO, "starting LBRServer: " + toString());
 		this.eventScoreCalculator = eventScoreCalculator;
@@ -162,7 +162,7 @@ public class LBRServer implements Closeable {
 		logger.log(Level.FINER, "filtering events");
 		eventList.removeIf((Event event) -> {
 			return !tagPreferenceConfiguration.containsAny(event.getTags())
-					|| !randomEventVisibiltyProvider.isVisible(event);
+					|| !eventVisibiltyProvider.isVisible(event);
 		});
 		return eventList;
 	}
