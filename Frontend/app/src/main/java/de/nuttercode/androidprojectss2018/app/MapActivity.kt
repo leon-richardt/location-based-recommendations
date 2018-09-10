@@ -12,7 +12,6 @@ import android.preference.PreferenceManager
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.LocalBroadcastManager
-import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
 
@@ -20,16 +19,15 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
 import de.nuttercode.androidprojectss2018.csi.ClientConfiguration
 import de.nuttercode.androidprojectss2018.csi.EventStore
 import de.nuttercode.androidprojectss2018.csi.ScoredEvent
-import java.lang.ref.WeakReference
+import de.nuttercode.androidprojectss2018.csi.TagStore
 
-private const val UPDATE_EVENTS_INTENT_ID = 42
-
-class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.OnListFragmentInteractionListener, AddAllTagsTaskCallback {
+class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.OnListFragmentInteractionListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var mList: EventListFragment
@@ -37,52 +35,70 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
     private lateinit var clientConfig: ClientConfiguration
     private lateinit var eventStore: EventStore
 
+    private var firstStart = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         checkAndRequestPermissions()
 
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-
-        // Check whether ClientConfiguration entry already exists
-        if (sharedPrefs.getString("ClientConfiguration", null) == null) {
-            // Custom ClientConfiguration does not exist yet, save a default ClientConfiguration
-            val clientConfigJson = Gson().toJson(ClientConfiguration().apply { radius = 200.0 })
-            sharedPrefs.edit().putString("ClientConfiguration", clientConfigJson).apply()
-        }
-
-        // At this point, there must be a ClientConfiguration saved --> retrieve it
-        clientConfig = Gson().fromJson(sharedPrefs.getString("ClientConfiguration", null), ClientConfiguration::class.java)
-        eventStore = EventStore(clientConfig)
-        updateEventStorePrefs()
-
-
-        // Add all available tags to the passed clientConfig. Currently, we run this on every startup.
-        // TODO: Implement settings menu and check whether new tags should automatically be added to ClientConfiguration
-        AddAllTagsTask(WeakReference(this), this).execute(clientConfig)
-
+        firstStart = sharedPrefs.getBoolean(SHARED_PREFS_FIRST_START, true)
 
         // Register a BroadcastReceiver that updates the event list with the new EventStore
         val mUpdateEventsReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                val newEventStoreGson = intent!!.getStringExtra(EVENT_STORE_UPDATED)
-                eventStore = Gson().fromJson(newEventStoreGson, EventStore::class.java)
-                updateEventStorePrefs()
-                updateEventList()
+                // Set the event store in this class to the most recent one (which is the one the service saved in SharedPreferences)
+                eventStore = Gson().fromJson(getFromSharedPrefs(SHARED_PREFS_EVENT_STORE), EventStore::class.java)
+                if (this@MapActivity::mList.isInitialized) updateEventList()
+                if (this@MapActivity::mMap.isInitialized) updateEventMap()
             }
         }
-        LocalBroadcastManager.getInstance(this).registerReceiver(mUpdateEventsReceiver, IntentFilter(ACTION_BROADCAST))
+        LocalBroadcastManager.getInstance(this).registerReceiver(mUpdateEventsReceiver, IntentFilter(BROADCAST_UPDATED_EVENT_STORE))
 
+        val mFetchTagsIntentServiceReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent?) {
+                if (firstStart) {
+                    // We know that an updated TagStore is now in SharedPrefs --> add all to ClientConfig
+                    val tagStore = Gson().fromJson(getFromSharedPrefs(SHARED_PREFS_TAG_STORE), TagStore::class.java)
+                    for (tag in tagStore.all) {
+                        clientConfig.tagPreferenceConfiguration.addTag(tag)
+                    }
+                    saveToSharedPrefs(SHARED_PREFS_CLIENT_CONFIG, clientConfig)
+                    UpdateEventsIntentService.startActionFetchEvents(this@MapActivity)
+                }
+            }
+        }
+        LocalBroadcastManager.getInstance(this).registerReceiver(mFetchTagsIntentServiceReceiver, IntentFilter(BROADCAST_UPDATED_TAG_STORE))
 
-        val updateIntent = Intent(this, UpdateEventsIntentService::class.java).apply {
+        if (firstStart) {
+            // If this is indeed the first start, we need to create new entries in SharedPreferences
+            val freshClientConfiguration = ClientConfiguration().apply {
+                radius = 200.0 // TODO: Get radius from settings
+            }
+            saveToSharedPrefs(SHARED_PREFS_CLIENT_CONFIG, freshClientConfiguration)
+
+            // Remember that we are not on the first start anymore
+            sharedPrefs.edit().putBoolean(SHARED_PREFS_FIRST_START, false).apply()
+        }
+
+        // At this point, there must be a ClientConfiguration saved --> retrieve it
+        clientConfig = Gson().fromJson(sharedPrefs.getString(SHARED_PREFS_CLIENT_CONFIG, null), ClientConfiguration::class.java)
+        eventStore = EventStore(clientConfig)
+        saveToSharedPrefs(SHARED_PREFS_EVENT_STORE, eventStore)
+
+        // On first start, this will also trigger the UpdateEventsIntentService
+        FetchTagsIntentService.startActionFetchTags(this)
+
+        val updateEventsIntent = Intent(this, UpdateEventsIntentService::class.java).apply {
             action = ACTION_FETCH_EVENTS
         }
 
-        // Run the service once now ...
-        startService(updateIntent)
+        // Run the service once at start (on the first start, this will be done after fetching tags) ...
+        if (!firstStart) startService(updateEventsIntent)
 
         // ... and schedule it to repeat every ~15 minutes
-        val pendingUpdateIntent = PendingIntent.getService(this, UPDATE_EVENTS_INTENT_ID, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingUpdateIntent = PendingIntent.getService(this, UPDATE_EVENTS_INTENT_ID, updateEventsIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingUpdateIntent)
 
@@ -100,20 +116,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
 
     override fun onResume() {
         super.onResume()
-        // Run the service when we re-open the activity
         UpdateEventsIntentService.startActionFetchEvents(this)
-        updateEventList()
     }
 
     override fun onListFragmentInteraction(item: ScoredEvent?) {
-        // TODO: Remove logging/Toast
-        val msg = "List interaction registered on Event ${item?.event?.id}: Name = ${item?.event?.name}, Description = ${item?.event?.description}"
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
-        Log.i("MapActivity", msg)
-
         // Create an Intent for that specific event and start the overview activity
         val intent = Intent(this, EventOverviewActivity::class.java)
-        intent.putExtra("EXTRA_EVENT", item)
+        intent.putExtra(EXTRA_EVENT_CLICKED, item)
         startActivity(intent)
     }
 
@@ -128,45 +137,84 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
-    fun updateEventList() {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            PERMISSIONS_REQUEST_LOCATION -> {
+                // If request is cancelled, the result arrays are empty
+                if (grantResults.isNotEmpty() && (grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+                    // Permission granted
+                    UpdateEventsIntentService.startActionFetchEvents(this)
+                } else {
+                    // Permission denied
+                    Toast.makeText(this, "This app requires location access.", Toast.LENGTH_LONG).show()
+                }
+                return
+            }
+        }
+    }
+
+    fun saveToSharedPrefs(key: String, value: Any) {
+        val internalPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        internalPrefs.edit().putString(key, Gson().toJson(value)).apply()
+    }
+
+    fun getFromSharedPrefs(key: String): String {
+        val internalSharedPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        return internalSharedPrefs.getString(key, null)
+                ?: throw IllegalStateException("SharedPreferences do not contain key '$key'")
+    }
+
+    private fun updateEventList() {
+        val mostRecentEventStore = Gson().fromJson(getFromSharedPrefs(SHARED_PREFS_EVENT_STORE), EventStore::class.java)
         mList.clearList()
-        mList.addAllElements(eventStore.all)
+        mList.addAllElements(mostRecentEventStore.all)
         mList.refreshList()
     }
 
-    fun updateEventStorePrefs() {
-        sharedPrefs.edit().putString("EventStore", Gson().toJson(eventStore)).apply()
+    private fun updateEventMap() {
+        val mostRecentEventStore = Gson().fromJson(getFromSharedPrefs(SHARED_PREFS_EVENT_STORE), EventStore::class.java)
+        val boundsBuilder = LatLngBounds.builder()
+        for (scoredEvent in mostRecentEventStore.all) {
+            val venuePos = LatLng(scoredEvent.event.venue.latitude, scoredEvent.event.venue.longitude)
+            boundsBuilder.include(venuePos)
+            mMap.addMarker(MarkerOptions().position(venuePos).title("${scoredEvent.event.name} at ${scoredEvent.event.venue.name}"))
+        }
+        // Move the camera in such a way that every event marked on the map is visible
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 100))
     }
 
     /**
      * Returns true if the permissions were already granted. Returns false if the permission dialog is prompted.
      */
-    fun checkAndRequestPermissions(): Boolean {
+    fun checkAndRequestPermissions() {
         if (ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 0)
-            return false
-        }
-        return true
-    }
 
-    override fun processAddAllTagsResult(result: ClientConfiguration) {
-        // Update JSON representation
-        Log.i(TAG, "Listing tags in callback:")
-        for (tag in result.tagPreferenceConfiguration) {
-            Log.i(TAG, tag.name)
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // TODO: Show explanation
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION),
+                        PERMISSIONS_REQUEST_LOCATION)
+            }
         }
-        sharedPrefs.edit().putString("ClientConfiguration", Gson().toJson(result)).apply()
     }
 
     companion object {
         const val TAG = "MapActivity"
+
+        const val EXTRA_EVENT_CLICKED = "de.nuttercode.androidprojectss2018.app.extra.EVENT_CLICKED"
+
+        const val SHARED_PREFS_CLIENT_CONFIG = "de.nuttercode.androidprojectss2018.app.sharedpreferences.CLIENT_CONFIGURATION"
+        const val SHARED_PREFS_EVENT_STORE = "de.nuttercode.androidprojectss2018.app.sharedpreferences.EVENT_STORE"
+        const val SHARED_PREFS_TAG_STORE = "de.nuttercode.androidprojectss2018.app.sharedpreferences.TAG_STORE"
+        const val SHARED_PREFS_FIRST_START = "de.nuttercode.androidprojectss2018.app.sharedpreferences.FIRST_START"
+
+        const val PERMISSIONS_REQUEST_LOCATION = 0
+        const val UPDATE_EVENTS_INTENT_ID = 42
     }
 }

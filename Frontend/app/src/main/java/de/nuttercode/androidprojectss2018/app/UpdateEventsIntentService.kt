@@ -1,7 +1,6 @@
 package de.nuttercode.androidprojectss2018.app
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.IntentService
 import android.content.Intent
 import android.content.Context
@@ -14,22 +13,22 @@ import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
+import de.nuttercode.androidprojectss2018.csi.ClientConfiguration
 import de.nuttercode.androidprojectss2018.csi.EventStore
+import de.nuttercode.androidprojectss2018.csi.TagStore
 
 const val ACTION_FETCH_EVENTS = "de.nuttercode.androidprojectss2018.app.action.FETCH_EVENTS"
-const val ACTION_BROADCAST = "de.nuttercode.androidprojectss2018.app.action.BROADCAST"
-const val EVENT_STORE_UPDATED = "de.nuttercode.androidprojectss2018.app.action.EVENT_STORE_UPDATED"
+const val BROADCAST_UPDATED_EVENT_STORE = "de.nuttercode.androidprojectss2018.app.broadcast.UPDATED_EVENT_STORE"
 
 /**
  * An [IntentService] subclass for handling asynchronous task requests in
  * a service on a separate handler thread.
- * TODO: Customize class - update intent actions, extra parameters and static
- * helper methods.
  */
 class UpdateEventsIntentService : IntentService("UpdateEventsIntentService") {
     private lateinit var sharedPrefs: SharedPreferences
     private lateinit var eventStore: EventStore
     private lateinit var wakeLock: PowerManager.WakeLock
+    private lateinit var tagStore: TagStore
 
 
     override fun onHandleIntent(intent: Intent) {
@@ -44,8 +43,18 @@ class UpdateEventsIntentService : IntentService("UpdateEventsIntentService") {
             }
 
             sharedPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-            // Get the event store from shared prefs in order to make sure we use the up-to-date version
-            eventStore = Gson().fromJson(sharedPrefs.getString("EventStore", null), EventStore::class.java)
+            val clientConfiguration = Gson().fromJson(sharedPrefs.getString(MapActivity.SHARED_PREFS_CLIENT_CONFIG, null), ClientConfiguration::class.java)
+            val tagStoreString = sharedPrefs.getString(MapActivity.SHARED_PREFS_TAG_STORE, null) ?: Gson().toJson(TagStore(clientConfiguration))
+
+            tagStore = Gson().fromJson(tagStoreString, TagStore::class.java)
+            // If the TagStore in SharedPreferences is empty, no events will be found --> release the wakelock and return
+            if (tagStore.all.isEmpty()) {
+                Log.i(TAG, "TagStore is empty, we would not find any Events. Ending the service now. (Wakelock will also be released)")
+                wakeLock.release()
+                return
+            }
+            // Create a new EventStore with the up-to-date ClientConfiguration (from SharedPreferences)
+            eventStore = EventStore(clientConfiguration)
             handleActionFetchEvents(eventStore)
         }
     }
@@ -54,7 +63,6 @@ class UpdateEventsIntentService : IntentService("UpdateEventsIntentService") {
      * Handle action in the provided background thread with the provided
      * parameters.
      */
-    @SuppressLint("MissingPermission")  // TODO: REMOVE LATER
     private fun handleActionFetchEvents(eventStore: EventStore) {
         Log.i(TAG, "Started handleActionFetchEvents()")
         try {
@@ -88,10 +96,11 @@ class UpdateEventsIntentService : IntentService("UpdateEventsIntentService") {
                 }
                 Log.i(TAG, "Finished listing all Events in EventStore")
 
-                // Get the JSON representation of the updated EventStore and send it as a broadcast
-                val answerBroadcast = Intent(ACTION_BROADCAST).apply {
-                    action = ACTION_BROADCAST
-                    putExtra(EVENT_STORE_UPDATED, Gson().toJson(eventStore))
+
+                sharedPrefs.edit().putString(MapActivity.SHARED_PREFS_EVENT_STORE, Gson().toJson(eventStore)).apply()
+                // Set the JSON representation of the updated EventStore and send it a broadcast to let MapActivity know we finished updating
+                val answerBroadcast = Intent(BROADCAST_UPDATED_EVENT_STORE).apply {
+                    action = BROADCAST_UPDATED_EVENT_STORE
                 }
                 LocalBroadcastManager.getInstance(this).sendBroadcast(answerBroadcast)
 

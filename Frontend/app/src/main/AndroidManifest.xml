@@ -47,6 +47,9 @@
             android:name=".UpdateEventsIntentService"
             android:enabled="true"
             android:exported="false" />
+        <service
+            android:name=".FetchTagsIntentService"
+            android:exported="false"></service>
     </application>
 
 </manifest>
