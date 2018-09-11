@@ -8,13 +8,15 @@ import de.nuttercode.androidprojectss2018.csi.Venue;
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+/*
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.sql.Date;
+*/
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Collection;
@@ -111,7 +113,8 @@ public class DBConnection implements Closeable {
 					dbResult.getString("venue_description"), dbResult.getBigDecimal("longitude").doubleValue(),
 					dbResult.getBigDecimal("latitude").doubleValue(), dbResult.getBigDecimal("distance").doubleValue()),
 					dbResult.getString("event_name"), dbResult.getString("event_description"),
-					dbResult.getInt("event_id"), getLocalDateTime(dbResult.getDate("date"), dbResult.getTime("time"))));
+					dbResult.getInt("event_id")));
+		// , getLocalDateTime(dbResult.getDate("date"), dbResult.getTime("time"))
 		return events;
 	}
 
@@ -217,15 +220,13 @@ public class DBConnection implements Closeable {
 	 *            The SQL Result Time may be null
 	 * @return LocalDateTime with default values if parameters are null
 	 */
-	private static LocalDateTime getLocalDateTime(Date date, Time time) {
-		Date actualDate = date;
-		if (actualDate == null)
-			actualDate = new Date(0);
-		Time actualTime = time;
-		if (actualTime == null)
-			actualTime = new Time(0);
-		return LocalDateTime.of(actualDate.toLocalDate(), actualTime.toLocalTime());
-	}
+	/*
+	 * private static LocalDateTime getLocalDateTime(Date date, Time time) { Date
+	 * actualDate = date; if (actualDate == null) actualDate = new Date(0); Time
+	 * actualTime = time; if (actualTime == null) actualTime = new Time(0); return
+	 * LocalDateTime.of(actualDate.toLocalDate(), actualTime.toLocalTime()); }
+	 * 
+	 */
 
 	/**
 	 * Checks if the Connection was initialized before working on query
