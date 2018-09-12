@@ -1,18 +1,17 @@
 package de.nuttercode.androidprojectss2018.app
 
-import android.Manifest
-import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
 import android.content.*
-import android.content.pm.PackageManager
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.SystemClock
 import android.preference.PreferenceManager
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.LocalBroadcastManager
-import android.widget.Toast
+import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 
 import com.google.android.gms.maps.GoogleMap
@@ -37,39 +36,22 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
 
     private var firstStart = true
 
+    private var newEventsAvailable = false
+
+    private var notifId = 0
+
+    private lateinit var jobScheduler: JobScheduler
+    private var jobId = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        checkAndRequestPermissions()
+        createNotificationChannel()
 
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+
         firstStart = sharedPrefs.getBoolean(SHARED_PREFS_FIRST_START, true)
-
-        // Register a BroadcastReceiver that updates the event list with the new EventStore
-        val mUpdateEventsReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                // Set the event store in this class to the most recent one (which is the one the service saved in SharedPreferences)
-                eventStore = Gson().fromJson(getFromSharedPrefs(SHARED_PREFS_EVENT_STORE), EventStore::class.java)
-                if (this@MapActivity::mList.isInitialized) updateEventList()
-                if (this@MapActivity::mMap.isInitialized) updateEventMap()
-            }
-        }
-        LocalBroadcastManager.getInstance(this).registerReceiver(mUpdateEventsReceiver, IntentFilter(BROADCAST_UPDATED_EVENT_STORE))
-
-        val mFetchTagsIntentServiceReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent?) {
-                if (firstStart) {
-                    // We know that an updated TagStore is now in SharedPrefs --> add all to ClientConfig
-                    val tagStore = Gson().fromJson(getFromSharedPrefs(SHARED_PREFS_TAG_STORE), TagStore::class.java)
-                    for (tag in tagStore.all) {
-                        clientConfig.tagPreferenceConfiguration.addTag(tag)
-                    }
-                    saveToSharedPrefs(SHARED_PREFS_CLIENT_CONFIG, clientConfig)
-                    UpdateEventsIntentService.startActionFetchEvents(this@MapActivity)
-                }
-            }
-        }
-        LocalBroadcastManager.getInstance(this).registerReceiver(mFetchTagsIntentServiceReceiver, IntentFilter(BROADCAST_UPDATED_TAG_STORE))
 
         if (firstStart) {
             // If this is indeed the first start, we need to create new entries in SharedPreferences
@@ -87,36 +69,45 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         eventStore = EventStore(clientConfig)
         saveToSharedPrefs(SHARED_PREFS_EVENT_STORE, eventStore)
 
-        // On first start, this will also trigger the UpdateEventsIntentService
-        FetchTagsIntentService.startActionFetchTags(this)
-
-        val updateEventsIntent = Intent(this, UpdateEventsIntentService::class.java).apply {
-            action = ACTION_FETCH_EVENTS
-        }
-
-        // Run the service once at start (on the first start, this will be done after fetching tags) ...
-        if (!firstStart) startService(updateEventsIntent)
-
-        // ... and schedule it to repeat every ~15 minutes
-        val pendingUpdateIntent = PendingIntent.getService(this, UPDATE_EVENTS_INTENT_ID, updateEventsIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingUpdateIntent)
-
-        // Must be set after clientConfig has been loaded
         setContentView(R.layout.activity_map)
 
         // Obtain the Event list
         mList = supportFragmentManager.findFragmentById(R.id.list) as EventListFragment
-        updateEventList()
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        // Get events/tags for the first time and update the view
+        val updateEventsTask = object : UpdateEventsTask(this@MapActivity) {
+            override fun onPostExecute(result: Boolean) {
+                updateEventList()
+                updateEventMap()
+            }
+        }
+
+        val updateTagsTask = object : UpdateTagsTask(this@MapActivity) {
+            override fun onPostExecute(result: Boolean) {
+                val tagStore = Gson().fromJson(getFromSharedPrefs(SHARED_PREFS_TAG_STORE), TagStore::class.java)
+                for (t in tagStore.all) clientConfig.tagPreferenceConfiguration.addTag(t)
+                saveToSharedPrefs(SHARED_PREFS_CLIENT_CONFIG, clientConfig)
+                updateEventsTask.execute()
+            }
+        }
+        updateTagsTask.execute()
+
+        // Schedule the repeating tasks for event and tag fetching
+        jobScheduler.schedule(buildJobInfo(PERIODIC_EVENT_UPDATES_JOB_ID, UpdateEventsJobService::class.java))
+        jobScheduler.schedule(buildJobInfo(PERIODIC_TAG_UPDATES_JOB_ID, UpdateTagsJobService::class.java))
     }
 
     override fun onResume() {
         super.onResume()
-        UpdateEventsIntentService.startActionFetchEvents(this)
+        // If the user opens the activity, he likely wants to see the most recent data
+        if (newEventsAvailable) {
+            updateEventList()
+            updateEventMap()
+        }
     }
 
     override fun onListFragmentInteraction(item: ScoredEvent?) {
@@ -139,22 +130,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         mMap = googleMap
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when (requestCode) {
-            PERMISSIONS_REQUEST_LOCATION -> {
-                // If request is cancelled, the result arrays are empty
-                if (grantResults.isNotEmpty() && (grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
-                    // Permission granted
-                    UpdateEventsIntentService.startActionFetchEvents(this)
-                } else {
-                    // Permission denied
-                    Toast.makeText(this, "This app requires location access.", Toast.LENGTH_LONG).show()
-                }
-                return
-            }
-        }
-    }
-
     fun saveToSharedPrefs(key: String, value: Any) {
         val internalPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         internalPrefs.edit().putString(key, Gson().toJson(value)).apply()
@@ -166,15 +141,24 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
                 ?: throw IllegalStateException("SharedPreferences do not contain key '$key'")
     }
 
-    private fun updateEventList() {
+    fun updateEventList() {
         val mostRecentEventStore = Gson().fromJson(getFromSharedPrefs(SHARED_PREFS_EVENT_STORE), EventStore::class.java)
         mList.clearList()
         mList.addAllElements(mostRecentEventStore.all)
         mList.refreshList()
     }
 
-    private fun updateEventMap() {
+    fun updateEventMap() {
+        if (!::mMap.isInitialized) return
+
+        // Make sure to remove all markers (we will add them again if their events are still in the store)
+        mMap.clear()
+
         val mostRecentEventStore = Gson().fromJson(getFromSharedPrefs(SHARED_PREFS_EVENT_STORE), EventStore::class.java)
+
+        // If there are no events in the EventStore, we can quit already
+        if (mostRecentEventStore.all.isEmpty()) return
+
         val boundsBuilder = LatLngBounds.builder()
         for (scoredEvent in mostRecentEventStore.all) {
             val venuePos = LatLng(scoredEvent.event.venue.latitude, scoredEvent.event.venue.longitude)
@@ -185,36 +169,49 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 100))
     }
 
-    /**
-     * Returns true if the permissions were already granted. Returns false if the permission dialog is prompted.
-     */
-    fun checkAndRequestPermissions() {
-        if (ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    private fun buildJobInfo(id: Int, cls: Class<*>): JobInfo {
+        if (cls != UpdateTagsJobService::class.java && cls != UpdateEventsJobService::class.java)
+            throw IllegalArgumentException("Can only pass UpdateTagsJobService or UpdateEventsJobService")
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION) ||
-                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                // TODO: Show explanation
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_COARSE_LOCATION),
-                        PERMISSIONS_REQUEST_LOCATION)
-            }
+        return JobInfo.Builder(id, ComponentName(this, cls))
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setPeriodic(if (cls == UpdateTagsJobService::class.java) 1000L * 60 * 60 else 1000L * 60 * 15)
+                .build()
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Default Channel"
+            val description = "Channel for all notifications"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance)
+            channel.description = description
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            val notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager!!.createNotificationChannel(channel)
         }
+    }
+
+    private fun sendNotification(title: String, text: String) {
+        val tmpIntent = Intent(this, MapActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT) }
+        val pendingIntent = PendingIntent.getActivity(this, notifId++, tmpIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val notifBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+                .setSmallIcon(R.drawable.notification_icon_background)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+
+        val notifManager = NotificationManagerCompat.from(this)
+        notifManager.notify(notifId, notifBuilder.build())
     }
 
     companion object {
         const val TAG = "MapActivity"
-
-        const val EXTRA_EVENT_CLICKED = "de.nuttercode.androidprojectss2018.app.extra.EVENT_CLICKED"
-
-        const val SHARED_PREFS_CLIENT_CONFIG = "de.nuttercode.androidprojectss2018.app.sharedpreferences.CLIENT_CONFIGURATION"
-        const val SHARED_PREFS_EVENT_STORE = "de.nuttercode.androidprojectss2018.app.sharedpreferences.EVENT_STORE"
-        const val SHARED_PREFS_TAG_STORE = "de.nuttercode.androidprojectss2018.app.sharedpreferences.TAG_STORE"
-        const val SHARED_PREFS_FIRST_START = "de.nuttercode.androidprojectss2018.app.sharedpreferences.FIRST_START"
-
-        const val PERMISSIONS_REQUEST_LOCATION = 0
-        const val UPDATE_EVENTS_INTENT_ID = 42
     }
 }

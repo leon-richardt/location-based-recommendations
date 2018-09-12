@@ -15,7 +15,7 @@ class EventOverviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_overview)
-        scoredEvent = intent.getSerializableExtra(MapActivity.EXTRA_EVENT_CLICKED) as ScoredEvent
+        scoredEvent = intent.getSerializableExtra(EXTRA_EVENT_CLICKED) as ScoredEvent
 
         eventNameView = findViewById<TextView>(R.id.event_name).apply { text = scoredEvent.event.name }
         venueNameView = findViewById<TextView>(R.id.venue_name).apply { text = scoredEvent.event.venue.name }
