@@ -16,10 +16,10 @@ public class TagPreferenceConfiguration implements Serializable {
 
 	private static final long serialVersionUID = 4061390806054215254L;
 
-	private final Map<Integer, TagUserChoice> userChoiceTagSet;
+	private final Map<Integer, TagUserChoice> userChoiceTagMap;
 
 	public TagPreferenceConfiguration() {
-		userChoiceTagSet = new HashMap<>();
+		userChoiceTagMap = new HashMap<>();
 	}
 
 	/**
@@ -33,8 +33,8 @@ public class TagPreferenceConfiguration implements Serializable {
 	public void addTag(Tag tag) {
 		Assurance.assureNotNull(tag);
 		Integer id = tag.getId();
-		if (!userChoiceTagSet.containsKey(id))
-			userChoiceTagSet.put(id, TagUserChoice.Accept);
+		if (!userChoiceTagMap.containsKey(id))
+			userChoiceTagMap.put(id, TagUserChoice.Accept);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class TagPreferenceConfiguration implements Serializable {
 	public void setTag(Tag tag, TagUserChoice tagUserChoice) {
 		Assurance.assureNotNull(tag);
 		Assurance.assureNotNull(tagUserChoice);
-		userChoiceTagSet.put(tag.getId(), tagUserChoice);
+		userChoiceTagMap.put(tag.getId(), tagUserChoice);
 	}
 
 	/**
@@ -63,8 +63,8 @@ public class TagPreferenceConfiguration implements Serializable {
 	public TagUserChoice getUserChoice(Tag tag) {
 		Assurance.assureNotNull(tag);
 		Integer id = tag.getId();
-		if (userChoiceTagSet.containsKey(id))
-			return userChoiceTagSet.get(id);
+		if (userChoiceTagMap.containsKey(id))
+			return userChoiceTagMap.get(id);
 		return TagUserChoice.Accept;
 	}
 
@@ -77,7 +77,7 @@ public class TagPreferenceConfiguration implements Serializable {
 		Integer id;
 		for (Tag tag : tags) {
 			id = tag.getId();
-			if (userChoiceTagSet.containsKey(id) && userChoiceTagSet.get(id) != TagUserChoice.Deny)
+			if (userChoiceTagMap.containsKey(id) && userChoiceTagMap.get(id) != TagUserChoice.Deny)
 				return true;
 		}
 		return false;
@@ -85,7 +85,7 @@ public class TagPreferenceConfiguration implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TagPreferenceConfiguration [userChoiceTagSet=" + userChoiceTagSet + "]";
+		return "TagPreferenceConfiguration [userChoiceTagSet=" + userChoiceTagMap + "]";
 	}
 
 }
