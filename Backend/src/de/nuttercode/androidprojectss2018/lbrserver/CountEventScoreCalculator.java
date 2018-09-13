@@ -45,9 +45,14 @@ public class CountEventScoreCalculator implements EventScoreCalculator {
 		}
 		if (!tagList.isEmpty()) {
 			int size = tagList.size();
-			// double cast to mitigate int-division
-			score = countScore + size / (double) size;
+			// double constant to mitigate int-division
+			score = countScore + size / (2.0 * size);
 		}
+		// mitigate rounding errors
+		if (score < 0)
+			score = 0;
+		else if (score > 1)
+			score = 1;
 		return new ScoredEvent(event, score);
 	}
 
