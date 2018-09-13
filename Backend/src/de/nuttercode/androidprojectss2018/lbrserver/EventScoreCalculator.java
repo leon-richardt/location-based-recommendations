@@ -2,6 +2,7 @@ package de.nuttercode.androidprojectss2018.lbrserver;
 
 import de.nuttercode.androidprojectss2018.csi.Event;
 import de.nuttercode.androidprojectss2018.csi.ScoredEvent;
+import de.nuttercode.androidprojectss2018.csi.TagPreferenceConfiguration;
 
 /**
  * interface for different Event scoring mechanisms
@@ -16,8 +17,11 @@ public interface EventScoreCalculator {
 	 * boundaries specified in {@link ScoredEvent}
 	 * 
 	 * @param event
-	 * @return event + score
+	 * @param tpc
+	 * @return new {@link ScoredEvent}
+	 * @throws IllegalArgumentException
+	 *             if event or tpc is null
 	 */
-	ScoredEvent scoreEvent(Event event);
+	ScoredEvent scoreEvent(Event event, TagPreferenceConfiguration tpc);
 
 }
