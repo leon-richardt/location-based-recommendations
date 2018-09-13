@@ -106,7 +106,6 @@ public class LBRServer implements Closeable {
 		}
 		serverThread = new Thread(this::run);
 		serverThread.setName("LBRServerThread");
-		serverThread.start();
 		isClosed = false;
 		executorServer = Executors.newFixedThreadPool(4);
 		try {
@@ -116,6 +115,10 @@ public class LBRServer implements Closeable {
 			logger.log(Level.WARNING, e.toString(), e);
 			throw new IllegalStateException("dbConnection unintializable", e);
 		}
+		// start at end so that all resources have been loaded before ClientConnections
+		// are processed
+		serverThread.start();
+		logger.info("LBRServer created");
 	}
 
 	/**
