@@ -8,8 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
+import de.nuttercode.androidprojectss2018.lbrserver.CountEventScoreCalculator;
 import de.nuttercode.androidprojectss2018.lbrserver.LBRServer;
-import de.nuttercode.androidprojectss2018.lbrserver.RandomEventScoreCalculator;
 
 /**
  * test {@link LBRServer}
@@ -24,7 +24,7 @@ public class LBRServerTest {
 		final Logger logger = Logger.getLogger(LBRServerTest.class.getCanonicalName() + "::Test");
 		logger.info("starting server");
 		logger.setLevel(Level.ALL);
-		LBRServer lbrServer = new LBRServer(ClientConfiguration.DEFAULT_LBR_PORT, new RandomEventScoreCalculator(42),
+		LBRServer lbrServer = new LBRServer(ClientConfiguration.DEFAULT_LBR_PORT, new CountEventScoreCalculator(),
 				"localhost", 3306, "lbr", "lbr", args[0], logger);
 		try {
 			fileHandler = new FileHandler(
