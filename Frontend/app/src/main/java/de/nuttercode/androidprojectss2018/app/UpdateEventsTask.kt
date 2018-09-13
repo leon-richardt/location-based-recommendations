@@ -4,15 +4,11 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.AsyncTask
-import android.preference.PreferenceManager
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
-import com.google.gson.Gson
-import de.nuttercode.androidprojectss2018.csi.ClientConfiguration
-import de.nuttercode.androidprojectss2018.csi.EventStore
 import de.nuttercode.androidprojectss2018.csi.ScoredEvent
 import java.lang.ref.WeakReference
 import java.util.*
@@ -20,10 +16,8 @@ import java.util.*
 open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>() {
 
     private var contextRef = WeakReference(context)
-    private var sharedPrefs = PreferenceManager.getDefaultSharedPreferences(contextRef.get())
-    private var geofencingClient = LocationServices.getGeofencingClient(contextRef.get()!!)
-    private lateinit var clientConfiguration: ClientConfiguration
-    private lateinit var eventStore: EventStore
+    // Included for future use
+//    private var geofencingClient = LocationServices.getGeofencingClient(contextRef.get()!!)
 
 
     /**
@@ -34,8 +28,7 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
                 ContextCompat.checkSelfPermission(contextRef.get()!!, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
             // We initialize them here in order to make sure they are up-to-date when the task is executed, not when it is declared
-            clientConfiguration = Gson().fromJson(sharedPrefs.getString(SHARED_PREFS_CLIENT_CONFIG, null), ClientConfiguration::class.java)
-            eventStore = EventStore(clientConfiguration)
+            val eventStore = obtainMostRecentEventStore()
 
             val locTask = LocationServices.getFusedLocationProviderClient(contextRef.get()!!).lastLocation
 
@@ -51,10 +44,6 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
                 // Indicate that this job should be rescheduled
                 return true
             }
-
-            Log.i(TAG, "ClientConfiguration = $clientConfiguration")
-            Log.i(TAG, "Listing Tags in TPC:")
-            for (t in clientConfiguration.tagPreferenceConfiguration) Log.i(TAG, "Tag in TPC: ${t.name}")
 
             eventStore.setUserLocation(location.latitude, location.longitude)
             val qri = eventStore.refresh()
@@ -82,8 +71,9 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
 
                 // TODO: Register geofencing events
             }
-            // Update EventStore representation in SharedPreferences
-            sharedPrefs.edit().putString(SHARED_PREFS_EVENT_STORE, Gson().toJson(eventStore)).apply()
+
+            // Update the EventStore holder (this does not need to be done as EventStores are mutable)
+            updateMostRecentEventStore(eventStore)
             // Indicate that this job does not need to be rescheduled immediately
             return false
         } else {
@@ -98,15 +88,25 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
 
         return Geofence.Builder()
                 .setRequestId(event.id.toString())
-                .setCircularRegion(event.venue.latitude, event.venue.longitude, 100.0f)
+                .setCircularRegion(event.venue.latitude, event.venue.longitude, GEOFENCE_RADIUS)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-                .setLoiteringDelay(1000 * 20)   // Only trigger an GeofencingEvent when the user stays inside the circular region for >= 20 seconds
+                .setLoiteringDelay(GEOFENCE_LOITERING_DELAY)   // Only trigger an GeofencingEvent when the user stays inside the circular region for the given time
                 .build()
     }
 
     companion object {
         const val TAG = "UpdateEventsTask"
+
+        /**
+         * Radius (in meters) inside which a geofencing event should trigger
+         */
+        private const val GEOFENCE_RADIUS: Float = 100.0f
+
+        /**
+         * Time (in milliseconds) that a user has to spend inside the circular region before a geofencing event should trigger
+         */
+        private const val GEOFENCE_LOITERING_DELAY: Int = 1000 * 20
     }
 
 }

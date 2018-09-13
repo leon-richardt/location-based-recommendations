@@ -13,7 +13,9 @@ open class UpdateTagsTask(context: Context) : AsyncTask<Void, Void, Boolean>() {
 
     private var contextRef = WeakReference(context)
     private var sharedPrefs = PreferenceManager.getDefaultSharedPreferences(contextRef.get())
+
     // Get the most up-to-date TagStore from SharedPreferences or create a new one with the ClientConfiguration in SharedPreferences
+    // We do not use Utils.getFromSharedPreferences because we want to fall back to a default store if none exists yet
     private var tagStore = Gson().fromJson(sharedPrefs.getString(SHARED_PREFS_TAG_STORE, null), TagStore::class.java)
             ?: TagStore(Gson().fromJson(sharedPrefs.getString(SHARED_PREFS_CLIENT_CONFIG, null), ClientConfiguration::class.java))
 
@@ -34,7 +36,7 @@ open class UpdateTagsTask(context: Context) : AsyncTask<Void, Void, Boolean>() {
         Log.i(TAG, "Finished listing all tags")
 
         // Updated the TagStore in SharedPreferences
-        sharedPrefs.edit().putString(SHARED_PREFS_TAG_STORE, Gson().toJson(tagStore)).apply()
+        saveToSharedPrefs(sharedPrefs, tagStore)
         // Indicate that this job does not need to be rescheduled
         return false
     }

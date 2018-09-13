@@ -12,10 +12,15 @@ import android.widget.Toast
 
 class SplashScreenActivity : AppCompatActivity() {
 
+    /**
+     * A [TextView] for stating information about the permission request.
+     */
+    private lateinit var permissionRequestTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-        // checkAndRequestPermissions()
+        permissionRequestTextView = findViewById(R.id.permissionRequestTextView)
     }
 
     override fun onResume() {
@@ -23,6 +28,11 @@ class SplashScreenActivity : AppCompatActivity() {
         checkAndRequestPermissions()
     }
 
+    /**
+     * This method is called as a callback from [ActivityCompat.requestPermissions] which is called
+     * in [checkAndRequestPermissions]. We act depending on the result of the permission request
+     * (either granted or denied).
+     */
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             PERMISSIONS_REQUEST_LOCATION -> {
@@ -58,15 +68,20 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Opens a [MapActivity] and finishes this Activity (removing it from the stack).
+     */
     private fun openMapActivity() {
         val mapIntent = Intent(this, MapActivity::class.java)
         startActivity(mapIntent)
         finish()
     }
 
+    /**
+     * Shows a toast stating that this app needs location access and updates [permissionRequestTextView].
+     */
     private fun handlePermissionDenied() {
         Toast.makeText(this, "This app requires location access.", Toast.LENGTH_LONG).show()
-        findViewById<TextView>(R.id.permissionRequestTextView).text =
-                "This app needs location access. Please grant the necessary permission. "
+        permissionRequestTextView.text = "This app needs location access. Please grant the necessary permission. "
     }
 }
