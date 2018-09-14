@@ -11,7 +11,7 @@ import de.nuttercode.androidprojectss2018.csi.TagUserChoice;
 
 /**
  * uses the following metric to calculate a score. For every tag in the event a
- * {@link TagUserChoice#DENY} counts as -1, a {@link TagUserChoice#ACCEPT}
+ * {@link TagUserChoice#DISLIKE} counts as -1, a {@link TagUserChoice#ACCEPT}
  * counts as 0, and a {@link TagUserChoice#LIKE} counts as +1. Let m be the
  * number of +1, n number of -1, and p the number of {@link Tag}s in the
  * {@link Event}. The score s will be s = (m + n + p) / 2p which satisfies
@@ -33,7 +33,7 @@ public class CountEventScoreCalculator implements EventScoreCalculator {
 			switch (tpc.getUserChoice(tag)) {
 			case ACCEPT:
 				break;
-			case DENY:
+			case DISLIKE:
 				countScore--;
 				break;
 			case LIKE:

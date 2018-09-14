@@ -77,7 +77,7 @@ public class TagPreferenceConfiguration implements Serializable {
 		Integer id;
 		for (Tag tag : tags) {
 			id = tag.getId();
-			if (userChoiceTagMap.containsKey(id) && userChoiceTagMap.get(id) != TagUserChoice.DENY)
+			if (userChoiceTagMap.containsKey(id) && userChoiceTagMap.get(id) != TagUserChoice.DISLIKE)
 				return true;
 		}
 		return false;
