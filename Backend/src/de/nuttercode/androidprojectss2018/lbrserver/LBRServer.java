@@ -172,7 +172,7 @@ public class LBRServer implements Closeable {
 			TagPreferenceConfiguration tagPreferenceConfiguration, LBRQuery lbrQuery) {
 		logger.log(Level.FINER, "filtering events");
 		eventList.removeIf((Event event) -> {
-			return !lbrQuery.ignoreId(event.getId()) || !tagPreferenceConfiguration.containsAny(event.getTags())
+			return lbrQuery.ignoreId(event.getId()) || !tagPreferenceConfiguration.containsAny(event.getTags())
 					|| !eventVisibiltyProvider.isVisible(event);
 		});
 		return eventList;
