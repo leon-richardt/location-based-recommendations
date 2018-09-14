@@ -2,7 +2,7 @@ package de.nuttercode.androidprojectss2018.lbrserver;
 
 import java.util.Random;
 
-import de.nuttercode.androidprojectss2018.csi.TagPreferenceConfiguration;
+import de.nuttercode.androidprojectss2018.csi.config.TagPreferenceConfiguration;
 import de.nuttercode.androidprojectss2018.csi.pojo.Event;
 import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent;
 

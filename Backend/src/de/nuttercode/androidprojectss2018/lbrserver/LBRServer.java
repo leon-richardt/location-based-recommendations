@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import java.lang.Thread;
 
 import de.nuttercode.androidprojectss2018.csi.*;
+import de.nuttercode.androidprojectss2018.csi.config.TagPreferenceConfiguration;
 import de.nuttercode.androidprojectss2018.csi.pojo.Event;
 import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent;
 import de.nuttercode.androidprojectss2018.csi.pojo.Tag;

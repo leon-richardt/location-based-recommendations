@@ -1,6 +1,6 @@
 package de.nuttercode.androidprojectss2018.test;
 
-import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
+import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration;
 import de.nuttercode.androidprojectss2018.csi.store.TagStore;
 import de.nuttercode.androidprojectss2018.example.StoreListenerExample;
 

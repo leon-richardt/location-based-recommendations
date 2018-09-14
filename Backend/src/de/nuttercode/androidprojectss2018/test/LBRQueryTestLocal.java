@@ -2,8 +2,8 @@ package de.nuttercode.androidprojectss2018.test;
 
 import java.util.ArrayList;
 
-import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
-import de.nuttercode.androidprojectss2018.csi.TagUserChoice;
+import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration;
+import de.nuttercode.androidprojectss2018.csi.config.TagUserChoice;
 import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent;
 import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultInformation;

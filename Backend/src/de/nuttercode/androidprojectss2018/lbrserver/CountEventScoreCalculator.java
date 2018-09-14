@@ -3,8 +3,8 @@ package de.nuttercode.androidprojectss2018.lbrserver;
 import java.util.List;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
-import de.nuttercode.androidprojectss2018.csi.TagPreferenceConfiguration;
-import de.nuttercode.androidprojectss2018.csi.TagUserChoice;
+import de.nuttercode.androidprojectss2018.csi.config.TagPreferenceConfiguration;
+import de.nuttercode.androidprojectss2018.csi.config.TagUserChoice;
 import de.nuttercode.androidprojectss2018.csi.pojo.Event;
 import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent;
 import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
