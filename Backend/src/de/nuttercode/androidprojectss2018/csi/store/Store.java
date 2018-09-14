@@ -14,7 +14,7 @@ import java.util.Set;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
 import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration;
-import de.nuttercode.androidprojectss2018.csi.pojo.LBRPOJO;
+import de.nuttercode.androidprojectss2018.csi.pojo.LBRPojo;
 import de.nuttercode.androidprojectss2018.csi.query.Query;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultInformation;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultState;
@@ -27,9 +27,9 @@ import de.nuttercode.androidprojectss2018.csi.query.QueryResultSummary;
  * @author Johannes B. Latzel
  *
  * @param <T>
- *            some {@link LBRPOJO}
+ *            some {@link LBRPojo}
  */
-public class Store<T extends LBRPOJO, Q extends Query<T>> {
+public class Store<T extends LBRPojo, Q extends Query<T>> {
 
 	/**
 	 * default ttl is 2h

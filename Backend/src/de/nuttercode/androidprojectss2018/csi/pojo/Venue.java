@@ -9,7 +9,7 @@ import de.nuttercode.androidprojectss2018.csi.query.LBRQuery;
  * @author Johannes B. Latzel
  *
  */
-public class Venue extends LBRPOJO {
+public class Venue extends LBRPojo {
 
 	private static final long serialVersionUID = -2902776286525562764L;
 

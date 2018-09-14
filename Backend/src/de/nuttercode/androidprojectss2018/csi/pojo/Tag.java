@@ -6,7 +6,7 @@ package de.nuttercode.androidprojectss2018.csi.pojo;
  * @author Johannes B. Latzel
  *
  */
-public class Tag extends LBRPOJO {
+public class Tag extends LBRPojo {
 
 	private static final long serialVersionUID = 1193555989071795461L;
 

@@ -8,13 +8,13 @@ import java.io.Serializable;
  * @author Johannes B. Latzel
  *
  */
-public abstract class LBRPOJO implements Serializable {
+public abstract class LBRPojo implements Serializable {
 
 	private static final long serialVersionUID = 2162139559240206678L;
 
 	private final int id;
 
-	protected LBRPOJO(int id) {
+	protected LBRPojo(int id) {
 		this.id = id;
 	}
 
@@ -35,7 +35,7 @@ public abstract class LBRPOJO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		LBRPOJO other = (LBRPOJO) obj;
+		LBRPojo other = (LBRPojo) obj;
 		if (id != other.id)
 			return false;
 		return true;
@@ -43,7 +43,7 @@ public abstract class LBRPOJO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "LBRPOJO [id=" + id + "]";
+		return "LBRPojo [id=" + id + "]";
 	}
 
 }

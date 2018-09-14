@@ -12,7 +12,7 @@ import de.nuttercode.androidprojectss2018.csi.Assurance;
  * @author Johannes B. Latzel
  *
  */
-public class Event extends LBRPOJO {
+public class Event extends LBRPojo {
 
 	private static final long serialVersionUID = -6794608442641090075L;
 
