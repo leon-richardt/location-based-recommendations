@@ -18,7 +18,8 @@ public class TagQueryTestLocal {
 		clientConfiguration.setServerDNSName("localhost");
 		TagStore tagStore = new TagStore(clientConfiguration);
 		tagStore.addStoreListener(new StoreListenerExample<>());
-		System.out.println(tagStore.refresh());
+		tagStore.refresh();
+		tagStore.refresh();
 
 	}
 

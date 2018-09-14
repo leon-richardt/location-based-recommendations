@@ -41,16 +41,16 @@ public class LBRQueryTestLocal {
 			throw new IllegalStateException();
 
 		// actual tests
-		System.out.println(eventStore.refresh());
+		eventStore.refresh();
 		clientConfiguration.getTagPreferenceConfiguration().addTag(tags.get(0));
-		System.out.println(eventStore.refresh());
+		eventStore.refresh();
 		clientConfiguration.getTagPreferenceConfiguration().addTag(tags.get(1));
-		System.out.println(eventStore.refresh());
+		eventStore.refresh();
 		clientConfiguration.getTagPreferenceConfiguration().setTag(tags.get(1), TagUserChoice.Like);
-		System.out.println(eventStore.refresh());
+		eventStore.refresh();
 		clientConfiguration.getTagPreferenceConfiguration().setTag(tags.get(0), TagUserChoice.Like);
 		clientConfiguration.getTagPreferenceConfiguration().setTag(tags.get(1), TagUserChoice.Deny);
-		System.out.println(eventStore.refresh());
+		eventStore.refresh();
 		for (ScoredEvent scoredEvent : eventStore.getAll())
 			System.out.println(scoredEvent);
 
