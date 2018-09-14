@@ -39,6 +39,14 @@ public class Query<T extends LBRPOJO> implements Serializable {
 	}
 
 	/**
+	 * @param id
+	 * @return true if the id is contained in {@link #ignoreIdSet}
+	 */
+	public boolean ignoreId(int id) {
+		return ignoreIdSet.contains(id);
+	}
+
+	/**
 	 * runs the query - sends itself to the {@link LBRServer} and waits for an
 	 * answer
 	 * 
