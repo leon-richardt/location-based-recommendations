@@ -1,4 +1,4 @@
-package de.nuttercode.androidprojectss2018.csi;
+package de.nuttercode.androidprojectss2018.csi.store;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import de.nuttercode.androidprojectss2018.csi.Assurance;
+import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
 import de.nuttercode.androidprojectss2018.csi.pojo.LBRPOJO;
 import de.nuttercode.androidprojectss2018.csi.query.Query;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultInformation;

@@ -1,4 +1,4 @@
-package de.nuttercode.androidprojectss2018.csi;
+package de.nuttercode.androidprojectss2018.csi.store;
 
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultInformation;
 

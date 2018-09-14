@@ -3,12 +3,12 @@ package de.nuttercode.androidprojectss2018.test;
 import java.util.ArrayList;
 
 import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
-import de.nuttercode.androidprojectss2018.csi.EventStore;
-import de.nuttercode.androidprojectss2018.csi.TagStore;
 import de.nuttercode.androidprojectss2018.csi.TagUserChoice;
 import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent;
 import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultInformation;
+import de.nuttercode.androidprojectss2018.csi.store.EventStore;
+import de.nuttercode.androidprojectss2018.csi.store.TagStore;
 import de.nuttercode.androidprojectss2018.example.StoreListenerExample;
 
 /**

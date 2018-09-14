@@ -1,7 +1,7 @@
 package de.nuttercode.androidprojectss2018.example;
 
-import de.nuttercode.androidprojectss2018.csi.StoreListener;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultInformation;
+import de.nuttercode.androidprojectss2018.csi.store.StoreListener;
 
 /**
  * example for {@link StoreListener} implementation
