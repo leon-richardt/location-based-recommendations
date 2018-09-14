@@ -21,8 +21,8 @@ public class Query<T extends LBRPOJO> implements Serializable {
 
 	private static final long serialVersionUID = 2130540249378192775L;
 
-	private final String serverDNSName;
-	private final int serverPort;
+	private String serverDNSName;
+	private int serverPort;
 
 	/**
 	 * 
@@ -31,9 +31,7 @@ public class Query<T extends LBRPOJO> implements Serializable {
 	 *             if clientConfiguration is null
 	 */
 	protected Query(ClientConfiguration clientConfiguration) {
-		Assurance.assureNotNull(clientConfiguration);
-		serverDNSName = clientConfiguration.getServerDNSName();
-		serverPort = clientConfiguration.getServerPort();
+		setClientConfiguration(clientConfiguration);
 	}
 
 	/**
@@ -77,6 +75,20 @@ public class Query<T extends LBRPOJO> implements Serializable {
 			return new QueryResultSummary<>(new QueryResult<>(new ArrayList<T>()),
 					new QueryResultInformation(clientQueryResultState, QueryResultState.Null, message));
 		}
+	}
+
+	/**
+	 * copies needed values for this query from the {@link ClientConfiguration}. Use
+	 * this method if the {@link ClientConfiguration} has changed.
+	 * 
+	 * @param clientConfiguration
+	 * @throws IllegalArgumentException
+	 *             if clientConfiguration is null
+	 */
+	public void setClientConfiguration(ClientConfiguration clientConfiguration) {
+		Assurance.assureNotNull(clientConfiguration);
+		serverDNSName = clientConfiguration.getServerDNSName();
+		serverPort = clientConfiguration.getServerPort();
 	}
 
 }
