@@ -136,6 +136,7 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 		QueryResultSummary<T> resultSummary = query.run();
 		QueryResultInformation resultInformation = resultSummary.getQueryResultInformation();
 		Collection<T> receivedElements;
+		int id;
 		if (resultInformation.isOK()) {
 			receivedElements = resultSummary.getQueryResult().getAll();
 			for (T newElement : receivedElements)
@@ -146,17 +147,15 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 						} catch (RuntimeException e) {
 							e.printStackTrace();
 						}
-
 			for (T element : tMap.values())
-				if (!receivedElements.contains(element))
+				if (!receivedElements.contains(element) && !ignoreIdMap.containsKey(element.getId()))
 					for (StoreListener<T> listener : storeListenerList)
 						try {
 							listener.onElementRemoved(element);
+							tMap.remove(element.getId());
 						} catch (RuntimeException e) {
 							e.printStackTrace();
 						}
-			tMap.clear();
-			int id;
 			for (T t : receivedElements) {
 				id = t.getId();
 				tMap.put(id, t);
@@ -169,12 +168,14 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 	}
 
 	/**
-	 * just calls {@link Query#setClientConfiguration(ClientConfiguration)}
+	 * calls {@link Query#setClientConfiguration(ClientConfiguration)} and clears
+	 * {@link #ignoreIdMap}
 	 * 
 	 * @param clientConfiguration
 	 */
 	public void setClientConfiguration(ClientConfiguration clientConfiguration) {
 		query.setClientConfiguration(clientConfiguration);
+		ignoreIdMap.clear();
 	}
 
 	@Override
