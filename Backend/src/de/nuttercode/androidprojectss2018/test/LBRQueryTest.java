@@ -45,10 +45,10 @@ public class LBRQueryTest {
 		System.out.println(eventStore.refresh());
 		clientConfiguration.getTagPreferenceConfiguration().addTag(tags.get(1));
 		System.out.println(eventStore.refresh());
-		clientConfiguration.getTagPreferenceConfiguration().setTag(tags.get(1), TagUserChoice.Like);
+		clientConfiguration.getTagPreferenceConfiguration().setTag(tags.get(1), TagUserChoice.LIKE);
 		System.out.println(eventStore.refresh());
-		clientConfiguration.getTagPreferenceConfiguration().setTag(tags.get(0), TagUserChoice.Like);
-		clientConfiguration.getTagPreferenceConfiguration().setTag(tags.get(1), TagUserChoice.Deny);
+		clientConfiguration.getTagPreferenceConfiguration().setTag(tags.get(0), TagUserChoice.LIKE);
+		clientConfiguration.getTagPreferenceConfiguration().setTag(tags.get(1), TagUserChoice.DENY);
 		System.out.println(eventStore.refresh());
 		for (ScoredEvent scoredEvent : eventStore.getAll())
 			System.out.println(scoredEvent);
