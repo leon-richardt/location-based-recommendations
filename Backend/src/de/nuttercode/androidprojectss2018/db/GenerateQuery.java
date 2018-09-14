@@ -1,7 +1,7 @@
 package de.nuttercode.androidprojectss2018.db;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
-import de.nuttercode.androidprojectss2018.csi.Event;
+import de.nuttercode.androidprojectss2018.csi.pojo.Event;
 
 /**
  * static DB-Query-Generator

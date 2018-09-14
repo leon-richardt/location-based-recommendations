@@ -1,9 +1,9 @@
 package de.nuttercode.androidprojectss2018.db;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
-import de.nuttercode.androidprojectss2018.csi.Event;
-import de.nuttercode.androidprojectss2018.csi.Tag;
-import de.nuttercode.androidprojectss2018.csi.Venue;
+import de.nuttercode.androidprojectss2018.csi.pojo.Event;
+import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
+import de.nuttercode.androidprojectss2018.csi.pojo.Venue;
 
 import java.io.Closeable;
 import java.io.IOException;

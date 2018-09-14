@@ -1,5 +1,6 @@
 package de.nuttercode.androidprojectss2018.csi;
 
+import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
 import de.nuttercode.androidprojectss2018.csi.query.TagQuery;
 
 /**

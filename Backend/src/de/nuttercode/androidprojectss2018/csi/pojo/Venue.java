@@ -1,7 +1,6 @@
-package de.nuttercode.androidprojectss2018.csi;
+package de.nuttercode.androidprojectss2018.csi.pojo;
 
-import java.io.Serializable;
-
+import de.nuttercode.androidprojectss2018.csi.Assurance;
 import de.nuttercode.androidprojectss2018.csi.query.LBRQuery;
 
 /**
@@ -10,12 +9,11 @@ import de.nuttercode.androidprojectss2018.csi.query.LBRQuery;
  * @author Johannes B. Latzel
  *
  */
-public class Venue implements Serializable {
+public class Venue extends LBRPOJO {
 
 	private static final long serialVersionUID = -2902776286525562764L;
 
 	private final String description;
-	private final int id;
 	private final String name;
 	private final double longitude;
 	private final double latitude;
@@ -39,11 +37,11 @@ public class Venue implements Serializable {
 	 *             < 0
 	 */
 	public Venue(int id, String name, String description, double longitude, double latitude, double initialDistance) {
+		super(id);
 		Assurance.assureNotNull(description);
 		Assurance.assureNotEmpty(name);
 		Assurance.assureNotNegative(initialDistance);
 		this.description = description;
-		this.id = id;
 		this.name = name;
 		this.longitude = longitude;
 		this.latitude = latitude;
@@ -52,10 +50,6 @@ public class Venue implements Serializable {
 
 	public String getDescription() {
 		return description;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String getName() {
@@ -75,18 +69,9 @@ public class Venue implements Serializable {
 	}
 
 	@Override
-	public String toString() {
-		return "Venue [description=" + description + ", id=" + id + ", name=" + name + ", longitude=" + longitude
-				+ ", latitude=" + latitude + ", initialDistance=" + initialDistance + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		return id;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
+		if (!super.equals(obj))
+			return false;
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -98,8 +83,6 @@ public class Venue implements Serializable {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
-			return false;
-		if (id != other.id)
 			return false;
 		if (Double.doubleToLongBits(initialDistance) != Double.doubleToLongBits(other.initialDistance))
 			return false;
@@ -113,6 +96,12 @@ public class Venue implements Serializable {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Venue [description=" + description + ", id=" + getId() + ", name=" + name + ", longitude=" + longitude
+				+ ", latitude=" + latitude + ", initialDistance=" + initialDistance + "]";
 	}
 
 }

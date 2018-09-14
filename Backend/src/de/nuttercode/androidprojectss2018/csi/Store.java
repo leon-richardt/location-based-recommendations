@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import de.nuttercode.androidprojectss2018.csi.pojo.LBRPOJO;
 import de.nuttercode.androidprojectss2018.csi.query.Query;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultInformation;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultState;
@@ -22,7 +23,7 @@ import de.nuttercode.androidprojectss2018.csi.query.QueryResultSummary;
  * @param <T>
  *            some {@link Serializable}
  */
-public class Store<T extends Serializable, Q extends Query<T>> {
+public class Store<T extends LBRPOJO, Q extends Query<T>> {
 
 	private final Set<T> tSet;
 	protected final Q query;

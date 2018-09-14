@@ -3,11 +3,11 @@ package de.nuttercode.androidprojectss2018.lbrserver;
 import java.util.List;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
-import de.nuttercode.androidprojectss2018.csi.Event;
-import de.nuttercode.androidprojectss2018.csi.ScoredEvent;
-import de.nuttercode.androidprojectss2018.csi.Tag;
 import de.nuttercode.androidprojectss2018.csi.TagPreferenceConfiguration;
 import de.nuttercode.androidprojectss2018.csi.TagUserChoice;
+import de.nuttercode.androidprojectss2018.csi.pojo.Event;
+import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent;
+import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
 
 /**
  * uses the following metric to calculate a score. For every tag in the event a

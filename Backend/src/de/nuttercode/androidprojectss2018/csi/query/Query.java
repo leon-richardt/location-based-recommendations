@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
 import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
+import de.nuttercode.androidprojectss2018.csi.pojo.LBRPOJO;
 
 /**
  * used to query elements of type T from the {@link LBRServer}
@@ -16,7 +17,7 @@ import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
  * @param <T>
  *            any Serializable
  */
-public class Query<T extends Serializable> implements Serializable {
+public class Query<T extends LBRPOJO> implements Serializable {
 
 	private static final long serialVersionUID = 2130540249378192775L;
 

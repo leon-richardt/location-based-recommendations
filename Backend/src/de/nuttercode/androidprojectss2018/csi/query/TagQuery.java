@@ -1,7 +1,7 @@
 package de.nuttercode.androidprojectss2018.csi.query;
 
 import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
-import de.nuttercode.androidprojectss2018.csi.Tag;
+import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
 
 /**
  * used to query {@link Tag}s from the {@link LBRServer}

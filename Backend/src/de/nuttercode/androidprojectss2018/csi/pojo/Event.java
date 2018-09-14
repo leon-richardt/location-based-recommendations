@@ -1,9 +1,10 @@
-package de.nuttercode.androidprojectss2018.csi;
+package de.nuttercode.androidprojectss2018.csi.pojo;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import de.nuttercode.androidprojectss2018.csi.Assurance;
 
 /**
  * POJO for an Event entry in the database
@@ -11,14 +12,13 @@ import java.util.List;
  * @author Johannes B. Latzel
  *
  */
-public class Event implements Serializable {
+public class Event extends LBRPOJO {
 
 	private static final long serialVersionUID = -6794608442641090075L;
 
 	private final List<Tag> tagList;
 	private String description;
 	private String name;
-	private final int id;
 	private final Venue venue;
 
 	/**
@@ -32,9 +32,9 @@ public class Event implements Serializable {
 	 *             is null
 	 */
 	public Event(Venue venue, String name, String description, int id) {
+		super(id);
 		Assurance.assureNotNull(venue);
 		this.tagList = new ArrayList<>();
-		this.id = id;
 		this.venue = venue;
 		setName(name);
 		setDescription(description);
@@ -60,10 +60,6 @@ public class Event implements Serializable {
 
 	public String getName() {
 		return name;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public Venue getVenue() {
@@ -92,11 +88,13 @@ public class Event implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return id;
+		return getId();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
+		if (!super.equals(obj))
+			return false;
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -114,8 +112,6 @@ public class Event implements Serializable {
 				return false;
 		} else if (!tagList.equals(other.tagList))
 			return false;
-		if (id != other.id)
-			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -132,7 +128,7 @@ public class Event implements Serializable {
 	@Override
 	public String toString() {
 		return "Event [tagList=" + Arrays.toString(tagList.toArray()) + ", description=" + description + ", name="
-				+ name + ", id=" + id + ", venue=" + venue + "]";
+				+ name + ", id=" + getId() + ", venue=" + venue + "]";
 	}
 
 }

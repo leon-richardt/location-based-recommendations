@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 
-import de.nuttercode.androidprojectss2018.csi.Event;
-import de.nuttercode.androidprojectss2018.csi.Tag;
+import de.nuttercode.androidprojectss2018.csi.pojo.Event;
+import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
 import de.nuttercode.androidprojectss2018.db.DBConnection;
 
 /**

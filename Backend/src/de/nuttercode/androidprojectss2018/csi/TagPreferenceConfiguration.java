@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
+
 /**
  * saves all {@link Tag}s and the users configurations regarding the specific
  * {@link Tag}s

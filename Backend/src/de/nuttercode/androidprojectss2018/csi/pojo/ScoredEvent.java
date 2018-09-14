@@ -1,6 +1,6 @@
-package de.nuttercode.androidprojectss2018.csi;
+package de.nuttercode.androidprojectss2018.csi.pojo;
 
-import java.io.Serializable;
+import de.nuttercode.androidprojectss2018.csi.Assurance;
 
 /**
  * an {@link Event} and its score. the score must be an element of [0, 1].
@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Johannes B. Latzel
  *
  */
-public class ScoredEvent implements Serializable {
+public class ScoredEvent extends LBRPOJO {
 
 	private static final long serialVersionUID = -1442060615555625349L;
 
@@ -19,10 +19,12 @@ public class ScoredEvent implements Serializable {
 	 * @param event
 	 * @param score
 	 * @throws IllegalArgumentException
-	 *             if event == null or score not an element of [0, 1]
+	 *             if score is not an element of [0, 1]
+	 * @throws NullPointerException
+	 *             if event is null
 	 */
 	public ScoredEvent(Event event, double score) {
-		Assurance.assureNotNull(event);
+		super(event.getId());
 		Assurance.assureBoundaries(score, 0, 1);
 		this.event = event;
 		this.score = score;
@@ -43,6 +45,8 @@ public class ScoredEvent implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (!super.equals(obj))
+			return false;
 		if (this == obj)
 			return true;
 		if (obj == null)

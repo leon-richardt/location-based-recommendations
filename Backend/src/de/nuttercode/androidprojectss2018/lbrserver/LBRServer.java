@@ -15,7 +15,9 @@ import java.util.logging.Logger;
 import java.lang.Thread;
 
 import de.nuttercode.androidprojectss2018.csi.*;
-import de.nuttercode.androidprojectss2018.csi.Tag;
+import de.nuttercode.androidprojectss2018.csi.pojo.Event;
+import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent;
+import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
 import de.nuttercode.androidprojectss2018.csi.query.LBRQuery;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResponse;
 import de.nuttercode.androidprojectss2018.csi.query.Query;
