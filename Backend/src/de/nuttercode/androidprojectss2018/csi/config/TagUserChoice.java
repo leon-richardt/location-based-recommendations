@@ -9,7 +9,6 @@ import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
  *
  */
 public enum TagUserChoice {
-	
 	DISLIKE,
 	ACCEPT,
 	LIKE
