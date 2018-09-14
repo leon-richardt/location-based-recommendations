@@ -1,8 +1,10 @@
 package de.nuttercode.androidprojectss2018.csi.store;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -29,9 +31,29 @@ import de.nuttercode.androidprojectss2018.csi.query.QueryResultSummary;
  */
 public class Store<T extends LBRPOJO, Q extends Query<T>> {
 
+	/**
+	 * default ttl is 2h
+	 */
+	private final static int DEFAULT_TTL_SECONDS = 2 * 60 * 60;
+
+	/**
+	 * maps T Ids to their instances
+	 */
 	private final Map<Integer, T> tMap;
+
+	/**
+	 * maps Ids to ttl. the Ids will be ignored in the lbrqueries until the ttl is
+	 * reached.
+	 */
+	private final Map<Integer, Instant> ignoreIdMap;
+
 	protected final Q query;
 	private final List<StoreListener<T>> storeListenerList;
+
+	/**
+	 * time to live in seconds for ignored Ids
+	 */
+	private int ttl;
 
 	/**
 	 * @param query
@@ -43,6 +65,33 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 		tMap = new HashMap<>();
 		this.query = query;
 		storeListenerList = new ArrayList<>();
+		ignoreIdMap = new HashMap<>();
+		setTTL(DEFAULT_TTL_SECONDS);
+	}
+
+	/**
+	 * removes all Ids whose ttl was reached and returns all remaining Ids.
+	 * 
+	 * @return all remaining Ids in {@link #ignoreIdMap}
+	 */
+	private Set<Integer> getIgnoreIds() {
+		Instant now = Instant.now();
+		for (Integer id : ignoreIdMap.keySet())
+			if (now.isAfter(ignoreIdMap.get(id)))
+				ignoreIdMap.remove(id);
+		return Collections.unmodifiableSet(ignoreIdMap.keySet());
+	}
+
+	/**
+	 * sets {@link #ttl}
+	 * 
+	 * @param ttl
+	 * @throws IllegalArgumentException
+	 *             if ttl is not positive
+	 */
+	public void setTTL(int ttl) {
+		Assurance.assurePositive(ttl);
+		this.ttl = ttl;
 	}
 
 	public void addStoreListener(StoreListener<T> storeNewElementListener) {
@@ -83,6 +132,7 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 	 * @return informations about the state of the underlying query
 	 */
 	public QueryResultInformation refresh() {
+		query.setIgnoreIds(getIgnoreIds());
 		QueryResultSummary<T> resultSummary = query.run();
 		QueryResultInformation resultInformation = resultSummary.getQueryResultInformation();
 		Collection<T> receivedElements;
@@ -106,8 +156,12 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 							e.printStackTrace();
 						}
 			tMap.clear();
-			for (T t : receivedElements)
-				tMap.put(t.getId(), t);
+			int id;
+			for (T t : receivedElements) {
+				id = t.getId();
+				tMap.put(id, t);
+				ignoreIdMap.put(id, Instant.now().plusSeconds(ttl));
+			}
 		}
 		for (StoreListener<T> listener : storeListenerList)
 			listener.onRefreshFinished(resultInformation);

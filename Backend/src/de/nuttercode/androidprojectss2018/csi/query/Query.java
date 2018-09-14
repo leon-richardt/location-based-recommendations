@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
 import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration;
@@ -23,6 +25,7 @@ public class Query<T extends LBRPOJO> implements Serializable {
 
 	private String serverDNSName;
 	private int serverPort;
+	private final Set<Integer> ignoreIdSet;
 
 	/**
 	 * 
@@ -32,6 +35,7 @@ public class Query<T extends LBRPOJO> implements Serializable {
 	 */
 	protected Query(ClientConfiguration clientConfiguration) {
 		setClientConfiguration(clientConfiguration);
+		ignoreIdSet = new HashSet<>();
 	}
 
 	/**
@@ -89,6 +93,18 @@ public class Query<T extends LBRPOJO> implements Serializable {
 		Assurance.assureNotNull(clientConfiguration);
 		serverDNSName = clientConfiguration.getServerDNSName();
 		serverPort = clientConfiguration.getServerPort();
+	}
+
+	/**
+	 * sets the Ids this query will ignore
+	 * 
+	 * @param ignoreIdSet
+	 * @throws IllegalArugmentException
+	 *             if ignoreIdSet is null
+	 */
+	public void setIgnoreIds(Set<Integer> ignoreIdSet) {
+		Assurance.assureNotNull(ignoreIdSet);
+		this.ignoreIdSet.retainAll(ignoreIdSet);
 	}
 
 }
