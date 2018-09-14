@@ -1,6 +1,7 @@
 package de.nuttercode.androidprojectss2018.example;
 
 import de.nuttercode.androidprojectss2018.csi.StoreListener;
+import de.nuttercode.androidprojectss2018.csi.query.QueryResultInformation;
 
 /**
  * example for {@link StoreListener} implementation
@@ -18,6 +19,11 @@ public class StoreListenerExample<T> implements StoreListener<T> {
 	@Override
 	public void onElementRemoved(T removedElement) {
 		System.out.println("remove element: " + removedElement);
+	}
+
+	@Override
+	public void onRefreshFinished(QueryResultInformation queryResultInformation) {
+		System.out.println("refresh finished: " + queryResultInformation);
 	}
 
 }

@@ -107,6 +107,8 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 			for (T t : receivedElements)
 				tMap.put(t.getId(), t);
 		}
+		for (StoreListener<T> listener : storeListenerList)
+			listener.onRefreshFinished(resultInformation);
 		return resultInformation;
 	}
 

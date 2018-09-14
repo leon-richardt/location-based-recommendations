@@ -1,5 +1,7 @@
 package de.nuttercode.androidprojectss2018.csi;
 
+import de.nuttercode.androidprojectss2018.csi.query.QueryResultInformation;
+
 /**
  * Use {@link Store#addStoreListener(StoreListener)} to add this listener to a
  * specific {@link Store}.
@@ -17,7 +19,8 @@ public interface StoreListener<T> {
 	 * @param newElement
 	 *            the new element added to the {@link Store}
 	 */
-	void onElementAdded(T newElement);
+	default void onElementAdded(T newElement) {
+	}
 
 	/**
 	 * will be called every time an element is removed from a {@link Store}.
@@ -25,6 +28,15 @@ public interface StoreListener<T> {
 	 * @param newElement
 	 *            the element that is removed from the {@link Store}
 	 */
-	void onElementRemoved(T newElement);
+	default void onElementRemoved(T newElement) {
+	}
+
+	/**
+	 * will be called every time {@link Store#refresh()} is finished
+	 * 
+	 * @param queryResultInformation
+	 */
+	default void onRefreshFinished(QueryResultInformation queryResultInformation) {
+	}
 
 }
