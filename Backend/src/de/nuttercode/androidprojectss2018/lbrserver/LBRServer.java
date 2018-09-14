@@ -106,7 +106,6 @@ public class LBRServer implements Closeable {
 		}
 		serverThread = new Thread(this::run);
 		serverThread.setName("LBRServerThread");
-		serverThread.start();
 		isClosed = false;
 		executorServer = Executors.newFixedThreadPool(4);
 		try {
@@ -116,6 +115,10 @@ public class LBRServer implements Closeable {
 			logger.log(Level.WARNING, e.toString(), e);
 			throw new IllegalStateException("dbConnection unintializable", e);
 		}
+		// start at end so that all resources have been loaded before ClientConnections
+		// are processed
+		serverThread.start();
+		logger.info("LBRServer created");
 	}
 
 	/**
@@ -161,8 +164,7 @@ public class LBRServer implements Closeable {
 			TagPreferenceConfiguration tagPreferenceConfiguration) {
 		logger.log(Level.FINER, "filtering events");
 		eventList.removeIf((Event event) -> {
-			return !tagPreferenceConfiguration.containsAny(event.getTags())
-					|| !eventVisibiltyProvider.isVisible(event);
+			return !tagPreferenceConfiguration.containsAny(event.getTags()) || !eventVisibiltyProvider.isVisible(event);
 		});
 		return eventList;
 	}
@@ -171,13 +173,14 @@ public class LBRServer implements Closeable {
 	 * scores all events in eventList
 	 * 
 	 * @param eventList
+	 * @param tpc
 	 * @return scored events
 	 */
-	private Collection<ScoredEvent> scoreEvents(Collection<Event> eventList) {
+	private Collection<ScoredEvent> scoreEvents(Collection<Event> eventList, TagPreferenceConfiguration tpc) {
 		logger.log(Level.FINER, "scoring events");
 		ArrayList<ScoredEvent> scoredEventList = new ArrayList<>(eventList.size());
 		for (Event event : eventList)
-			scoredEventList.add(eventScoreCalculator.scoreEvent(event));
+			scoredEventList.add(eventScoreCalculator.scoreEvent(event, tpc));
 		return scoredEventList;
 	}
 
@@ -209,9 +212,10 @@ public class LBRServer implements Closeable {
 		logger.log(Level.FINER, "creating LBR result");
 		QueryResult<ScoredEvent> queryResult;
 		QueryResultState serverQueryResultState = QueryResultState.OK;
+		TagPreferenceConfiguration tpc = lbrQuery.getTagPreferenceConfiguration();
 		try {
-			queryResult = new QueryResult<ScoredEvent>(scoreEvents(
-					filterEvents(getAllEventsByRadiusAndLocation(lbrQuery), lbrQuery.getTagPreferenceConfiguration())));
+			queryResult = new QueryResult<ScoredEvent>(
+					scoreEvents(filterEvents(getAllEventsByRadiusAndLocation(lbrQuery), tpc), tpc));
 		} catch (SQLException e) {
 			logger.log(Level.WARNING, e.toString(), e);
 			if (tryReconnect && reconnectDB()) {

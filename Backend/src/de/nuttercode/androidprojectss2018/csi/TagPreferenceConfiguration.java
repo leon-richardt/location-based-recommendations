@@ -1,58 +1,91 @@
 package de.nuttercode.androidprojectss2018.csi;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * saves all event-genres the user wants to see
+ * saves all {@link Tag}s and the users configurations regarding the specific
+ * {@link Tag}s
  * 
  * @author Johannes B. Latzel
  *
  */
-public class TagPreferenceConfiguration implements Serializable, Iterable<Tag> {
+public class TagPreferenceConfiguration implements Serializable {
 
 	private static final long serialVersionUID = 4061390806054215254L;
 
-	private final Set<Tag> userChoiceTagSet;
+	private final Map<Integer, TagUserChoice> userChoiceTagMap;
 
 	public TagPreferenceConfiguration() {
-		userChoiceTagSet = new HashSet<>();
+		userChoiceTagMap = new HashMap<>();
 	}
 
-	public TagPreferenceConfiguration(TagPreferenceConfiguration tagPreferenceConfiguration) {
-		this();
-		for (Tag tag : tagPreferenceConfiguration.userChoiceTagSet)
-			addTag(tag);
-	}
-
+	/**
+	 * adds a tag (if the tag is not already configured herein) with
+	 * {@link TagUserChoice#ACCEPT} configuration
+	 * 
+	 * @param tag
+	 * @throws IllegalArgumentException
+	 *             if tag is null
+	 */
 	public void addTag(Tag tag) {
-		userChoiceTagSet.add(tag);
+		Assurance.assureNotNull(tag);
+		Integer id = tag.getId();
+		if (!userChoiceTagMap.containsKey(id))
+			userChoiceTagMap.put(id, TagUserChoice.ACCEPT);
+	}
+
+	/**
+	 * adds a tag (if the tag is not already configured herein) with the the
+	 * specified tagUserChoice
+	 * 
+	 * @param tag
+	 * @param tagUserChoice
+	 * @throws IllegalArgumentException
+	 *             if tag or tagUserChoice is null
+	 */
+	public void setTag(Tag tag, TagUserChoice tagUserChoice) {
+		Assurance.assureNotNull(tag);
+		Assurance.assureNotNull(tagUserChoice);
+		userChoiceTagMap.put(tag.getId(), tagUserChoice);
+	}
+
+	/**
+	 * 
+	 * @param tag
+	 * @return the {@link TagUserChoice} or {@link TagUserChoice#ACCEPT} if the
+	 *         {@link Tag} is not configured
+	 * @throws IllegalArgumentException
+	 *             if tag is null
+	 */
+	public TagUserChoice getUserChoice(Tag tag) {
+		Assurance.assureNotNull(tag);
+		Integer id = tag.getId();
+		if (userChoiceTagMap.containsKey(id))
+			return userChoiceTagMap.get(id);
+		return TagUserChoice.ACCEPT;
 	}
 
 	/**
 	 * @param tags
-	 * @return true if any configured genre is contained in the given Collection
+	 * @return true if any configured tag is contained in the given Collection and
+	 *         is not denied by the client
 	 */
 	public boolean containsAny(Collection<Tag> tags) {
-		for (Tag tag : this)
-			if (tags.contains(tag))
+		Integer id;
+		for (Tag tag : tags) {
+			id = tag.getId();
+			if (userChoiceTagMap.containsKey(id) && userChoiceTagMap.get(id) != TagUserChoice.DISLIKE)
 				return true;
+		}
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		return "TagPreferenceConfiguration [userChoiceTagSet=" + Arrays.toString(userChoiceTagSet.toArray())
-				+ "]";
-	}
-
-	@Override
-	public Iterator<Tag> iterator() {
-		return userChoiceTagSet.iterator();
+		return "TagPreferenceConfiguration [userChoiceTagSet=" + userChoiceTagMap + "]";
 	}
 
 }

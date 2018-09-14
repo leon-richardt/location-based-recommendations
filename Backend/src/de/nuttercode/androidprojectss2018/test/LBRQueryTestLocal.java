@@ -17,13 +17,14 @@ import de.nuttercode.androidprojectss2018.example.StoreListenerExample;
  * @author Johannes B. Latzel
  *
  */
-public class LBRQueryTest {
+public class LBRQueryTestLocal {
 
 	public static void main(String[] args) {
 
 		// client config
 		ClientConfiguration clientConfiguration = new ClientConfiguration();
 		clientConfiguration.setRadius(10);
+		clientConfiguration.setServerDNSName("localhost");
 
 		// eventstore and config
 		EventStore eventStore = new EventStore(clientConfiguration);

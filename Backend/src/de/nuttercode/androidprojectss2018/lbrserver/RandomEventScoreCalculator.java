@@ -4,6 +4,7 @@ import java.util.Random;
 
 import de.nuttercode.androidprojectss2018.csi.Event;
 import de.nuttercode.androidprojectss2018.csi.ScoredEvent;
+import de.nuttercode.androidprojectss2018.csi.TagPreferenceConfiguration;
 
 /**
  * random implementation of {@link EventScoreCalculator}
@@ -20,7 +21,7 @@ public class RandomEventScoreCalculator implements EventScoreCalculator {
 	}
 
 	@Override
-	public ScoredEvent scoreEvent(Event event) {
+	public ScoredEvent scoreEvent(Event event, TagPreferenceConfiguration tpc) {
 		return new ScoredEvent(event, random.nextDouble());
 	}
 

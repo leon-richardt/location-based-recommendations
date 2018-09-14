@@ -17,15 +17,15 @@ import de.nuttercode.androidprojectss2018.lbrserver.LBRServer;
  * @author Johannes B. Latzel
  *
  */
-public class LBRServerTest {
+public class LBRServerTestLocal {
 
 	public static void main(String[] args) {
 		final FileHandler fileHandler;
-		final Logger logger = Logger.getLogger(LBRServerTest.class.getCanonicalName() + "::Test");
+		final Logger logger = Logger.getLogger(LBRServerTestLocal.class.getCanonicalName() + "::Test");
 		logger.info("starting server");
 		logger.setLevel(Level.ALL);
 		LBRServer lbrServer = new LBRServer(ClientConfiguration.DEFAULT_LBR_PORT, new CountEventScoreCalculator(),
-				"localhost", 3306, "lbr", "lbr", args[0], logger);
+				"lbr.nuttercode.de", 3306, "lbr", "lbr", args[0], logger);
 		try {
 			fileHandler = new FileHandler(
 					Paths.get(System.getProperty("user.dir"), "LBRServer.xml").toFile().getAbsolutePath(), false);
