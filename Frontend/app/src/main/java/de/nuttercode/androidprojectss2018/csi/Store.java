@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import de.nuttercode.androidprojectss2018.csi.query.Query;
+import de.nuttercode.androidprojectss2018.csi.query.QueryResultInformation;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultState;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultSummary;
 
@@ -21,10 +22,10 @@ import de.nuttercode.androidprojectss2018.csi.query.QueryResultSummary;
  * @param <T>
  *            some {@link Serializable}
  */
-public class Store<T extends Serializable> {
+public class Store<T extends Serializable, Q extends Query<T>> {
 
 	private final Set<T> tSet;
-	private final Query<T> query;
+	protected final Q query;
 	private final List<StoreListener<T>> storeListenerList;
 
 	/**
@@ -32,7 +33,7 @@ public class Store<T extends Serializable> {
 	 * @throws IllegalArgumentException
 	 *             if query is null
 	 */
-	protected Store(Query<T> query) {
+	protected Store(Q query) {
 		Assurance.assureNotNull(query);
 		tSet = new HashSet<>();
 		this.query = query;
@@ -53,12 +54,13 @@ public class Store<T extends Serializable> {
 	 * will be saved in this {@link Store}. calls all added {@link StoreListener}s
 	 * as added by {@link #addStoreListener(StoreListener)}.
 	 * 
-	 * @return the state of the underlying query
+	 * @return informations about the state of the underlying query
 	 */
-	public QueryResultSummary<T> refresh() {
+	public QueryResultInformation refresh() {
 		QueryResultSummary<T> resultSummary = query.run();
+		QueryResultInformation resultInformation = resultSummary.getQueryResultInformation();
 		Collection<T> receivedElements;
-		if (resultSummary.getQueryResultState() == QueryResultState.OK) {
+		if (resultInformation.isOK()) {
 			receivedElements = resultSummary.getQueryResult().getAll();
 			for (T newElement : receivedElements)
 				if (!tSet.contains(newElement))
@@ -80,7 +82,7 @@ public class Store<T extends Serializable> {
 			tSet.clear();
 			tSet.addAll(receivedElements);
 		}
-		return resultSummary;
+		return resultInformation;
 	}
 
 	@Override

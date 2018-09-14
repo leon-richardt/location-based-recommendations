@@ -2,8 +2,7 @@ package de.nuttercode.androidprojectss2018.csi;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,8 +18,6 @@ public class Event implements Serializable {
 	private final List<Tag> tagList;
 	private String description;
 	private String name;
-	@SuppressWarnings("unused")
-	private Date date;
 	private final int id;
 	private final Venue venue;
 
@@ -43,16 +40,7 @@ public class Event implements Serializable {
 		setDescription(description);
 	}
 
-	/**
-	 * adds all elements to this event
-	 * 
-	 * @param tags
-	 */
-	public void addAll(Collection<Tag> tags) {
-		tagList.addAll(tags);
-	}
-
-	public List<Tag> getGenres() {
+	public List<Tag> getTags() {
 		return new ArrayList<>(tagList);
 	}
 
@@ -61,7 +49,7 @@ public class Event implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             if tag is null
 	 */
-	public void addGenre(Tag tag) {
+	public void addTag(Tag tag) {
 		Assurance.assureNotNull(tag);
 		tagList.add(tag);
 	}
@@ -143,8 +131,8 @@ public class Event implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Event [tagList=" + tagList + ", description=" + description + ", name=" + name + ", id=" + id
-				+ ", venue=" + venue + "]";
+		return "Event [tagList=" + Arrays.toString(tagList.toArray()) + ", description=" + description + ", name="
+				+ name + ", id=" + id + ", venue=" + venue + "]";
 	}
 
 }

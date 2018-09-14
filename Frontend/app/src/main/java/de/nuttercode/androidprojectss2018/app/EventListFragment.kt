@@ -6,13 +6,10 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 
-import de.nuttercode.androidprojectss2018.app.dummy.DummyContent
 import de.nuttercode.androidprojectss2018.csi.*
 
 /**
@@ -21,9 +18,11 @@ import de.nuttercode.androidprojectss2018.csi.*
  * [EventListFragment.OnListFragmentInteractionListener] interface.
  */
 class EventListFragment : Fragment() {
-
-    // TODO: Customize parameters
     private var columnCount = 1
+
+    private val contentList: ArrayList<ScoredEvent> = ArrayList()
+
+    private lateinit var recyclerView: RecyclerView
 
     private var listener: OnListFragmentInteractionListener? = null
 
@@ -41,33 +40,36 @@ class EventListFragment : Fragment() {
 
         // Set the adapter
         if (view is RecyclerView) {
+            recyclerView = view
+
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
 
-                // TODO: Fetch Events here (in separate Thread)
-                val eventStore = EventStore(ClientConfiguration())
-                eventStore.addStoreListener(object: StoreListener<ScoredEvent> {
-                    override fun onElementAdded(newElement: ScoredEvent?) {
-                        Toast.makeText(context, "Element hinzugefügt: ${newElement?.event?.name}", Toast.LENGTH_SHORT).show()
-                        Log.i("EventListFragment", "Element hinzugefügt: ${newElement?.event?.name}")
-                    }
-
-                    override fun onElementRemoved(newElement: ScoredEvent?) {
-                        Toast.makeText(context, "Element removed: ${newElement?.event?.name}", Toast.LENGTH_SHORT).show()
-                        Log.i("EventListFragment", "Element hinzugefügt: ${newElement?.event?.name}")
-                    }
-                })
-                Log.i("EventListFragment", eventStore.refresh().message)
-
-                adapter = MyEventRecyclerViewAdapter(DummyContent.ITEMS, listener)
-
+                adapter = MyEventRecyclerViewAdapter(contentList, listener)
             }
         }
 
         return view
+    }
+
+    fun clearList() {
+        contentList.clear()
+    }
+
+    fun addElement(scoredEvent: ScoredEvent) {
+        contentList.add(scoredEvent)
+    }
+
+    fun addAllElements(collection: Collection<ScoredEvent>) {
+        contentList.addAll(collection)
+    }
+
+    fun refreshList() {
+        // notifyDataSetChanged() needs to be run the UI thread
+        activity!!.runOnUiThread { recyclerView.adapter!!.notifyDataSetChanged() }
     }
 
     override fun onAttach(context: Context) {
@@ -96,15 +98,12 @@ class EventListFragment : Fragment() {
      * for more information.
      */
     interface OnListFragmentInteractionListener {
-        fun onListFragmentInteraction(item: Event?)
+        fun onListFragmentInteraction(item: ScoredEvent?)
     }
 
     companion object {
-
-        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 
-        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
                 EventListFragment().apply {

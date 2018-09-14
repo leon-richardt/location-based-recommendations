@@ -3,6 +3,7 @@ package de.nuttercode.androidprojectss2018.csi.query;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
 import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
@@ -19,7 +20,8 @@ public class Query<T extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = 2130540249378192775L;
 
-	protected final ClientConfiguration clientConfiguration;
+	private final String serverDNSName;
+	private final int serverPort;
 
 	/**
 	 * 
@@ -29,7 +31,8 @@ public class Query<T extends Serializable> implements Serializable {
 	 */
 	protected Query(ClientConfiguration clientConfiguration) {
 		Assurance.assureNotNull(clientConfiguration);
-		this.clientConfiguration = clientConfiguration;
+		serverDNSName = clientConfiguration.getServerDNSName();
+		serverPort = clientConfiguration.getServerPort();
 	}
 
 	/**
@@ -41,28 +44,38 @@ public class Query<T extends Serializable> implements Serializable {
 	 */
 	@SuppressWarnings("unchecked")
 	public QueryResultSummary<T> run() {
-		QueryResult<T> queryResult = null;
-		QueryResultState queryResultState = QueryResultState.OK;
-		String message = "";
-		try (ServerConnection clientConnection = new ServerConnection(clientConfiguration.getServerPort(),
-				clientConfiguration.getServerDNSName())) {
+		QueryResponse<T> queryResponse = null;
+		QueryResultState clientQueryResultState = QueryResultState.OK;
+		String message = "OK";
+		try (ServerConnection clientConnection = new ServerConnection(serverPort, serverDNSName)) {
 			clientConnection.writeQuery(this);
-			queryResult = (QueryResult<T>) clientConnection.readResult();
+			queryResponse = (QueryResponse<T>) clientConnection.readResponse();
+			if (queryResponse.getServerQueryResultState() != QueryResultState.OK)
+				message = "Server Problem - please try again later";
 		} catch (ClassCastException e) {
-			queryResultState = QueryResultState.ClassCastException;
+			clientQueryResultState = QueryResultState.ClassCastException;
+			message = e.getMessage();
 		} catch (UnknownHostException e) {
-			queryResultState = QueryResultState.UnknownHostException;
+			clientQueryResultState = QueryResultState.UnknownHostException;
+			message = e.getMessage();
 		} catch (IOException e) {
-			queryResultState = QueryResultState.IOException;
+			clientQueryResultState = QueryResultState.IOException;
+			message = e.getMessage();
 		} catch (ClassNotFoundException e) {
-			queryResultState = QueryResultState.ClassNotFoundException;
-		} catch (InterruptedException e) {
-			queryResultState = QueryResultState.InterruptedException;
+			clientQueryResultState = QueryResultState.ClassNotFoundException;
+			message = e.getMessage();
 		} catch (RuntimeException e) {
-			queryResultState = QueryResultState.RuntimeException;
-			message = e.toString();
+			clientQueryResultState = QueryResultState.RuntimeException;
+			message = e.getMessage();
 		}
-		return new QueryResultSummary<>(queryResult, queryResultState, message);
+		if (queryResponse != null)
+			return new QueryResultSummary<>(queryResponse.getQueryResult(), new QueryResultInformation(
+					clientQueryResultState, queryResponse.getServerQueryResultState(), message));
+		else {
+			// kotlin type inference problem - use of T directly
+			return new QueryResultSummary<>(new QueryResult<>(new ArrayList<T>()),
+					new QueryResultInformation(clientQueryResultState, QueryResultState.Null, message));
+		}
 	}
 
 }
