@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import de.nuttercode.androidprojectss2018.csi.pojo.LBRPOJO;
@@ -25,7 +28,7 @@ import de.nuttercode.androidprojectss2018.csi.query.QueryResultSummary;
  */
 public class Store<T extends LBRPOJO, Q extends Query<T>> {
 
-	private final Set<T> tSet;
+	private final Map<Integer, T> tSet;
 	protected final Q query;
 	private final List<StoreListener<T>> storeListenerList;
 
@@ -36,7 +39,7 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 	 */
 	protected Store(Q query) {
 		Assurance.assureNotNull(query);
-		tSet = new HashSet<>();
+		tSet = new HashMap<>();
 		this.query = query;
 		storeListenerList = new ArrayList<>();
 	}
@@ -46,7 +49,28 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 	}
 
 	public Set<T> getAll() {
-		return new HashSet<>(tSet);
+		return new HashSet<>(tSet.values());
+	}
+
+	/**
+	 * @param id
+	 * @return true if the element specified by the id exists in this {@link Store}
+	 */
+	public boolean contains(int id) {
+		return tSet.containsKey(id);
+	}
+
+	/**
+	 * @param id
+	 *            id of the element
+	 * @return the element specified by the id
+	 * @throws NoSuchElementException
+	 *             if the element does not exist
+	 */
+	public T getById(int id) {
+		if (!contains(id))
+			throw new NoSuchElementException();
+		return tSet.get(id);
 	}
 
 	/**
@@ -64,7 +88,7 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 		if (resultInformation.isOK()) {
 			receivedElements = resultSummary.getQueryResult().getAll();
 			for (T newElement : receivedElements)
-				if (!tSet.contains(newElement))
+				if (!tSet.containsKey(newElement.getId()))
 					for (StoreListener<T> listener : storeListenerList)
 						try {
 							listener.onElementAdded(newElement);
@@ -72,7 +96,7 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 							e.printStackTrace();
 						}
 
-			for (T element : tSet)
+			for (T element : tSet.values())
 				if (!receivedElements.contains(element))
 					for (StoreListener<T> listener : storeListenerList)
 						try {
@@ -81,14 +105,15 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 							e.printStackTrace();
 						}
 			tSet.clear();
-			tSet.addAll(receivedElements);
+			for (T t : receivedElements)
+				tSet.put(t.getId(), t);
 		}
 		return resultInformation;
 	}
 
 	@Override
 	public String toString() {
-		return "Store [tSet=" + Arrays.toString(tSet.toArray()) + "]";
+		return "Store [tSet=" + Arrays.toString(tSet.values().toArray()) + "]";
 	}
 
 }
