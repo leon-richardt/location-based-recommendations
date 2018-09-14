@@ -38,7 +38,7 @@ public class Venue implements Serializable {
 	 *             if description or name is name, name is empty, or initialDistance
 	 *             < 0
 	 */
-	public Venue(String description, int id, String name, double longitude, double latitude, double initialDistance) {
+	public Venue(int id, String name, String description, double longitude, double latitude, double initialDistance) {
 		Assurance.assureNotNull(description);
 		Assurance.assureNotEmpty(name);
 		Assurance.assureNotNegative(initialDistance);

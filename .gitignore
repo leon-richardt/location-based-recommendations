@@ -34,3 +34,6 @@ hs_err_pid*
 # Gradle
 *.bin
 *.lock
+
+# File for the Google Maps API key
+Frontend/app/src/debug/res/values/google_maps_api.xml

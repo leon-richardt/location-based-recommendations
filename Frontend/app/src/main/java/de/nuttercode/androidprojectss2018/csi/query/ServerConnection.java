@@ -2,6 +2,7 @@ package de.nuttercode.androidprojectss2018.csi.query;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
@@ -63,6 +64,20 @@ public class ServerConnection implements Closeable {
 	}
 
 	/**
+	 * @return the next object read from the {@link InputStream} of the
+	 *         {@link #socket}
+	 * @throws ClassNotFoundException
+	 *             when {@link ObjectInputStream#readObject()} does
+	 * @throws IOException
+	 *             when {@link ObjectInputStream#readObject()} does
+	 */
+	private Object readObject() throws ClassNotFoundException, IOException {
+		if (objectInputStream == null)
+			objectInputStream = new ObjectInputStream(socket.getInputStream());
+		return objectInputStream.readObject();
+	}
+
+	/**
 	 * writes the {@link Query} to the {@link OutputStream} of the {@link #socket}
 	 * 
 	 * @param query
@@ -75,16 +90,16 @@ public class ServerConnection implements Closeable {
 	}
 
 	/**
-	 * reads the {@link QueryResult} of the answer of the {@link LBRServer} from the
-	 * {@link InputStream} of the {@link #socket}
+	 * reads the {@link QueryResultState} of the answer of the {@link LBRServer}
+	 * from the {@link InputStream} of the {@link #socket}
 	 * 
 	 * @throws IOException
-	 *             when {@link ObjectInputStream#readObject()} does
+	 *             when {@link #readObject()} does
+	 * @throws ClassNotFoundException
+	 *             when {@link #readObject()} does
 	 */
-	public QueryResult<?> readResult() throws ClassNotFoundException, IOException, InterruptedException {
-		if (objectInputStream == null)
-			objectInputStream = new ObjectInputStream(socket.getInputStream());
-		return (QueryResult<?>) objectInputStream.readObject();
+	public QueryResponse<?> readResponse() throws ClassNotFoundException, IOException {
+		return (QueryResponse<?>) readObject();
 	}
 
 	@Override
