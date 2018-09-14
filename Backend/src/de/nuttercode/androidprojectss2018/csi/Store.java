@@ -1,6 +1,5 @@
 package de.nuttercode.androidprojectss2018.csi;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,11 +23,11 @@ import de.nuttercode.androidprojectss2018.csi.query.QueryResultSummary;
  * @author Johannes B. Latzel
  *
  * @param <T>
- *            some {@link Serializable}
+ *            some {@link LBRPOJO}
  */
 public class Store<T extends LBRPOJO, Q extends Query<T>> {
 
-	private final Map<Integer, T> tSet;
+	private final Map<Integer, T> tMap;
 	protected final Q query;
 	private final List<StoreListener<T>> storeListenerList;
 
@@ -39,7 +38,7 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 	 */
 	protected Store(Q query) {
 		Assurance.assureNotNull(query);
-		tSet = new HashMap<>();
+		tMap = new HashMap<>();
 		this.query = query;
 		storeListenerList = new ArrayList<>();
 	}
@@ -49,7 +48,7 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 	}
 
 	public Set<T> getAll() {
-		return new HashSet<>(tSet.values());
+		return new HashSet<>(tMap.values());
 	}
 
 	/**
@@ -57,7 +56,7 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 	 * @return true if the element specified by the id exists in this {@link Store}
 	 */
 	public boolean contains(int id) {
-		return tSet.containsKey(id);
+		return tMap.containsKey(id);
 	}
 
 	/**
@@ -70,7 +69,7 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 	public T getById(int id) {
 		if (!contains(id))
 			throw new NoSuchElementException();
-		return tSet.get(id);
+		return tMap.get(id);
 	}
 
 	/**
@@ -88,7 +87,7 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 		if (resultInformation.isOK()) {
 			receivedElements = resultSummary.getQueryResult().getAll();
 			for (T newElement : receivedElements)
-				if (!tSet.containsKey(newElement.getId()))
+				if (!tMap.containsKey(newElement.getId()))
 					for (StoreListener<T> listener : storeListenerList)
 						try {
 							listener.onElementAdded(newElement);
@@ -96,7 +95,7 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 							e.printStackTrace();
 						}
 
-			for (T element : tSet.values())
+			for (T element : tMap.values())
 				if (!receivedElements.contains(element))
 					for (StoreListener<T> listener : storeListenerList)
 						try {
@@ -104,16 +103,16 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 						} catch (RuntimeException e) {
 							e.printStackTrace();
 						}
-			tSet.clear();
+			tMap.clear();
 			for (T t : receivedElements)
-				tSet.put(t.getId(), t);
+				tMap.put(t.getId(), t);
 		}
 		return resultInformation;
 	}
 
 	@Override
 	public String toString() {
-		return "Store [tSet=" + Arrays.toString(tSet.values().toArray()) + "]";
+		return "Store [tSet=" + Arrays.toString(tMap.values().toArray()) + "]";
 	}
 
 }
