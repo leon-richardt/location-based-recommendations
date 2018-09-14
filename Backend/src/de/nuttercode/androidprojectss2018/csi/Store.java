@@ -112,6 +112,15 @@ public class Store<T extends LBRPOJO, Q extends Query<T>> {
 		return resultInformation;
 	}
 
+	/**
+	 * just calls {@link Query#setClientConfiguration(ClientConfiguration)}
+	 * 
+	 * @param clientConfiguration
+	 */
+	public void setClientConfiguration(ClientConfiguration clientConfiguration) {
+		query.setClientConfiguration(clientConfiguration);
+	}
+
 	@Override
 	public String toString() {
 		return "Store [tSet=" + Arrays.toString(tMap.values().toArray()) + "]";
