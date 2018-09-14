@@ -27,7 +27,7 @@ public class TagPreferenceConfiguration implements Serializable {
 
 	/**
 	 * adds a tag (if the tag is not already configured herein) with
-	 * {@link TagUserChoice#Accept} configuration
+	 * {@link TagUserChoice#ACCEPT} configuration
 	 * 
 	 * @param tag
 	 * @throws IllegalArgumentException
@@ -37,7 +37,7 @@ public class TagPreferenceConfiguration implements Serializable {
 		Assurance.assureNotNull(tag);
 		Integer id = tag.getId();
 		if (!userChoiceTagMap.containsKey(id))
-			userChoiceTagMap.put(id, TagUserChoice.Accept);
+			userChoiceTagMap.put(id, TagUserChoice.ACCEPT);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class TagPreferenceConfiguration implements Serializable {
 	/**
 	 * 
 	 * @param tag
-	 * @return the {@link TagUserChoice} or {@link TagUserChoice#Accept} if the
+	 * @return the {@link TagUserChoice} or {@link TagUserChoice#ACCEPT} if the
 	 *         {@link Tag} is not configured
 	 * @throws IllegalArgumentException
 	 *             if tag is null
@@ -68,7 +68,7 @@ public class TagPreferenceConfiguration implements Serializable {
 		Integer id = tag.getId();
 		if (userChoiceTagMap.containsKey(id))
 			return userChoiceTagMap.get(id);
-		return TagUserChoice.Accept;
+		return TagUserChoice.ACCEPT;
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class TagPreferenceConfiguration implements Serializable {
 		Integer id;
 		for (Tag tag : tags) {
 			id = tag.getId();
-			if (userChoiceTagMap.containsKey(id) && userChoiceTagMap.get(id) != TagUserChoice.Deny)
+			if (userChoiceTagMap.containsKey(id) && userChoiceTagMap.get(id) != TagUserChoice.DISLIKE)
 				return true;
 		}
 		return false;

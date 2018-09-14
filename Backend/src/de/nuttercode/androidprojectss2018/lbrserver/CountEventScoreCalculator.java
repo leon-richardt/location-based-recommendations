@@ -11,8 +11,8 @@ import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
 
 /**
  * uses the following metric to calculate a score. For every tag in the event a
- * {@link TagUserChoice#Deny} counts as -1, a {@link TagUserChoice#Accept}
- * counts as 0, and a {@link TagUserChoice#Like} counts as +1. Let m be the
+ * {@link TagUserChoice#DISLIKE} counts as -1, a {@link TagUserChoice#ACCEPT}
+ * counts as 0, and a {@link TagUserChoice#LIKE} counts as +1. Let m be the
  * number of +1, n number of -1, and p the number of {@link Tag}s in the
  * {@link Event}. The score s will be s = (m + n + p) / 2p which satisfies
  * {@link ScoredEvent}.
@@ -31,12 +31,12 @@ public class CountEventScoreCalculator implements EventScoreCalculator {
 		double score = 0.0;
 		for (Tag tag : tagList) {
 			switch (tpc.getUserChoice(tag)) {
-			case Accept:
+			case ACCEPT:
 				break;
-			case Deny:
+			case DISLIKE:
 				countScore--;
 				break;
-			case Like:
+			case LIKE:
 				countScore++;
 				break;
 			default:
