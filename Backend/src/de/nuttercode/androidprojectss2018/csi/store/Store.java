@@ -27,7 +27,7 @@ import de.nuttercode.androidprojectss2018.csi.query.QueryResultSummary;
  * @author Johannes B. Latzel
  *
  * @param <T>
- *            some {@link LBRPojo}
+ *            any {@link LBRPojo}
  */
 public class Store<T extends LBRPojo, Q extends Query<T>> {
 

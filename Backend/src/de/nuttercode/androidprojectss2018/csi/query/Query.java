@@ -17,7 +17,7 @@ import de.nuttercode.androidprojectss2018.csi.pojo.LBRPojo;
  * @author Johannes B. Latzel
  *
  * @param <T>
- *            any Serializable
+ *            any LBRPojo
  */
 public class Query<T extends LBRPojo> implements Serializable {
 
