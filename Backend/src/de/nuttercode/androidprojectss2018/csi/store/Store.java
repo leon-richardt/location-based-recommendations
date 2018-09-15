@@ -1,6 +1,5 @@
 package de.nuttercode.androidprojectss2018.csi.store;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -34,7 +33,7 @@ public class Store<T extends LBRPojo, Q extends Query<T>> {
 	/**
 	 * default ttl is 2h
 	 */
-	private final static int DEFAULT_TTL_SECONDS = 2 * 60 * 60;
+	private final static int DEFAULT_TTL_MILLISECONDS = 2 * 60 * 60 * 1000;
 
 	/**
 	 * maps T Ids to their instances
@@ -45,7 +44,7 @@ public class Store<T extends LBRPojo, Q extends Query<T>> {
 	 * maps Ids to ttl. the Ids will be ignored in the lbrqueries until the ttl is
 	 * reached.
 	 */
-	private final Map<Integer, Instant> ignoreIdMap;
+	private final Map<Integer, Long> ignoreIdMap;
 
 	protected final Q query;
 	private final List<StoreListener<T>> storeListenerList;
@@ -66,7 +65,7 @@ public class Store<T extends LBRPojo, Q extends Query<T>> {
 		this.query = query;
 		storeListenerList = new ArrayList<>();
 		ignoreIdMap = new HashMap<>();
-		setTTL(DEFAULT_TTL_SECONDS);
+		setTTL(DEFAULT_TTL_MILLISECONDS);
 	}
 
 	/**
@@ -75,9 +74,9 @@ public class Store<T extends LBRPojo, Q extends Query<T>> {
 	 * @return all remaining Ids in {@link #ignoreIdMap}
 	 */
 	private Set<Integer> getIgnoreIds() {
-		Instant now = Instant.now();
+		long now = System.currentTimeMillis();
 		for (Integer id : ignoreIdMap.keySet())
-			if (now.isAfter(ignoreIdMap.get(id)))
+			if (now >= ignoreIdMap.get(id))
 				ignoreIdMap.remove(id);
 		return Collections.unmodifiableSet(ignoreIdMap.keySet());
 	}
@@ -159,7 +158,7 @@ public class Store<T extends LBRPojo, Q extends Query<T>> {
 			for (T t : receivedElements) {
 				id = t.getId();
 				tMap.put(id, t);
-				ignoreIdMap.put(id, Instant.now().plusSeconds(ttl));
+				ignoreIdMap.put(id, System.currentTimeMillis() + ttl);
 			}
 		}
 		for (StoreListener<T> listener : storeListenerList)
