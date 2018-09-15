@@ -1,6 +1,4 @@
-package de.nuttercode.androidprojectss2018.csi;
-
-import java.io.Serializable;
+package de.nuttercode.androidprojectss2018.csi.pojo;
 
 /**
  * POJO for a Tag entry in the database
@@ -8,22 +6,17 @@ import java.io.Serializable;
  * @author Johannes B. Latzel
  *
  */
-public class Tag implements Serializable {
+public class Tag extends LBRPojo {
 
 	private static final long serialVersionUID = 1193555989071795461L;
 
-	private final int id;
 	private final String name;
 	private final String description;
 
 	public Tag(int id, String name, String description) {
-		this.id = id;
+		super(id);
 		this.name = name;
 		this.description = description;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String getName() {
@@ -35,12 +28,9 @@ public class Tag implements Serializable {
 	}
 
 	@Override
-	public int hashCode() {
-		return id;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
+		if (!super.equals(obj))
+			return false;
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -53,8 +43,6 @@ public class Tag implements Serializable {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (id != other.id)
-			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -65,7 +53,7 @@ public class Tag implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Tag [id=" + id + ", name=" + name + ", description=" + description + "]";
+		return "Tag [id=" + getId() + ", name=" + name + ", description=" + description + "]";
 	}
 
 }

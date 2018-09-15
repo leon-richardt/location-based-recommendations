@@ -7,7 +7,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
+import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration;
 import de.nuttercode.androidprojectss2018.lbrserver.CountEventScoreCalculator;
 import de.nuttercode.androidprojectss2018.lbrserver.LBRServer;
 

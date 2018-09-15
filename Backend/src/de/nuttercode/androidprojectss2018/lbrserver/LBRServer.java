@@ -15,7 +15,10 @@ import java.util.logging.Logger;
 import java.lang.Thread;
 
 import de.nuttercode.androidprojectss2018.csi.*;
-import de.nuttercode.androidprojectss2018.csi.Tag;
+import de.nuttercode.androidprojectss2018.csi.config.TagPreferenceConfiguration;
+import de.nuttercode.androidprojectss2018.csi.pojo.Event;
+import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent;
+import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
 import de.nuttercode.androidprojectss2018.csi.query.LBRQuery;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResponse;
 import de.nuttercode.androidprojectss2018.csi.query.Query;
@@ -139,10 +142,15 @@ public class LBRServer implements Closeable {
 	 * @throws SQLException
 	 *             when {@link DBConnection#getAllTags()} does
 	 */
-	private Collection<Tag> getAllTags() throws SQLException {
+	private Collection<Tag> getAllTags(TagQuery tagQuery) throws SQLException {
+		Collection<Tag> tagCollection;
 		synchronized (dbConnection) {
-			return dbConnection.getAllTags();
+			tagCollection = dbConnection.getAllTags();
 		}
+		tagCollection.removeIf((Tag tag) -> {
+			return tagQuery.ignoreId(tag.getId());
+		});
+		return tagCollection;
 	}
 
 	private Collection<Event> getAllEventsByRadiusAndLocation(LBRQuery lbrQuery) throws SQLException {
@@ -161,10 +169,11 @@ public class LBRServer implements Closeable {
 	 * @return eventList
 	 */
 	private Collection<Event> filterEvents(Collection<Event> eventList,
-			TagPreferenceConfiguration tagPreferenceConfiguration) {
+			TagPreferenceConfiguration tagPreferenceConfiguration, LBRQuery lbrQuery) {
 		logger.log(Level.FINER, "filtering events");
 		eventList.removeIf((Event event) -> {
-			return !tagPreferenceConfiguration.containsAny(event.getTags()) || !eventVisibiltyProvider.isVisible(event);
+			return lbrQuery.ignoreId(event.getId()) || !tagPreferenceConfiguration.containsAny(event.getTags())
+					|| !eventVisibiltyProvider.isVisible(event);
 		});
 		return eventList;
 	}
@@ -189,7 +198,7 @@ public class LBRServer implements Closeable {
 		QueryResult<Tag> queryResult;
 		QueryResultState serverQueryResultState = QueryResultState.OK;
 		try {
-			queryResult = new QueryResult<>(getAllTags());
+			queryResult = new QueryResult<>(getAllTags(tagQuery));
 		} catch (SQLException e) {
 			logger.log(Level.WARNING, e.toString(), e);
 			if (tryReconnect && reconnectDB()) {
@@ -215,7 +224,7 @@ public class LBRServer implements Closeable {
 		TagPreferenceConfiguration tpc = lbrQuery.getTagPreferenceConfiguration();
 		try {
 			queryResult = new QueryResult<ScoredEvent>(
-					scoreEvents(filterEvents(getAllEventsByRadiusAndLocation(lbrQuery), tpc), tpc));
+					scoreEvents(filterEvents(getAllEventsByRadiusAndLocation(lbrQuery), tpc, lbrQuery), tpc));
 		} catch (SQLException e) {
 			logger.log(Level.WARNING, e.toString(), e);
 			if (tryReconnect && reconnectDB()) {

@@ -2,13 +2,13 @@ package de.nuttercode.androidprojectss2018.test;
 
 import java.util.ArrayList;
 
-import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
-import de.nuttercode.androidprojectss2018.csi.EventStore;
-import de.nuttercode.androidprojectss2018.csi.ScoredEvent;
-import de.nuttercode.androidprojectss2018.csi.Tag;
-import de.nuttercode.androidprojectss2018.csi.TagStore;
-import de.nuttercode.androidprojectss2018.csi.TagUserChoice;
+import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration;
+import de.nuttercode.androidprojectss2018.csi.config.TagUserChoice;
+import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent;
+import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
 import de.nuttercode.androidprojectss2018.csi.query.QueryResultInformation;
+import de.nuttercode.androidprojectss2018.csi.store.EventStore;
+import de.nuttercode.androidprojectss2018.csi.store.TagStore;
 import de.nuttercode.androidprojectss2018.example.StoreListenerExample;
 
 /**
@@ -41,16 +41,19 @@ public class LBRQueryTestLocal {
 			throw new IllegalStateException();
 
 		// actual tests
-		System.out.println(eventStore.refresh());
+		eventStore.refresh();
 		clientConfiguration.getTagPreferenceConfiguration().addTag(tags.get(0));
-		System.out.println(eventStore.refresh());
+		eventStore.refresh();
 		clientConfiguration.getTagPreferenceConfiguration().addTag(tags.get(1));
-		System.out.println(eventStore.refresh());
+		eventStore.refresh();
 		clientConfiguration.getTagPreferenceConfiguration().setTag(tags.get(1), TagUserChoice.LIKE);
-		System.out.println(eventStore.refresh());
+		eventStore.refresh();
 		clientConfiguration.getTagPreferenceConfiguration().setTag(tags.get(0), TagUserChoice.LIKE);
 		clientConfiguration.getTagPreferenceConfiguration().setTag(tags.get(1), TagUserChoice.DISLIKE);
-		System.out.println(eventStore.refresh());
+		eventStore.refresh();
+		eventStore.refresh();
+		eventStore.setClientConfiguration(clientConfiguration);
+		eventStore.refresh();
 		for (ScoredEvent scoredEvent : eventStore.getAll())
 			System.out.println(scoredEvent);
 

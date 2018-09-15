@@ -1,6 +1,8 @@
-package de.nuttercode.androidprojectss2018.csi;
+package de.nuttercode.androidprojectss2018.csi.config;
 
 import java.io.Serializable;
+
+import de.nuttercode.androidprojectss2018.csi.Assurance;
 
 /**
  * represents the configuration of a LBRClient - may be saved locally by

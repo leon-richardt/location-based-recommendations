@@ -2,9 +2,9 @@ package de.nuttercode.androidprojectss2018.lbrserver;
 
 import java.util.Random;
 
-import de.nuttercode.androidprojectss2018.csi.Event;
-import de.nuttercode.androidprojectss2018.csi.ScoredEvent;
-import de.nuttercode.androidprojectss2018.csi.TagPreferenceConfiguration;
+import de.nuttercode.androidprojectss2018.csi.config.TagPreferenceConfiguration;
+import de.nuttercode.androidprojectss2018.csi.pojo.Event;
+import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent;
 
 /**
  * random implementation of {@link EventScoreCalculator}

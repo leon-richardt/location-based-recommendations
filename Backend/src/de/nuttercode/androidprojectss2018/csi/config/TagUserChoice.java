@@ -1,4 +1,6 @@
-package de.nuttercode.androidprojectss2018.csi;
+package de.nuttercode.androidprojectss2018.csi.config;
+
+import de.nuttercode.androidprojectss2018.csi.pojo.Tag;
 
 /**
  * possible choice of user for a {@link Tag} in {@link TagPreferenceConfiguration}
@@ -7,7 +9,6 @@ package de.nuttercode.androidprojectss2018.csi;
  *
  */
 public enum TagUserChoice {
-
 	DISLIKE,
 	ACCEPT,
 	LIKE

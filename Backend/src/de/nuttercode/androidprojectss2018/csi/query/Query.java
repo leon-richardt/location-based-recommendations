@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
-import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
+import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration;
+import de.nuttercode.androidprojectss2018.csi.pojo.LBRPojo;
 
 /**
  * used to query elements of type T from the {@link LBRServer}
@@ -14,14 +17,15 @@ import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
  * @author Johannes B. Latzel
  *
  * @param <T>
- *            any Serializable
+ *            any LBRPojo
  */
-public class Query<T extends Serializable> implements Serializable {
+public class Query<T extends LBRPojo> implements Serializable {
 
 	private static final long serialVersionUID = 2130540249378192775L;
 
-	private final String serverDNSName;
-	private final int serverPort;
+	private String serverDNSName;
+	private int serverPort;
+	private final Set<Integer> ignoreIdSet;
 
 	/**
 	 * 
@@ -30,9 +34,16 @@ public class Query<T extends Serializable> implements Serializable {
 	 *             if clientConfiguration is null
 	 */
 	protected Query(ClientConfiguration clientConfiguration) {
-		Assurance.assureNotNull(clientConfiguration);
-		serverDNSName = clientConfiguration.getServerDNSName();
-		serverPort = clientConfiguration.getServerPort();
+		setClientConfiguration(clientConfiguration);
+		ignoreIdSet = new HashSet<>();
+	}
+
+	/**
+	 * @param id
+	 * @return true if the id is contained in {@link #ignoreIdSet}
+	 */
+	public boolean ignoreId(int id) {
+		return ignoreIdSet.contains(id);
 	}
 
 	/**
@@ -76,6 +87,32 @@ public class Query<T extends Serializable> implements Serializable {
 			return new QueryResultSummary<>(new QueryResult<>(new ArrayList<T>()),
 					new QueryResultInformation(clientQueryResultState, QueryResultState.Null, message));
 		}
+	}
+
+	/**
+	 * copies needed values for this query from the {@link ClientConfiguration}. Use
+	 * this method if the {@link ClientConfiguration} has changed.
+	 * 
+	 * @param clientConfiguration
+	 * @throws IllegalArgumentException
+	 *             if clientConfiguration is null
+	 */
+	public void setClientConfiguration(ClientConfiguration clientConfiguration) {
+		Assurance.assureNotNull(clientConfiguration);
+		serverDNSName = clientConfiguration.getServerDNSName();
+		serverPort = clientConfiguration.getServerPort();
+	}
+
+	/**
+	 * sets the Ids this query will ignore
+	 * 
+	 * @param ignoreIdSet
+	 * @throws IllegalArugmentException
+	 *             if ignoreIdSet is null
+	 */
+	public void setIgnoreIds(Set<Integer> ignoreIdSet) {
+		Assurance.assureNotNull(ignoreIdSet);
+		this.ignoreIdSet.retainAll(ignoreIdSet);
 	}
 
 }

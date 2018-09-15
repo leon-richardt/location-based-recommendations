@@ -4,7 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
-import de.nuttercode.androidprojectss2018.csi.Event;
+import de.nuttercode.androidprojectss2018.csi.pojo.Event;
 
 /**
  * assigns visibility states to events with id 1 and 2. event with id 1 will be
