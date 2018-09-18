@@ -1,7 +1,10 @@
 package de.nuttercode.androidprojectss2018.app
 
 import android.app.IntentService
+import android.app.PendingIntent
 import android.content.Intent
+import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
 import android.util.Log
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
@@ -23,15 +26,39 @@ class GeofenceTransitionsIntentService: IntentService("GeofenceTransitionsIntent
             val triggeringGeofences = geofencingEvent.triggeringGeofences
 
             // TODO: Send notification for one (or all?) triggering geofence(s), set PendingIntent to open the overview for that notification
+            sendNotification(triggeringGeofences)
         }
     }
 
-    private fun sendNotification() {
+    private var notifId: Int = 0
+    private fun sendNotification(triggeringGeofences: List<Geofence>): Int {
+        if (triggeringGeofences.isEmpty()) throw IllegalStateException("No geofences in passed list")
 
+        // We are just sending a notification for the first geofence in the list
+        val eventStore = obtainMostRecentEventStore()
+        val scoredEventId = triggeringGeofences[0].requestId.toInt()
+        val scoredEvent = eventStore.getById(scoredEventId)
+        val eventOverviewIntent = Intent(this, EventOverviewActivity::class.java).apply { putExtra(EXTRA_EVENT_CLICKED, scoredEventId) }
+        val pendingIntent = PendingIntent.getActivity(this, PENDING_INTENT_ID, eventOverviewIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+
+        val notifBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.notification_icon_background)
+                .setContentTitle("Nearby Event")
+                .setContentText("${scoredEvent.event.name} is close to you!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+
+        val notifManager = NotificationManagerCompat.from(this)
+        notifManager.notify(notifId, notifBuilder.build())
+        return notifId++
     }
 
     companion object {
         const val TAG = "GeofenceTransitionsIS"
+
+        const val PENDING_INTENT_ID = 0
     }
 
 }

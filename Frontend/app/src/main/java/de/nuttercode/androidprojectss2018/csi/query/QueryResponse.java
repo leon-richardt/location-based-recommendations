@@ -3,7 +3,6 @@ package de.nuttercode.androidprojectss2018.csi.query;
 import java.io.Serializable;
 
 import de.nuttercode.androidprojectss2018.csi.Assurance;
-import de.nuttercode.androidprojectss2018.lbrserver.LBRServer;
 
 /**
  * encapsulates {@link QueryResult} and {@link QueryResultState} as send by

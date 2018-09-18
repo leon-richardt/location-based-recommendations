@@ -1,7 +1,9 @@
 package de.nuttercode.androidprojectss2018.app
 
 import android.Manifest
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.AsyncTask
 import android.support.v4.content.ContextCompat
@@ -17,7 +19,7 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
 
     private var contextRef = WeakReference(context)
     // Included for future use
-//    private var geofencingClient = LocationServices.getGeofencingClient(contextRef.get()!!)
+   private var geofencingClient = LocationServices.getGeofencingClient(contextRef.get()!!)
 
 
     /**
@@ -61,15 +63,19 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
 
 
             if (!eventStore.all.isEmpty()) {
-                GeofencingRequest.Builder()
+                val request = GeofencingRequest.Builder()
                         .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
                         .addGeofences(
+                                // Create a new list with geofences for every event (can later be extended to only include events over a certain score)
                                 LinkedList<Geofence>().apply {
                                     for (e in eventStore.all) add(buildGeofence(e))
                                 })
                         .build()
 
-                // TODO: Register geofencing events
+                // Register geofencing events
+                val geofencingServiceIntent = Intent(contextRef.get(), GeofenceTransitionsIntentService::class.java)
+                val pendingIntent = PendingIntent.getService(contextRef.get(), PENDING_INTENT_ID, geofencingServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                geofencingClient.addGeofences(request, pendingIntent)
             }
 
             // Update the EventStore holder (this does not need to be done as EventStores are mutable)
@@ -87,7 +93,7 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
         val event = scoredEvent.event
 
         return Geofence.Builder()
-                .setRequestId(event.id.toString())
+                .setRequestId(scoredEvent.id.toString())
                 .setCircularRegion(event.venue.latitude, event.venue.longitude, GEOFENCE_RADIUS)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
@@ -97,6 +103,8 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
 
     companion object {
         const val TAG = "UpdateEventsTask"
+
+        const val PENDING_INTENT_ID = 0
 
         /**
          * Radius (in meters) inside which a geofencing event should trigger

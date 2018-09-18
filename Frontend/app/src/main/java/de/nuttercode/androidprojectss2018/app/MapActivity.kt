@@ -102,7 +102,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
     override fun onListFragmentInteraction(item: ScoredEvent?) {
         // Create an Intent for that specific event and start the overview activity
         val intent = Intent(this, EventOverviewActivity::class.java)
-        intent.putExtra(EXTRA_EVENT_CLICKED, item)
+        intent.putExtra(EXTRA_EVENT_CLICKED, item!!.id)
         startActivity(intent)
     }
 
