@@ -25,7 +25,6 @@ class GeofenceTransitionsIntentService: IntentService("GeofenceTransitionsIntent
                 geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
             val triggeringGeofences = geofencingEvent.triggeringGeofences
 
-            // TODO: Send notification for one (or all?) triggering geofence(s), set PendingIntent to open the overview for that notification
             sendNotification(triggeringGeofences)
         }
     }
