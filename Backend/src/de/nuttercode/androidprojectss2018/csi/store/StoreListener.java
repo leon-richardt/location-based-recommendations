@@ -19,8 +19,7 @@ public interface StoreListener<T> {
 	 * @param newElement
 	 *            the new element added to the {@link Store}
 	 */
-	default void onElementAdded(T newElement) {
-	}
+	void onElementAdded(T newElement);
 
 	/**
 	 * will be called every time an element is removed from a {@link Store}.
@@ -28,15 +27,13 @@ public interface StoreListener<T> {
 	 * @param newElement
 	 *            the element that is removed from the {@link Store}
 	 */
-	default void onElementRemoved(T newElement) {
-	}
+	void onElementRemoved(T newElement);
 
 	/**
 	 * will be called every time {@link Store#refresh()} is finished
 	 * 
 	 * @param queryResultInformation
 	 */
-	default void onRefreshFinished(QueryResultInformation queryResultInformation) {
-	}
+	void onRefreshFinished(QueryResultInformation queryResultInformation);
 
 }
