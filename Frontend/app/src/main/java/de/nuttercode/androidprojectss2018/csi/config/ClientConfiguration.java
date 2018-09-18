@@ -1,6 +1,8 @@
-package de.nuttercode.androidprojectss2018.csi;
+package de.nuttercode.androidprojectss2018.csi.config;
 
 import java.io.Serializable;
+
+import de.nuttercode.androidprojectss2018.csi.Assurance;
 
 /**
  * represents the configuration of a LBRClient - may be saved locally by
@@ -15,7 +17,7 @@ public class ClientConfiguration implements Serializable {
 	 * this upper bound constraints the radius to a maximum of this value - the unit
 	 * is the same as of {@link #radius}
 	 */
-	private final static double RADIUS_UPPER_BOUND = 200.0;	// TODO: Change back to 100
+	private final static double RADIUS_UPPER_BOUND = 200.0;		// TODO: Change back to 100.0
 
 	private static final long serialVersionUID = 135520319529800968L;
 
