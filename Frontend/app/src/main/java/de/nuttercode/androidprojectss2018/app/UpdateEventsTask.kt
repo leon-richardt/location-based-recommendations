@@ -95,7 +95,7 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
         return Geofence.Builder()
                 .setRequestId(scoredEvent.id.toString())
                 .setCircularRegion(event.venue.latitude, event.venue.longitude, GEOFENCE_RADIUS)
-                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)       // TODO: Maybe change? Could also remove geofences in StoreListener?
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
                 .setLoiteringDelay(GEOFENCE_LOITERING_DELAY)   // Only trigger an GeofencingEvent when the user stays inside the circular region for the given time
                 .build()
@@ -114,7 +114,7 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
         /**
          * Time (in milliseconds) that a user has to spend inside the circular region before a geofencing event should trigger
          */
-        private const val GEOFENCE_LOITERING_DELAY: Int = 1000 * 20
+        private const val GEOFENCE_LOITERING_DELAY: Int = 1000 * 20     // 20 seconds
     }
 
 }
