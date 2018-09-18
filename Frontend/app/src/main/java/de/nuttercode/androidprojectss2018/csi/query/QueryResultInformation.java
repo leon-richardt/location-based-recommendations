@@ -18,10 +18,12 @@ public class QueryResultInformation {
 			String message) {
 		Assurance.assureNotNull(clientQueryResultState);
 		Assurance.assureNotNull(serverQueryResultState);
-		Assurance.assureNotEmpty(message);
 		this.clientQueryResultState = clientQueryResultState;
 		this.serverQueryResultState = serverQueryResultState;
-		this.message = message;
+		if (message == null)
+			this.message = "";
+		else
+			this.message = message;
 	}
 
 	public QueryResultState getClientQueryResultState() {

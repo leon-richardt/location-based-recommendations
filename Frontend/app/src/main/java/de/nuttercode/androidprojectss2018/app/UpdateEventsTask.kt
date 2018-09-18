@@ -9,7 +9,7 @@ import android.util.Log
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
-import de.nuttercode.androidprojectss2018.csi.ScoredEvent
+import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent
 import java.lang.ref.WeakReference
 import java.util.*
 

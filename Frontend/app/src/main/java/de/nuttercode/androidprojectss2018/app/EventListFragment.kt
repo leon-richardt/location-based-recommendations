@@ -9,8 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import de.nuttercode.androidprojectss2018.csi.*
+import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent
 
 /**
  * A fragment representing a list of Items.

@@ -5,8 +5,8 @@ import android.os.AsyncTask
 import android.preference.PreferenceManager
 import android.util.Log
 import com.google.gson.Gson
-import de.nuttercode.androidprojectss2018.csi.ClientConfiguration
-import de.nuttercode.androidprojectss2018.csi.TagStore
+import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration
+import de.nuttercode.androidprojectss2018.csi.store.TagStore
 import java.lang.ref.WeakReference
 
 open class UpdateTagsTask(context: Context) : AsyncTask<Void, Void, Boolean>() {

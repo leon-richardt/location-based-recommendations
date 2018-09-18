@@ -1,5 +1,7 @@
-package de.nuttercode.androidprojectss2018.csi;
+package de.nuttercode.androidprojectss2018.csi.store;
 
+import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration;
+import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent;
 import de.nuttercode.androidprojectss2018.csi.query.LBRQuery;
 
 /**

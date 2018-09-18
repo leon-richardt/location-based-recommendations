@@ -10,9 +10,9 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import com.google.gson.Gson
-import de.nuttercode.androidprojectss2018.csi.ClientConfiguration
-import de.nuttercode.androidprojectss2018.csi.EventStore
-import de.nuttercode.androidprojectss2018.csi.TagStore
+import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration
+import de.nuttercode.androidprojectss2018.csi.store.EventStore
+import de.nuttercode.androidprojectss2018.csi.store.TagStore
 
 /**
  * Holds the most recent instance of the [EventStore] that should be used by every Activity in the app.

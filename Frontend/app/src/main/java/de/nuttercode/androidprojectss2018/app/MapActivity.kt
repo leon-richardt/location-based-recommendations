@@ -15,10 +15,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
-import de.nuttercode.androidprojectss2018.csi.ClientConfiguration
-import de.nuttercode.androidprojectss2018.csi.EventStore
-import de.nuttercode.androidprojectss2018.csi.ScoredEvent
-import de.nuttercode.androidprojectss2018.csi.TagStore
+import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration
+import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent
+import de.nuttercode.androidprojectss2018.csi.store.EventStore
+import de.nuttercode.androidprojectss2018.csi.store.TagStore
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.OnListFragmentInteractionListener {
 
