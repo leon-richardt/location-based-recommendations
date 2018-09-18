@@ -1,17 +1,21 @@
 package de.nuttercode.androidprojectss2018.app
 
+import android.Manifest
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.*
+import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import com.google.android.gms.maps.CameraUpdateFactory
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
@@ -19,6 +23,7 @@ import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration
 import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent
 import de.nuttercode.androidprojectss2018.csi.store.EventStore
 import de.nuttercode.androidprojectss2018.csi.store.TagStore
+import java.lang.Exception
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.OnListFragmentInteractionListener {
 
@@ -28,7 +33,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
     private lateinit var clientConfig: ClientConfiguration
 
     private var firstStart = true
-    
+
     private lateinit var jobScheduler: JobScheduler
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,10 +122,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            mMap.isMyLocationEnabled = true
     }
 
     fun updateEventList() {
-        val mostRecentEventStore = obtainMostRecentEventStore()
+        val mostRecentEventStore = obtainMostRecentEventStore()!!
         mList.clearList()
         mList.addAllElements(mostRecentEventStore.all)
         mList.refreshList()
@@ -132,19 +139,31 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         // Make sure to remove all markers (we will add them again if their events are still in the store)
         mMap.clear()
 
-        val mostRecentEventStore = obtainMostRecentEventStore()
-
-        // If there are no events in the EventStore, we can quit already
-        if (mostRecentEventStore.all.isEmpty()) return
+        val mostRecentEventStore = obtainMostRecentEventStore()!!
 
         val boundsBuilder = LatLngBounds.builder()
-        for (scoredEvent in mostRecentEventStore.all) {
-            val venuePos = LatLng(scoredEvent.event.venue.latitude, scoredEvent.event.venue.longitude)
-            boundsBuilder.include(venuePos)
-            mMap.addMarker(MarkerOptions().position(venuePos).title("${scoredEvent.event.name} at ${scoredEvent.event.venue.name}"))
+        val mostRecentLocation = obtainMostRecentLocation()
+        if (mostRecentLocation != null) boundsBuilder.include(mostRecentLocation)
+
+        // If there are no events in the EventStore, we can skip this part
+        if (mostRecentEventStore.all.isNotEmpty()) {
+            for (scoredEvent in mostRecentEventStore.all) {
+                val venuePos = LatLng(scoredEvent.event.venue.latitude, scoredEvent.event.venue.longitude)
+                boundsBuilder.include(venuePos)
+                mMap.addMarker(MarkerOptions()
+                        .position(venuePos)
+                        .title("${scoredEvent.event.name} at ${scoredEvent.event.venue.name}")
+                )
+            }
         }
-        // Move the camera in such a way that every event marked on the map is visible
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 100))
+
+        // Building the bounds can throw an exception which we catch here
+        try {
+            // Move the camera in such a way that every event marked on the map is visible
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 100))
+        } catch (e: Exception) {
+            Log.e(TAG, "BoundsBuilder: ${e.message}")
+        }
     }
 
     private fun buildJobInfo(cls: Class<*>): JobInfo {
@@ -155,5 +174,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPeriodic(if (cls == UpdateTagsJobService::class.java) PERIODIC_TAG_UPDATES_JOB_INTERVAL else PERIODIC_EVENT_UPDATES_JOB_INTERVAL)
                 .build()
+    }
+
+    companion object {
+        const val TAG = "MapActivity"
     }
 }

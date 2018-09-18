@@ -14,6 +14,7 @@ class GeofenceTransitionsIntentService: IntentService("GeofenceTransitionsIntent
     override fun onHandleIntent(intent: Intent?) {
         val geofencingEvent = GeofencingEvent.fromIntent(intent)
 
+        Log.i(TAG, "Started onHandleIntent() in GeofenceTransitionsIS")
         if (geofencingEvent.hasError()) {
             Log.e(TAG, "Error in GeofencingEvent from Intent: Error Code ${geofencingEvent.errorCode}")
             return
@@ -21,7 +22,7 @@ class GeofenceTransitionsIntentService: IntentService("GeofenceTransitionsIntent
 
         val geofenceTransition = geofencingEvent.geofenceTransition
 
-        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_DWELL ||
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT ||
                 geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
             val triggeringGeofences = geofencingEvent.triggeringGeofences
 
@@ -36,7 +37,7 @@ class GeofenceTransitionsIntentService: IntentService("GeofenceTransitionsIntent
         // We are just sending a notification for the first geofence in the list
         val eventStore = obtainMostRecentEventStore()
         val scoredEventId = triggeringGeofences[0].requestId.toInt()
-        val scoredEvent = eventStore.getById(scoredEventId)
+        val scoredEvent = eventStore!!.getById(scoredEventId)
         val eventOverviewIntent = Intent(this, EventOverviewActivity::class.java).apply { putExtra(EXTRA_EVENT_CLICKED, scoredEventId) }
         val pendingIntent = PendingIntent.getActivity(this, PENDING_INTENT_ID, eventOverviewIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 

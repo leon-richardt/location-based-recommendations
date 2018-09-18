@@ -9,6 +9,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration
 import de.nuttercode.androidprojectss2018.csi.store.EventStore
@@ -18,6 +19,7 @@ import de.nuttercode.androidprojectss2018.csi.store.TagStore
  * Holds the most recent instance of the [EventStore] that should be used by every Activity in the app.
  */
 private lateinit var mostRecentEventStore: EventStore
+private lateinit var mostRecentLocation: LatLng
 
 /**
  * Convenience method for getting an object saved in [SharedPreferences].
@@ -92,13 +94,29 @@ fun updateMostRecentEventStore(newEventStore: EventStore) {
 /**
  * Obtain the most recent [EventStore] instance saved.
  *
- * @throws IllegalStateException if no [EventStore] instance has been saved yet
+ * @return The most recent [EventStore] saved, or null if none has been saved yet
  */
-fun obtainMostRecentEventStore(): EventStore {
-    if (!::mostRecentEventStore.isInitialized) throw IllegalStateException("No EventStore saved yet")
+fun obtainMostRecentEventStore(): EventStore? {
+    if (!::mostRecentEventStore.isInitialized) return null
     return mostRecentEventStore
 }
 
+/**
+ * Update the [LatLng] holder with [newLocation].
+ */
+fun updateMostRecentLocation(newLocation: LatLng) {
+    mostRecentLocation = newLocation
+}
+
+/**
+ * Obtain the most recent location saved.
+ *
+ * @return The most recent location (as a [LatLng]) saved, or null if none has been saved yet
+ */
+fun obtainMostRecentLocation(): LatLng? {
+    if (!::mostRecentLocation.isInitialized) return null
+    return mostRecentLocation
+}
 
 /**
  * Holds the ID for the last notification that was sent

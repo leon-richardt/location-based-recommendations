@@ -21,19 +21,12 @@ open class UpdateTagsTask(context: Context) : AsyncTask<Void, Void, Boolean>() {
 
     override fun doInBackground(vararg parameters: Void?): Boolean {
         val qri = tagStore.refresh()
-        val cqrs = qri.clientQueryResultState
-        val sqrs = qri.serverQueryResultState
 
-        // TODO: Remove logging
-        Log.i(TAG, "CQRS = $cqrs, SQRS = $sqrs")
         if (!qri.isOK) {
             Log.e(TAG, "TagQuery was not successful. Message: ${qri.message}")
             // Indicate that this job needs to be rescheduled
             return true
         }
-        Log.i(TAG, "Now listing all tags in TagStore:")
-        for (tag in tagStore.all) Log.i(TAG, "Tag in TagStore: ${tag.name}")
-        Log.i(TAG, "Finished listing all tags")
 
         // Updated the TagStore in SharedPreferences
         saveToSharedPrefs(sharedPrefs, tagStore)

@@ -8,10 +8,13 @@ import android.content.pm.PackageManager
 import android.os.AsyncTask
 import android.support.v4.content.ContextCompat
 import android.util.Log
+import android.widget.Toast
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent
+import java.lang.Exception
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -19,18 +22,17 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
 
     private var contextRef = WeakReference(context)
     // Included for future use
-   private var geofencingClient = LocationServices.getGeofencingClient(contextRef.get()!!)
+    private var geofencingClient = LocationServices.getGeofencingClient(contextRef.get()!!)
 
 
     /**
      * Returns true if fetching events should be rescheduled and false if not.
      */
     override fun doInBackground(vararg parameters: Void?): Boolean {
-        if (ContextCompat.checkSelfPermission(contextRef.get()!!, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(contextRef.get()!!, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(contextRef.get()!!, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
             // We initialize them here in order to make sure they are up-to-date when the task is executed, not when it is declared
-            val eventStore = obtainMostRecentEventStore()
+            val eventStore = obtainMostRecentEventStore()!!
 
             val locTask = LocationServices.getFusedLocationProviderClient(contextRef.get()!!).lastLocation
 
@@ -43,39 +45,38 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
             val location = locTask.result
             if (location == null) {
                 Log.e(TAG, "Location returned by locTask is null! Ending service ...")
+                Toast.makeText(contextRef.get()!!, "Could not fetch location at this time, please try again later.", Toast.LENGTH_LONG).show()
                 // Indicate that this job should be rescheduled
                 return true
             }
+            updateMostRecentLocation(LatLng(location.latitude, location.longitude))
 
             eventStore.setUserLocation(location.latitude, location.longitude)
             val qri = eventStore.refresh()
-            val cqrs = qri.clientQueryResultState
-            val sqrs = qri.serverQueryResultState
 
-            // TODO: Remove logging
-            Log.i(TAG, "CQRS = $cqrs, SQRS = $sqrs")
             if (!qri.isOK) Log.e(TAG, "Query was not successful. Message: ${qri.message}")
-            Log.i(TAG, "Now listing all Events in EventStore. There are ${eventStore.all.size} events matching the given tags in the store")
-            for (e in eventStore.all) {
-                Log.i(TAG, "Event in eventStore: ${e.event.name}")
-            }
-            Log.i(TAG, "Finished listing all Events in EventStore")
-
 
             if (!eventStore.all.isEmpty()) {
+                // Add a geofence for every event in the EventStore (can be expanded to only include event above a certain score threshold)
+                val geofenceList = LinkedList<Geofence>().apply {
+                    for (e in eventStore.all) {
+                        add(buildGeofence(e))
+                    }
+                }
+
                 val request = GeofencingRequest.Builder()
                         .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
-                        .addGeofences(
-                                // Create a new list with geofences for every event (can later be extended to only include events over a certain score)
-                                LinkedList<Geofence>().apply {
-                                    for (e in eventStore.all) add(buildGeofence(e))
-                                })
+                        .addGeofences(geofenceList)
                         .build()
 
                 // Register geofencing events
                 val geofencingServiceIntent = Intent(contextRef.get(), GeofenceTransitionsIntentService::class.java)
                 val pendingIntent = PendingIntent.getService(contextRef.get(), PENDING_INTENT_ID, geofencingServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-                geofencingClient.addGeofences(request, pendingIntent)
+                if (ContextCompat.checkSelfPermission((contextRef.get() as Context), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                    geofencingClient.addGeofences(request, pendingIntent)?.run {
+                        addOnSuccessListener { Log.i(TAG, "Geofences added successfully.") }
+                        addOnFailureListener { Log.i(TAG, "Geofences could not be added. Exception Code: ${(exception as Exception).message}") }
+                    }
             }
 
             // Update the EventStore holder (this does not need to be done as EventStores are mutable)
