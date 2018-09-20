@@ -10,11 +10,13 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.content.ContextCompat
 import android.util.Log
+import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
@@ -33,13 +35,15 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
 
     private var firstStart = true
 
+    private var lastCamPosition: CameraPosition? = null
+
     private lateinit var jobScheduler: JobScheduler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         createNotificationChannel(this)
-
+        Toast.makeText(this, "onCreate() called", Toast.LENGTH_SHORT).show()    // TODO: Remove later
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
 
@@ -94,6 +98,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         Log.i("JobSchedulerInfo", "The periodic UpdateEventsJob has been scheduled")
         jobScheduler.schedule(buildJobInfo(UpdateTagsJobService::class.java))
         Log.i("JobSchedulerInfo", "The periodic UpdateTagsJob has been scheduled")
+    }
+
+    override fun onPause() {
+        lastCamPosition = mMap.cameraPosition
+        super.onPause()
     }
 
     override fun onResume() {
@@ -158,8 +167,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
 
         // Building the bounds can throw an exception which we catch here
         try {
-            // Move the camera in such a way that every event marked on the map is visible
-            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 100))
+            if (lastCamPosition != null)
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(lastCamPosition))
+            else
+                // Move the camera in such a way that every event marked on the map is visible
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 100))
         } catch (e: Exception) {
             Log.e(TAG, "BoundsBuilder: ${e.message}")
         }

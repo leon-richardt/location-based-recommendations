@@ -133,7 +133,7 @@ private var notifId: Int = -1
  *          if not needed)
  */
 fun sendNotification(context: Context, title: String, text: String, bigText: String? = null): Int {
-    val tmpIntent = Intent(context, MapActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT) }
+    val tmpIntent = Intent(context, MapActivity::class.java)
     val pendingIntent = PendingIntent.getActivity(context, ++notifId, tmpIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
     val notifBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
