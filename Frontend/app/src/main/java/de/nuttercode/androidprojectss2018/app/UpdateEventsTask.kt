@@ -85,7 +85,15 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
             // Indicate that this job does not need to be rescheduled immediately
             return false
         } else {
+            // If the location access has been revoked, we show a toast and redirect the user back to
+            // the splash screen
             Log.e(TAG, "App is missing permission to get user location")
+            if (contextRef.get() != null) {
+                val splashScreenIntent = Intent(contextRef.get()!!, SplashScreenActivity::class.java)
+                        .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) }
+                contextRef.get()!!.startActivity(splashScreenIntent)
+            }
+
             // Indicate that this job does not need to be rescheduled
             return false
         }
