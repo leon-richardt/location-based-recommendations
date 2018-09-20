@@ -73,13 +73,14 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
                 val geofencingServiceIntent = Intent(contextRef.get(), GeofenceTransitionsIntentService::class.java)
                 val pendingIntent = PendingIntent.getService(contextRef.get(), PENDING_INTENT_ID, geofencingServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
                 if (ContextCompat.checkSelfPermission((contextRef.get() as Context), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-                    geofencingClient.addGeofences(request, pendingIntent)?.run {
+                    geofencingClient.addGeofences(request, pendingIntent)!!.run {
                         addOnSuccessListener { Log.i(TAG, "Geofences added successfully.") }
                         addOnFailureListener { Log.i(TAG, "Geofences could not be added. Exception Code: ${(exception as Exception).message}") }
                     }
             }
 
-            // Update the EventStore holder (this does not need to be done as EventStores are mutable)
+            // Update the EventStore holder (this does not need to be done as EventStores are mutable,
+            // but we might make them immutable in the future)
             updateMostRecentEventStore(eventStore)
             // Indicate that this job does not need to be rescheduled immediately
             return false
@@ -110,7 +111,7 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
         /**
          * Radius (in meters) inside which a geofencing event should trigger
          */
-        private const val GEOFENCE_RADIUS: Float = 100.0f
+        private const val GEOFENCE_RADIUS: Float = 300.0f
 
         /**
          * Time (in milliseconds) that a user has to spend inside the circular region before a geofencing event should trigger

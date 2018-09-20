@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.content.ContextCompat
 import android.util.Log
-import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
 
 import com.google.android.gms.maps.GoogleMap
@@ -32,18 +31,21 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
     private lateinit var mList: EventListFragment
     private lateinit var sharedPrefs: SharedPreferences
     private lateinit var clientConfig: ClientConfiguration
+    private lateinit var jobScheduler: JobScheduler
 
     private var firstStart = true
 
     private var lastCamPosition: CameraPosition? = null
 
-    private lateinit var jobScheduler: JobScheduler
-
+    /**
+     * This method is called when a new instance of the Activity is created.
+     *
+     * Therefore, we set up our member variables and register the periodic update jobs here.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         createNotificationChannel(this)
-        Toast.makeText(this, "onCreate() called", Toast.LENGTH_SHORT).show()    // TODO: Remove later
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
 
@@ -100,11 +102,21 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         Log.i("JobSchedulerInfo", "The periodic UpdateTagsJob has been scheduled")
     }
 
+    /**
+     * This method is called when this [MapActivity] loses focus.
+     *
+     * We save our camera position in order to be able to restore it when the user resumes this [MapActivity].
+     */
     override fun onPause() {
         lastCamPosition = mMap.cameraPosition
         super.onPause()
     }
 
+    /**
+     * This method is called when this [MapActivity] gains focus.
+     *
+     * We update our event map and list with the latest data from the [EventStore].
+     */
     override fun onResume() {
         super.onResume()
         // If the user opens the activity, he likely wants to see the most recent data
@@ -112,6 +124,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         updateEventMap()
     }
 
+    /**
+     * This method is called when the user taps an item in the event list.
+     */
     override fun onListFragmentInteraction(item: ScoredEvent?) {
         // Create an Intent for that specific event and start the overview activity
         val intent = Intent(this, EventOverviewActivity::class.java)
@@ -134,6 +149,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
             mMap.isMyLocationEnabled = true
     }
 
+    /**
+     * Updates the event list with the events currently stored in the [EventStore].
+     */
     fun updateEventList() {
         val mostRecentEventStore = obtainMostRecentEventStore()!!
         mList.clearList()
@@ -141,6 +159,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         mList.refreshList()
     }
 
+    /**
+     * Updates the [GoogleMap] in this [MapActivity]. This means adding all event markers, and moving
+     * the camera accordingly.
+     */
     fun updateEventMap() {
         if (!::mMap.isInitialized) return
 
@@ -167,16 +189,21 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
 
         // Building the bounds can throw an exception which we catch here
         try {
+            // If we have a CameraPosition saved already, move the camera to that position
             if (lastCamPosition != null)
                 mMap.moveCamera(CameraUpdateFactory.newCameraPosition(lastCamPosition))
             else
-                // Move the camera in such a way that every event marked on the map is visible
+                // If no CameraPosition has been saved yet, move the camera in such a way that every event marked on the map is visible
                 mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 100))
         } catch (e: Exception) {
             Log.e(TAG, "BoundsBuilder: ${e.message}")
         }
     }
 
+    /**
+     * Helper function to generate the [JobInfo]s needed for the periodic [UpdateTagsJobService] and
+     * [UpdateEventsJobService].
+     */
     private fun buildJobInfo(cls: Class<*>): JobInfo {
         if (cls != UpdateTagsJobService::class.java && cls != UpdateEventsJobService::class.java)
             throw IllegalArgumentException("Can only pass UpdateTagsJobService or UpdateEventsJobService")

@@ -15,7 +15,7 @@ open class UpdateTagsTask(context: Context) : AsyncTask<Void, Void, Boolean>() {
     private var sharedPrefs = PreferenceManager.getDefaultSharedPreferences(contextRef.get())
 
     // Get the most up-to-date TagStore from SharedPreferences or create a new one with the ClientConfiguration in SharedPreferences
-    // We do not use Utils.getFromSharedPreferences because we want to fall back to a default store if none exists yet
+    // We do not use Utils.getFromSharedPreferences() because we want to fall back to a default store if none exists yet
     private var tagStore = Gson().fromJson(sharedPrefs.getString(SHARED_PREFS_TAG_STORE, null), TagStore::class.java)
             ?: TagStore(Gson().fromJson(sharedPrefs.getString(SHARED_PREFS_CLIENT_CONFIG, null), ClientConfiguration::class.java))
 

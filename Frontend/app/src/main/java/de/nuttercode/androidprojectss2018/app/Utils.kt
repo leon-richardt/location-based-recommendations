@@ -153,19 +153,19 @@ fun sendNotification(context: Context, title: String, text: String, bigText: Str
     return notifId
 }
 
+/**
+ * Create the [NotificationChannel], but only on API 26+ because the NotificationChannel class is
+ * new and not in the support library.
+ */
 fun createNotificationChannel(context: Context) {
-    // Create the NotificationChannel, but only on API 26+ because
-    // the NotificationChannel class is new and not in the support library
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        val name = "Default Channel"
-        val description = "Channel for all notifications"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance)
-        channel.description = description
-        // Register the channel with the system; you can't change the importance
-        // or other notification behaviors after this
+        val geofenceChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID,
+                "Geofence Notifications",
+                NotificationManager.IMPORTANCE_DEFAULT)
+                .apply { description = "Notifications for nearby events" }
+        // Register the channel with the system
         val notificationManager = context.getSystemService(NotificationManager::class.java)
-        notificationManager!!.createNotificationChannel(channel)
+        notificationManager!!.createNotificationChannel(geofenceChannel)
     }
 }
 

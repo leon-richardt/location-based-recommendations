@@ -9,7 +9,7 @@ import android.util.Log
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
 
-class GeofenceTransitionsIntentService: IntentService("GeofenceTransitionsIntentService") {
+class GeofenceTransitionsIntentService : IntentService("GeofenceTransitionsIntentService") {
 
     override fun onHandleIntent(intent: Intent?) {
         val geofencingEvent = GeofencingEvent.fromIntent(intent)
@@ -22,15 +22,28 @@ class GeofenceTransitionsIntentService: IntentService("GeofenceTransitionsIntent
 
         val geofenceTransition = geofencingEvent.geofenceTransition
 
-        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT ||
-                geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
+        // ENTER because of the initial trigger
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_DWELL || geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
             val triggeringGeofences = geofencingEvent.triggeringGeofences
 
             sendNotification(triggeringGeofences)
         }
     }
 
+    /**
+     * Holds the ID for the next notification that will be posted. It is incremented when [sendNotification]
+     * is called.
+     */
     private var notifId: Int = 0
+
+    /**
+     * Sends a notification for the first [Geofence] in [triggeringGeofences]. The notification informs
+     * the user which [Geofence] has been triggered. Clicking it will direct the user to the according
+     * [EventOverviewActivity].
+     *
+     * @param triggeringGeofences a [List] with one or more [Geofence] instances, as returned by
+     * [GeofencingEvent.getTriggeringGeofences]
+     */
     private fun sendNotification(triggeringGeofences: List<Geofence>): Int {
         if (triggeringGeofences.isEmpty()) throw IllegalStateException("No geofences in passed list")
 
