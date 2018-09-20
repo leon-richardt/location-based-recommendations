@@ -75,9 +75,11 @@ public class Store<T extends LBRPojo, Q extends Query<T>> {
 	 */
 	private Set<Integer> getIgnoreIds() {
 		long now = System.currentTimeMillis();
-		for (Integer id : ignoreIdMap.keySet())
-			if (now >= ignoreIdMap.get(id))
-				ignoreIdMap.remove(id);
+		synchronized (ignoreIdMap) {
+			for (Integer id : ignoreIdMap.keySet())
+				if (now >= ignoreIdMap.get(id))
+					ignoreIdMap.remove(id);
+		}
 		return Collections.unmodifiableSet(ignoreIdMap.keySet());
 	}
 
