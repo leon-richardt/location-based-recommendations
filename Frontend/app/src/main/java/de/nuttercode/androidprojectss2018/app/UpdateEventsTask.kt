@@ -74,7 +74,6 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
                 val pendingIntent = PendingIntent.getService(contextRef.get(), PENDING_INTENT_ID, geofencingServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
                 if (ContextCompat.checkSelfPermission((contextRef.get() as Context), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    Log.i(TAG, "Location Services available: ${isLocationServicesAvailable(contextRef.get()!!)}")   // TODO: DEBUG, remove later
                     geofencingClient.addGeofences(request, pendingIntent)!!.run {
                         addOnSuccessListener {
                             Log.i(TAG, "Geofences added successfully. Registered Geofences: ")
@@ -115,7 +114,7 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
         return Geofence.Builder()
                 .setRequestId(scoredEvent.id.toString())
                 .setCircularRegion(event.venue.latitude, event.venue.longitude, GEOFENCE_RADIUS)
-                .setExpirationDuration(Geofence.NEVER_EXPIRE)       // TODO: Maybe change? Could also remove geofences in StoreListener?
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setNotificationResponsiveness(GEOFENCE_NOTIFICATION_RESPONSE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
                 .setLoiteringDelay(GEOFENCE_LOITERING_DELAY)   // Only trigger an GeofencingEvent when the user stays inside the circular region for the given time
