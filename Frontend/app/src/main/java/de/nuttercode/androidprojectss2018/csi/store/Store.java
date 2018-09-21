@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -76,9 +77,11 @@ public class Store<T extends LBRPojo, Q extends Query<T>> {
 	private Set<Integer> getIgnoreIds() {
 		long now = System.currentTimeMillis();
 		synchronized (ignoreIdMap) {
-			for (Integer id : ignoreIdMap.keySet())
-				if (now >= ignoreIdMap.get(id))
-					ignoreIdMap.remove(id);
+			for (Iterator<Integer> iterator = ignoreIdMap.keySet().iterator(); iterator.hasNext(); ) {
+				Integer curId = iterator.next();
+				if (now >= ignoreIdMap.get(curId))
+					iterator.remove();
+			}
 		}
 		return Collections.unmodifiableSet(ignoreIdMap.keySet());
 	}
