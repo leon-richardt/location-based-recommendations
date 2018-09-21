@@ -29,7 +29,7 @@ open class UpdateTagsTask(context: Context) : AsyncTask<Void, Void, Boolean>() {
         }
 
         // Updated the TagStore in SharedPreferences
-        saveToSharedPrefs(sharedPrefs, tagStore)
+        saveToSharedPrefs(tagStore)
         // Indicate that this job does not need to be rescheduled
         return false
     }

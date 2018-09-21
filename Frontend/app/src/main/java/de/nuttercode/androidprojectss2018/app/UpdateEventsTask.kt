@@ -57,7 +57,7 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
             if (!qri.isOK) Log.e(TAG, "Query was not successful. Message: ${qri.message}")
 
             if (!eventStore.all.isEmpty()) {
-                // Add a geofence for every event in the EventStore (can be expanded to only include event above a certain score threshold)
+                // Add a geofence for every event in the EventStore (can be expanded to only include events above a certain score threshold)
                 val geofenceList = LinkedList<Geofence>().apply {
                     for (e in eventStore.all) {
                         add(buildGeofence(e))
@@ -65,18 +65,32 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
                 }
 
                 val request = GeofencingRequest.Builder()
-                        .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+                        .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_DWELL)
                         .addGeofences(geofenceList)
                         .build()
 
                 // Register geofencing events
                 val geofencingServiceIntent = Intent(contextRef.get(), GeofenceTransitionsIntentService::class.java)
                 val pendingIntent = PendingIntent.getService(contextRef.get(), PENDING_INTENT_ID, geofencingServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-                if (ContextCompat.checkSelfPermission((contextRef.get() as Context), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+
+                if (ContextCompat.checkSelfPermission((contextRef.get() as Context), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    Log.i(TAG, "Location Services available: ${isLocationServicesAvailable(contextRef.get()!!)}")   // TODO: DEBUG, remove later
                     geofencingClient.addGeofences(request, pendingIntent)!!.run {
-                        addOnSuccessListener { Log.i(TAG, "Geofences added successfully.") }
-                        addOnFailureListener { Log.i(TAG, "Geofences could not be added. Exception Code: ${(exception as Exception).message}") }
+                        addOnSuccessListener {
+                            Log.i(TAG, "Geofences added successfully. Registered Geofences: ")
+                            for (g in geofenceList) Log.i(TAG, "Geofence with request ID (= Event ID) ${g.requestId}")
+                        }
+                        addOnFailureListener {
+                            Log.e(TAG, "Geofences could not be added. Exception Code:" +
+                                    " ${(exception as Exception).message}")
+                        }
                     }
+                } else {
+                    // If the location access has been revoked, we show a toast and redirect the user back to
+                    // the splash screen
+                    Log.e(TAG, "App is missing permission to get user location")
+                    if (contextRef.get() != null) sendBackToSplashScreen(contextRef.get()!!)
+                }
             }
 
             // Update the EventStore holder (this does not need to be done as EventStores are mutable,
@@ -88,11 +102,7 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
             // If the location access has been revoked, we show a toast and redirect the user back to
             // the splash screen
             Log.e(TAG, "App is missing permission to get user location")
-            if (contextRef.get() != null) {
-                val splashScreenIntent = Intent(contextRef.get()!!, SplashScreenActivity::class.java)
-                        .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) }
-                contextRef.get()!!.startActivity(splashScreenIntent)
-            }
+            if (contextRef.get() != null) sendBackToSplashScreen(contextRef.get()!!)
 
             // Indicate that this job does not need to be rescheduled
             return false
@@ -106,6 +116,7 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
                 .setRequestId(scoredEvent.id.toString())
                 .setCircularRegion(event.venue.latitude, event.venue.longitude, GEOFENCE_RADIUS)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)       // TODO: Maybe change? Could also remove geofences in StoreListener?
+                .setNotificationResponsiveness(GEOFENCE_NOTIFICATION_RESPONSE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
                 .setLoiteringDelay(GEOFENCE_LOITERING_DELAY)   // Only trigger an GeofencingEvent when the user stays inside the circular region for the given time
                 .build()
@@ -124,7 +135,12 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
         /**
          * Time (in milliseconds) that a user has to spend inside the circular region before a geofencing event should trigger
          */
-        private const val GEOFENCE_LOITERING_DELAY: Int = 1000 * 20     // 20 seconds
+        private const val GEOFENCE_LOITERING_DELAY: Int = 1000 * 15     // 15 seconds
+
+        /**
+         * Time (in milliseconds) in which the [PendingIntent] should be send after the event was triggered.
+         */
+        private const val GEOFENCE_NOTIFICATION_RESPONSE: Int = 1000 * 3    // 3 seconds
     }
 
 }

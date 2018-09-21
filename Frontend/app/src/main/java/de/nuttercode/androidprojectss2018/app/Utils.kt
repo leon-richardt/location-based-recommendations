@@ -14,12 +14,27 @@ import com.google.gson.Gson
 import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration
 import de.nuttercode.androidprojectss2018.csi.store.EventStore
 import de.nuttercode.androidprojectss2018.csi.store.TagStore
+import android.location.LocationManager
+
+/**
+ *
+ */
+private lateinit var sharedPrefs: SharedPreferences
 
 /**
  * Holds the most recent instance of the [EventStore] that should be used by every Activity in the app.
  */
 private lateinit var mostRecentEventStore: EventStore
+
+/**
+ * Holds the most recent instance of a [LatLng] representing the last known user location.
+ */
 private lateinit var mostRecentLocation: LatLng
+
+
+fun setGlobalSharedPreferences(sharedPreferences: SharedPreferences) {
+    sharedPrefs = sharedPreferences
+}
 
 /**
  * Convenience method for getting an object saved in [SharedPreferences].
@@ -27,12 +42,11 @@ private lateinit var mostRecentLocation: LatLng
  * If the [sharedPrefs] do not contain the [SHARED_PREFS_FIRST_START] key at time of execution, this
  * method will return true.
  *
- * @param sharedPrefs The [SharedPreferences] instance to use for the look-up.
  * @param key One of the following: [SHARED_PREFS_CLIENT_CONFIG], [SHARED_PREFS_TAG_STORE] or [SHARED_PREFS_FIRST_START]
  * @throws IllegalStateException if the [sharedPrefs] do not contain the passed [key]
  * @throws IllegalArgumentException if the passed [key] is not one of the key listed above
  */
-fun getFromSharedPrefs(sharedPrefs: SharedPreferences, key: String): Any {
+fun getFromSharedPrefs(key: String): Any {
     val gson = Gson()
 
     when (key) {
@@ -62,11 +76,10 @@ fun getFromSharedPrefs(sharedPrefs: SharedPreferences, key: String): Any {
  * Please note that [Boolean] objects CANNOT be passed to [entry] as Kotlin does not accept primitive
  * types for [Any].
  *
- * @param sharedPrefs The [SharedPreferences] instance to save the values to.
  * @param entry An instance of one of the following classes: [ClientConfiguration] or [TagStore]
  * @throws IllegalArgumentException if the object passed to [entry] is not of the right type
  */
-fun saveToSharedPrefs(sharedPrefs: SharedPreferences, entry: Any) {
+fun saveToSharedPrefs(entry: Any) {
     val gson = Gson()
 
     when (entry.javaClass) {
@@ -94,10 +107,10 @@ fun updateMostRecentEventStore(newEventStore: EventStore) {
 /**
  * Obtain the most recent [EventStore] instance saved.
  *
- * @return The most recent [EventStore] saved, or null if none has been saved yet
+ * @return The most recent [EventStore] saved, or a new one with the [ClientConfiguration] from [SharedPreferences]
  */
-fun obtainMostRecentEventStore(): EventStore? {
-    if (!::mostRecentEventStore.isInitialized) return null
+fun obtainMostRecentEventStore(): EventStore {
+    if (!::mostRecentEventStore.isInitialized) return EventStore(getFromSharedPrefs(SHARED_PREFS_CLIENT_CONFIG) as ClientConfiguration)
     return mostRecentEventStore
 }
 
@@ -116,6 +129,25 @@ fun updateMostRecentLocation(newLocation: LatLng) {
 fun obtainMostRecentLocation(): LatLng? {
     if (!::mostRecentLocation.isInitialized) return null
     return mostRecentLocation
+}
+
+/**
+ * Helper method to check whether the location services are available.
+ *
+ * @return true, if the GPS provider or network provider are available; false otherwise
+ */
+fun isLocationServicesAvailable(context: Context): Boolean {
+    val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) || lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+}
+
+/**
+ * Helper method to send the user back to the splash screen.
+ */
+fun sendBackToSplashScreen(fromContext: Context) {
+        val splashScreenIntent = Intent(fromContext, SplashScreenActivity::class.java)
+                .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) }
+        fromContext.startActivity(splashScreenIntent)
 }
 
 /**

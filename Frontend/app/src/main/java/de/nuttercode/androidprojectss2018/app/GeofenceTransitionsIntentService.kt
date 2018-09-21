@@ -22,8 +22,7 @@ class GeofenceTransitionsIntentService : IntentService("GeofenceTransitionsInten
 
         val geofenceTransition = geofencingEvent.geofenceTransition
 
-        // ENTER because of the initial trigger
-        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_DWELL || geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_DWELL) {
             val triggeringGeofences = geofencingEvent.triggeringGeofences
 
             sendNotification(triggeringGeofences)

@@ -47,6 +47,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
 
         createNotificationChannel(this)
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        setGlobalSharedPreferences(sharedPrefs)
+
         jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
 
         firstStart = sharedPrefs.getBoolean(SHARED_PREFS_FIRST_START, true)
@@ -56,14 +58,14 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
             val freshClientConfiguration = ClientConfiguration().apply {
                 radius = 200.0 // TODO: Get radius from settings
             }
-            saveToSharedPrefs(sharedPrefs, freshClientConfiguration)
+            saveToSharedPrefs(freshClientConfiguration)
 
             // Remember that we are not on the first start anymore
             sharedPrefs.edit().putBoolean(SHARED_PREFS_FIRST_START, false).apply()
         }
 
         // At this point, there must be a ClientConfiguration saved --> retrieve it and save an EventStore
-        clientConfig = getFromSharedPrefs(sharedPrefs, SHARED_PREFS_CLIENT_CONFIG) as ClientConfiguration
+        clientConfig = getFromSharedPrefs(SHARED_PREFS_CLIENT_CONFIG) as ClientConfiguration
         updateMostRecentEventStore(EventStore(clientConfig))
 
         setContentView(R.layout.activity_map)
@@ -85,9 +87,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
 
         val updateTagsTask = object : UpdateTagsTask(this@MapActivity) {
             override fun onPostExecute(result: Boolean) {
-                val tagStore = getFromSharedPrefs(sharedPrefs, SHARED_PREFS_TAG_STORE) as TagStore
+                val tagStore = getFromSharedPrefs(SHARED_PREFS_TAG_STORE) as TagStore
                 for (t in tagStore.all) clientConfig.tagPreferenceConfiguration.addTag(t)   // TODO: Get tags from settings instead of adding them all
-                saveToSharedPrefs(sharedPrefs, clientConfig)
+                saveToSharedPrefs(clientConfig)
                 updateMostRecentEventStore(EventStore(clientConfig))
                 // Once we finished fetching/adding tags to the ClientConfiguration, we can start fetching events
                 updateEventsTask.execute()
@@ -153,7 +155,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
      * Updates the event list with the events currently stored in the [EventStore].
      */
     fun updateEventList() {
-        val mostRecentEventStore = obtainMostRecentEventStore()!!
+        val mostRecentEventStore = obtainMostRecentEventStore()
         mList.clearList()
         mList.addAllElements(mostRecentEventStore.all)
         mList.refreshList()
@@ -169,7 +171,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         // Make sure to remove all markers (we will add them again if their events are still in the store)
         mMap.clear()
 
-        val mostRecentEventStore = obtainMostRecentEventStore()!!
+        val mostRecentEventStore = obtainMostRecentEventStore()
 
         val boundsBuilder = LatLngBounds.builder()
         val mostRecentLocation = obtainMostRecentLocation()
