@@ -8,7 +8,8 @@ import android.widget.TextView
 
 
 import de.nuttercode.androidprojectss2018.app.EventListFragment.OnListFragmentInteractionListener
-import de.nuttercode.androidprojectss2018.csi.ScoredEvent
+import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent
+
 
 import kotlinx.android.synthetic.main.fragment_event.view.*
 

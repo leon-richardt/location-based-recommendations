@@ -3,7 +3,7 @@ package de.nuttercode.androidprojectss2018.app
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import de.nuttercode.androidprojectss2018.csi.ScoredEvent
+import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent
 
 class EventOverviewActivity : AppCompatActivity() {
 

@@ -41,3 +41,13 @@ LBRServer.xml
 
 # File for the Google Maps API key
 Frontend/app/src/debug/res/values/google_maps_api.xml
+Frontend/build.gradle
+Frontend/.gradle/buildOutputCleanup/cache.properties
+Frontend/.gradle/buildOutputCleanup/cache.properties
+Frontend/.gradle/vcsWorkingDirs/gc.properties
+Frontend/.gradle/buildOutputCleanup/cache.properties
+Frontend/gradle/wrapper/gradle-wrapper.properties
+Frontend/build.gradle
+Frontend/app/src/debug/res/values/google_maps_api.xml
+Frontend/.gradle/buildOutputCleanup/cache.properties
+Frontend/app/src/debug/res/values/google_maps_api.xml
