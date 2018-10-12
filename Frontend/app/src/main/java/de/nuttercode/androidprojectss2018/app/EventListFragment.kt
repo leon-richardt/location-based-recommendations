@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent
+import de.nuttercode.androidprojectss2018.csi.pojo.*
 
 /**
  * A fragment representing a list of items, representing [ScoredEvent]s.

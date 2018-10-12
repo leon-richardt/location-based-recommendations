@@ -14,12 +14,11 @@ import com.google.gson.Gson
 import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration
 import de.nuttercode.androidprojectss2018.csi.store.EventStore
 import de.nuttercode.androidprojectss2018.csi.store.TagStore
+
 import android.location.LocationManager
 
-/**
- *
- */
 private lateinit var sharedPrefs: SharedPreferences
+
 
 /**
  * Holds the most recent instance of the [EventStore] that should be used by every Activity in the app.

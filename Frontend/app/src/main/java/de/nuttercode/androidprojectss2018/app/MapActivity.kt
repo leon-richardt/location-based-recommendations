@@ -25,6 +25,7 @@ import de.nuttercode.androidprojectss2018.csi.store.EventStore
 import de.nuttercode.androidprojectss2018.csi.store.TagStore
 import java.lang.Exception
 
+
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.OnListFragmentInteractionListener {
 
     private lateinit var mMap: GoogleMap
