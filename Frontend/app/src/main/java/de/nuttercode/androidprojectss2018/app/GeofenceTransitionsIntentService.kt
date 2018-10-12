@@ -49,7 +49,7 @@ class GeofenceTransitionsIntentService : IntentService("GeofenceTransitionsInten
         // We are just sending a notification for the first geofence in the list
         val eventStore = obtainMostRecentEventStore()
         val scoredEventId = triggeringGeofences[0].requestId.toInt()
-        val scoredEvent = eventStore!!.getById(scoredEventId)
+        val scoredEvent = eventStore.getById(scoredEventId)
         val eventOverviewIntent = Intent(this, EventOverviewActivity::class.java).apply { putExtra(EXTRA_EVENT_CLICKED, scoredEventId) }
         val pendingIntent = PendingIntent.getActivity(this, PENDING_INTENT_ID, eventOverviewIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 

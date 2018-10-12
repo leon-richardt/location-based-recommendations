@@ -32,7 +32,7 @@ open class UpdateEventsTask(context: Context) : AsyncTask<Void, Void, Boolean>()
         if (ContextCompat.checkSelfPermission(contextRef.get()!!, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
             // We initialize them here in order to make sure they are up-to-date when the task is executed, not when it is declared
-            val eventStore = obtainMostRecentEventStore()!!
+            val eventStore = obtainMostRecentEventStore()
 
             val locTask = LocationServices.getFusedLocationProviderClient(contextRef.get()!!).lastLocation
 

@@ -56,7 +56,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         if (firstStart) {
             // If this is indeed the first start, we need to create a new entry for the ClientConfiguration in SharedPreferences
             val freshClientConfiguration = ClientConfiguration().apply {
-                radius = 200.0 // TODO: Get radius from settings
+                radius = 200.0
             }
             saveToSharedPrefs(freshClientConfiguration)
 
@@ -88,7 +88,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, EventListFragment.O
         val updateTagsTask = object : UpdateTagsTask(this@MapActivity) {
             override fun onPostExecute(result: Boolean) {
                 val tagStore = getFromSharedPrefs(SHARED_PREFS_TAG_STORE) as TagStore
-                for (t in tagStore.all) clientConfig.tagPreferenceConfiguration.addTag(t)   // TODO: Get tags from settings instead of adding them all
+                for (t in tagStore.all) clientConfig.tagPreferenceConfiguration.addTag(t)
                 saveToSharedPrefs(clientConfig)
                 updateMostRecentEventStore(EventStore(clientConfig))
                 // Once we finished fetching/adding tags to the ClientConfiguration, we can start fetching events
