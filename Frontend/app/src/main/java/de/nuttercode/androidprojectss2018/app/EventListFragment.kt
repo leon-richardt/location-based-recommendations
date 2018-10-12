@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import de.nuttercode.androidprojectss2018.csi.pojo.*
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a list of items, representing [ScoredEvent]s.
  * Activities containing this fragment MUST implement the
  * [EventListFragment.OnListFragmentInteractionListener] interface.
  */
@@ -54,23 +54,6 @@ class EventListFragment : Fragment() {
         return view
     }
 
-    fun clearList() {
-        contentList.clear()
-    }
-
-    fun addElement(scoredEvent: ScoredEvent) {
-        contentList.add(scoredEvent)
-    }
-
-    fun addAllElements(collection: Collection<ScoredEvent>) {
-        contentList.addAll(collection)
-    }
-
-    fun refreshList() {
-        // notifyDataSetChanged() needs to be run the UI thread
-        activity!!.runOnUiThread { recyclerView.adapter!!.notifyDataSetChanged() }
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnListFragmentInteractionListener) {
@@ -86,15 +69,42 @@ class EventListFragment : Fragment() {
     }
 
     /**
+     * Removes all items from this list.
+     * [refreshList] needs to be called in order to make the change visible in the view.
+     */
+    fun clearList() {
+        contentList.clear()
+    }
+
+    /**
+     * Adds an item to this list.
+     * [refreshList] needs to be called in order to make the change visible in the view.
+     */
+    fun addElement(scoredEvent: ScoredEvent) {
+        contentList.add(scoredEvent)
+    }
+
+    /**
+     * Adds all items to this list.
+     * [refreshList] needs to be called in order to make the change visible in the view.
+     */
+    fun addAllElements(collection: Collection<ScoredEvent>) {
+        contentList.addAll(collection)
+    }
+
+    /**
+     * Updates the view with any changes made to the data set.
+     */
+    fun refreshList() {
+        // notifyDataSetChanged() needs to be run the UI thread
+        activity!!.runOnUiThread { recyclerView.adapter!!.notifyDataSetChanged() }
+    }
+
+    /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     *
-     *
-     * See the Android Training lesson
-     * [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
      */
     interface OnListFragmentInteractionListener {
         fun onListFragmentInteraction(item: ScoredEvent?)
@@ -102,13 +112,5 @@ class EventListFragment : Fragment() {
 
     companion object {
         const val ARG_COLUMN_COUNT = "column-count"
-
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-                EventListFragment().apply {
-                    arguments = Bundle().apply {
-                        putInt(ARG_COLUMN_COUNT, columnCount)
-                    }
-                }
     }
 }

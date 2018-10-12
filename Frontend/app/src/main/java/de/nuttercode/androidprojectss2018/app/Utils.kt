@@ -9,10 +9,16 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration
 import de.nuttercode.androidprojectss2018.csi.store.EventStore
 import de.nuttercode.androidprojectss2018.csi.store.TagStore
+
+import android.location.LocationManager
+
+private lateinit var sharedPrefs: SharedPreferences
+
 
 /**
  * Holds the most recent instance of the [EventStore] that should be used by every Activity in the app.
@@ -20,17 +26,26 @@ import de.nuttercode.androidprojectss2018.csi.store.TagStore
 private lateinit var mostRecentEventStore: EventStore
 
 /**
+ * Holds the most recent instance of a [LatLng] representing the last known user location.
+ */
+private lateinit var mostRecentLocation: LatLng
+
+
+fun setGlobalSharedPreferences(sharedPreferences: SharedPreferences) {
+    sharedPrefs = sharedPreferences
+}
+
+/**
  * Convenience method for getting an object saved in [SharedPreferences].
  * Provide a SharedPreferences instance that contains one of the accepted keys (see below).
  * If the [sharedPrefs] do not contain the [SHARED_PREFS_FIRST_START] key at time of execution, this
  * method will return true.
  *
- * @param sharedPrefs The [SharedPreferences] instance to use for the look-up.
  * @param key One of the following: [SHARED_PREFS_CLIENT_CONFIG], [SHARED_PREFS_TAG_STORE] or [SHARED_PREFS_FIRST_START]
  * @throws IllegalStateException if the [sharedPrefs] do not contain the passed [key]
  * @throws IllegalArgumentException if the passed [key] is not one of the key listed above
  */
-fun getFromSharedPrefs(sharedPrefs: SharedPreferences, key: String): Any {
+fun getFromSharedPrefs(key: String): Any {
     val gson = Gson()
 
     when (key) {
@@ -60,11 +75,10 @@ fun getFromSharedPrefs(sharedPrefs: SharedPreferences, key: String): Any {
  * Please note that [Boolean] objects CANNOT be passed to [entry] as Kotlin does not accept primitive
  * types for [Any].
  *
- * @param sharedPrefs The [SharedPreferences] instance to save the values to.
  * @param entry An instance of one of the following classes: [ClientConfiguration] or [TagStore]
  * @throws IllegalArgumentException if the object passed to [entry] is not of the right type
  */
-fun saveToSharedPrefs(sharedPrefs: SharedPreferences, entry: Any) {
+fun saveToSharedPrefs(entry: Any) {
     val gson = Gson()
 
     when (entry.javaClass) {
@@ -92,13 +106,48 @@ fun updateMostRecentEventStore(newEventStore: EventStore) {
 /**
  * Obtain the most recent [EventStore] instance saved.
  *
- * @throws IllegalStateException if no [EventStore] instance has been saved yet
+ * @return The most recent [EventStore] saved, or a new one with the [ClientConfiguration] from [SharedPreferences]
  */
 fun obtainMostRecentEventStore(): EventStore {
-    if (!::mostRecentEventStore.isInitialized) throw IllegalStateException("No EventStore saved yet")
+    if (!::mostRecentEventStore.isInitialized) return EventStore(getFromSharedPrefs(SHARED_PREFS_CLIENT_CONFIG) as ClientConfiguration)
     return mostRecentEventStore
 }
 
+/**
+ * Update the [LatLng] holder with [newLocation].
+ */
+fun updateMostRecentLocation(newLocation: LatLng) {
+    mostRecentLocation = newLocation
+}
+
+/**
+ * Obtain the most recent location saved.
+ *
+ * @return The most recent location (as a [LatLng]) saved, or null if none has been saved yet
+ */
+fun obtainMostRecentLocation(): LatLng? {
+    if (!::mostRecentLocation.isInitialized) return null
+    return mostRecentLocation
+}
+
+/**
+ * Helper method to check whether the location services are available.
+ *
+ * @return true, if the GPS provider or network provider are available; false otherwise
+ */
+fun isLocationServicesAvailable(context: Context): Boolean {
+    val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) || lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+}
+
+/**
+ * Helper method to send the user back to the splash screen.
+ */
+fun sendBackToSplashScreen(fromContext: Context) {
+        val splashScreenIntent = Intent(fromContext, SplashScreenActivity::class.java)
+                .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) }
+        fromContext.startActivity(splashScreenIntent)
+}
 
 /**
  * Holds the ID for the last notification that was sent
@@ -115,7 +164,7 @@ private var notifId: Int = -1
  *          if not needed)
  */
 fun sendNotification(context: Context, title: String, text: String, bigText: String? = null): Int {
-    val tmpIntent = Intent(context, MapActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT) }
+    val tmpIntent = Intent(context, MapActivity::class.java)
     val pendingIntent = PendingIntent.getActivity(context, ++notifId, tmpIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
     val notifBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
@@ -135,19 +184,19 @@ fun sendNotification(context: Context, title: String, text: String, bigText: Str
     return notifId
 }
 
+/**
+ * Create the [NotificationChannel], but only on API 26+ because the NotificationChannel class is
+ * new and not in the support library.
+ */
 fun createNotificationChannel(context: Context) {
-    // Create the NotificationChannel, but only on API 26+ because
-    // the NotificationChannel class is new and not in the support library
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        val name = "Default Channel"
-        val description = "Channel for all notifications"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance)
-        channel.description = description
-        // Register the channel with the system; you can't change the importance
-        // or other notification behaviors after this
+        val geofenceChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID,
+                "Geofence Notifications",
+                NotificationManager.IMPORTANCE_DEFAULT)
+                .apply { description = "Notifications for nearby events" }
+        // Register the channel with the system
         val notificationManager = context.getSystemService(NotificationManager::class.java)
-        notificationManager!!.createNotificationChannel(channel)
+        notificationManager!!.createNotificationChannel(geofenceChannel)
     }
 }
 

@@ -10,6 +10,10 @@ import android.support.v4.content.ContextCompat
 import android.widget.TextView
 import android.widget.Toast
 
+/**
+ * This [Activity] is the main entry point (the launcher activity) for the app. On start-up, we check
+ * whether the app has the necessary permission. If it does not, we request the permission.
+ */
 class SplashScreenActivity : AppCompatActivity() {
 
     /**
@@ -34,14 +38,15 @@ class SplashScreenActivity : AppCompatActivity() {
      * (either granted or denied).
      */
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        // when-statement because we might want to request more permissions later on
         when (requestCode) {
-            PERMISSIONS_REQUEST_LOCATION -> {
+            PERMISSIONS_REQUEST_FINE_LOCATION -> {
                 // If request is cancelled, the result arrays are empty
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission granted --> open the MapActivity
                     openMapActivity()
                 } else {
-                    // Permission denied
+                    // Permission denied --> update the text and show a Toast
                     handlePermissionDenied()
                 }
                 return
@@ -50,7 +55,8 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     /**
-     * Returns true if the permissions were already granted. Returns false if the permission dialog is prompted.
+     * Checks whether the required permissions have been granted and requests them if necessary.
+     * If permissions have been granted already, we open the [MapActivity].
      */
     private fun checkAndRequestPermissions() {
         if (ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -60,7 +66,7 @@ class SplashScreenActivity : AppCompatActivity() {
             } else {
                 ActivityCompat.requestPermissions(this,
                         arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                        PERMISSIONS_REQUEST_LOCATION)
+                        PERMISSIONS_REQUEST_FINE_LOCATION)
             }
         } else {
             // We already had permission --> start the Activity directly

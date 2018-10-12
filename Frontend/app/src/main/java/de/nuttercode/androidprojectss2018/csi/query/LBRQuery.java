@@ -1,8 +1,8 @@
 package de.nuttercode.androidprojectss2018.csi.query;
 
-import de.nuttercode.androidprojectss2018.csi.ClientConfiguration;
-import de.nuttercode.androidprojectss2018.csi.ScoredEvent;
-import de.nuttercode.androidprojectss2018.csi.TagPreferenceConfiguration;
+import de.nuttercode.androidprojectss2018.csi.config.ClientConfiguration;
+import de.nuttercode.androidprojectss2018.csi.config.TagPreferenceConfiguration;
+import de.nuttercode.androidprojectss2018.csi.pojo.ScoredEvent;
 
 /**
  * used to query {@link ScoredEvent}s from the {@link LBRServer}
@@ -13,10 +13,10 @@ import de.nuttercode.androidprojectss2018.csi.TagPreferenceConfiguration;
 public class LBRQuery extends Query<ScoredEvent> {
 
 	private static final long serialVersionUID = 2485145114980361102L;
-	private final double radius;
+	private double radius;
 	private double longitude;
 	private double latitude;
-	private final TagPreferenceConfiguration tagPreferenceConfiguration;
+	private TagPreferenceConfiguration tagPreferenceConfiguration;
 
 	/**
 	 * 
@@ -26,8 +26,7 @@ public class LBRQuery extends Query<ScoredEvent> {
 	 */
 	public LBRQuery(ClientConfiguration clientConfiguration) {
 		super(clientConfiguration);
-		radius = clientConfiguration.getRadius();
-		tagPreferenceConfiguration = clientConfiguration.getTagPreferenceConfiguration();
+		setClientConfiguration(clientConfiguration);
 		longitude = 0.0;
 		latitude = 0.0;
 	}
@@ -54,6 +53,13 @@ public class LBRQuery extends Query<ScoredEvent> {
 
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
+	}
+
+	@Override
+	public void setClientConfiguration(ClientConfiguration clientConfiguration) {
+		super.setClientConfiguration(clientConfiguration);
+		radius = clientConfiguration.getRadius();
+		tagPreferenceConfiguration = clientConfiguration.getTagPreferenceConfiguration();
 	}
 
 }
