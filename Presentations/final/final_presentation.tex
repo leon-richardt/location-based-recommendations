@@ -1,0 +1,109 @@
+\documentclass{beamer}
+
+\usepackage[english,ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+
+\usepackage{amsmath, amssymb}
+
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usetheme[sectionpage=progressbar]{metropolis}
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{footline}{\insertauthor}
+
+\title{Location Based Recommendations\\Abschlussbericht}
+\author[H.~Gerdes, J.B.~Latzel, L.~Richardt]{Henrik~Gerdes, Johannes~B.~Latzel, Leon~Richardt}
+\institute{Universität Osnabrück}
+\date[16.10.2018]{16. Oktober 2018}
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+
+	\section{Vorüberlegungen}
+	\begin{frame}{Was brauchen wir?}
+			\begin{itemize}
+				\item \textbf{Server:} Entscheidet, welche Events ein Nutzer zu sehen bekommt (\textit{Event Scoring})
+				\item \textbf{Datenbank:} Speichert die Events
+				\item \textbf{App:} GUI für den User
+				\item \textbf{Client-Server-Interface:} Kommunikation zwischen App und Server
+			\end{itemize}
+	\end{frame}
+
+	\section{Datenbank}
+	\begin{frame}{Datenbank - Implementation}
+		Die Datenbank läuft auf \alert{\texttt{MariaDB}}, einer Open-Source-Alternative zu \texttt{MySQL}. Die Kommunikation zwischen Datenbank und Java geschieht mit \alert{\texttt{JDBC}} (\textit{Java Database Connectivity}).
+		
+		\pause
+		In der Datenbank gibt es je eine Table für:
+		\begin{itemize}
+			\item Events
+			\item Venues
+			\item Tags (\textit{Kategorien, in die die Events eingeordnet werden})
+		\end{itemize}
+		Außerdem gibt es eine weitere Table, die jedem Event seine Tags zuordnet.
+		
+	\end{frame}
+
+	\begin{frame}{Datenbank - Schema}
+		\centering\includegraphics[width = \linewidth]{db_scheme}
+	\end{frame}
+
+	\section{Server}
+	\begin{frame}{Server - Hardware \& Betriebssystem}
+		Als Server wird ein \texttt{Raspberry Pi I B+} mit dem Betriebssystem \texttt{Raspbian} genutzt.
+		
+		Der Server wartet auf Port \texttt{5445} auf neue Client-Verbindungen und verarbeitet diese. Da ein \alert{Thread-Pool} mit vier Threads genutzt wird, können mehrere Verbindungen gleichzeitig akzeptiert werden.\pause
+		
+		Kommt es während des Datenbank-Zugriffs zu einer \texttt{SQLException}, so wird automatisch ein \alert{Reconnect} durchgeführt.\pause
+		
+		Das momentan verwendete \alert{Scoring} ist zufallsbasiert, es ließe sich aber leicht ein anderes Scoring-System integrieren.
+	\end{frame}
+	
+	\section{Client-Server-Interface}
+	\begin{frame}{Client-Server-Interface - Klassen}
+		Folgende Klassen sind besonders wichtig für die Kommunikation zwischen Server und App:
+		\begin{itemize}
+			\item \texttt{Venue} - Ein Ort, an dem Events stattfinden können
+			\item \texttt{Event} - Ein Ereignis, wie z.\,B.\ ein Konzert oder ein Festival
+			\item \texttt{Tag} - Eine Kategorie, wie z.\,B.\ \textit{Tanzen} oder \textit{Live-Musik}
+			\item \texttt{Store} - Interface, um Tags und Events zwischenzuspeichern. Mit einem \texttt{StoreListener} kann auf Veränderungen komfortabel reagiert werden.
+		\end{itemize}
+	\end{frame}
+	
+	
+	\section{App}
+	\begin{frame}{App - Funktionen}
+		\begin{itemize}
+			\item Der Nutzer landet bei Start auf einem Splash Screen und wird erst bei vorhandenen Standort-Berechtigungen weitergeleitet.\pause
+			\item Die App führt in regelmäßigen Abständen (15~Minuten) automatisch eine Aktualisierung der Events, die in der Nähe stattfinden, durch.
+			\item Die aktuelle Position des Users und nahe Events werden auf einer \alert{Karte} angezeigt. Außerdem werden die Events in einer Liste aufgeführt.\pause
+			\item Für nahe Events wird ein \alert{Geofence} registriert.
+			\item Hält sich der User lange genug innerhalb eines Geofences auf, erhält er eine \alert{Benachrichtigung}.
+		\end{itemize}
+	\end{frame}
+
+	\section{Herausforderungen}
+	\begin{frame}{Herausforderungen bei der Implementation}
+		\begin{itemize}
+			\item Einarbeitung in Android und in Kotlin
+			\item Zuverlässige Netzwerk-Kommunikation zwischen App und Server
+			\item Eigenheiten von Android, unter anderem:
+				\begin{itemize}
+					\item[--] Standortzugriff über den \texttt{FusedLocationProvider}
+					\item[--] Regelmäßiges Fetchen von Tags und Events im Hintergrund über \texttt{JobService}
+					\item[--] Unzuverlässigkeit der Geofencing-API
+				\end{itemize}
+			\item Umfangreiche Frameworks, die viel Einarbeitung benötigen, wie zum Beispiel:
+				\begin{itemize}
+					\item[--] Android Job Scheduling
+					\item[--] Geofencing
+				\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+\end{document}
