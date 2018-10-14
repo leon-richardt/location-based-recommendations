@@ -34,16 +34,16 @@
 	\section{Vorüberlegungen}
 	\begin{frame}{Was brauchen wir?}
 			\begin{itemize}
-				\item \textbf{Server:} Entscheidet, welche Events ein Nutzer zu sehen bekommt (\textit{Event Scoring})
 				\item \textbf{Datenbank:} Speichert die Events
+				\item \textbf{Server:} Entscheidet, welche Events ein Nutzer zu sehen bekommt (\textit{Event Scoring})
 				\item \textbf{App:} GUI für den User
 				\item \textbf{Client-Server-Interface:} Kommunikation zwischen App und Server
 			\end{itemize}
 	\end{frame}
 
 	\section{Datenbank}
-	\begin{frame}{Datenbank - Implementation}
-		Die Datenbank läuft auf \alert{\texttt{MariaDB}}, einer Open-Source-Alternative zu \texttt{MySQL}. Die Kommunikation zwischen Datenbank und Java geschieht mit \alert{\texttt{JDBC}} (\textit{Java Database Connectivity}).
+	\begin{frame}{Datenbank -- Implementation}
+		Die Datenbank läuft auf \alert{\texttt{MariaDB}}, einer Open-Source-Alternative zu \texttt{MySQL}. Die Kommunikation zwischen der Datenbank und Java geschieht mit \alert{\texttt{JDBC}} (\textit{Java Database Connectivity}).
 		
 		\pause
 		In der Datenbank gibt es je eine Table für:
@@ -56,12 +56,12 @@
 		
 	\end{frame}
 
-	\begin{frame}{Datenbank - Schematischer Aufbau}
-		\centering\includegraphics[width = \linewidth]{db_scheme}
+	\begin{frame}{Datenbank -- Schematischer Aufbau}
+		\centering\includegraphics[scale=0.5]{db_scheme}
 	\end{frame}
 
 	\section{Server}
-	\begin{frame}{Server - Hardware \& Betriebssystem}
+	\begin{frame}{Server -- Hardware \& Betriebssystem}
 		Als Server wird ein \texttt{Raspberry Pi I B+} mit dem Betriebssystem \texttt{Raspbian} genutzt.
 		
 		Der Server wartet auf Port \texttt{5445} auf neue Client-Verbindungen und verarbeitet diese. Da ein \alert{Thread-Pool} mit vier Threads genutzt wird, können mehrere Verbindungen gleichzeitig akzeptiert werden.\pause
@@ -71,7 +71,7 @@
 		Das momentan verwendete \alert{Scoring} ist zufallsbasiert, es ließe sich aber leicht ein anderes Scoring-System integrieren.
 	\end{frame}
 
-	\begin{frame}{Server - Schematischer Ablauf}
+	\begin{frame}{Server -- Schematischer Ablauf}
 		\centering
 		\resizebox{!}{\textheight-1.5cm}{%
 			\begin{tikzpicture}[node distance = 1cm, auto]
@@ -79,9 +79,9 @@
 				\node (accept) {};
 				\node [block, below of=accept] (read) {Lesen aus \texttt{InputStream}};
 				\node [decision, below of=read] (class) {Klasse?};
-				\node [block, node distance=4cm, left of=class, yshift=-1cm] (readevents) {nahe Events lesen};
-				\node [block, right of=filterevents, xshift=2cm, right of=class, yshift=-1.75cm] (readtags) {alle Tags lesen};
-				\node [block, below of=readevents] (filterevents) {nach Tags filtern};
+				\node [block, node distance=4cm, left of=class, yshift=-1cm, text width=7em] (readevents) {Events nahe des Nutzers lesen};
+				\node [block, right of=filterevents, xshift=2cm, right of=class, yshift=-2cm] (readtags) {alle Tags lesen};
+				\node [block, below of=readevents, yshift=-0.3cm] (filterevents) {nach Tags filtern};
 				\node [block, below of=filterevents] (scoring) {Scoring};
 				\node [block, node distance=4cm, right of=scoring, yshift=-1cm] (createqueryresult) {\texttt{QueryResult} erstellen};
 				\node [block, below of=createqueryresult] (writequeryresult) {in \texttt{OutputStream} schreiben};
@@ -102,11 +102,11 @@
 	\end{frame}
 	
 	\section{Client-Server-Interface}
-	\begin{frame}{Client-Server-Interface - Klassen}
+	\begin{frame}{Client-Server-Interface -- Klassen}
 		Folgende Klassen sind besonders wichtig für die Kommunikation zwischen Server und App:
 		\begin{itemize}
 			\item \texttt{Venue} - Ein Ort, an dem Events stattfinden können
-			\item \texttt{Event} - Ein Ereignis, wie z.\,B.\ ein Konzert oder ein Festival
+			\item \texttt{Event} - Ein Ereignis, wie z.\,B.\ ein \textit{Konzert} oder ein \textit{Festival}
 			\item \texttt{Tag} - Eine Kategorie, wie z.\,B.\ \textit{Tanzen} oder \textit{Live-Musik}
 			\item \texttt{Store} - Interface, um Tags und Events zwischenzuspeichern. Mit einem \texttt{StoreListener} kann auf Veränderungen komfortabel reagiert werden.
 		\end{itemize}
@@ -114,13 +114,13 @@
 	
 	
 	\section{App}
-	\begin{frame}{App - Funktionen}
+	\begin{frame}{App -- Funktionen}
 		\begin{itemize}
-			\item Der Nutzer landet bei Start auf einem Splash Screen und wird erst bei vorhandenen Standort-Berechtigungen weitergeleitet.\pause
-			\item Die App führt in regelmäßigen Abständen (15~Minuten) automatisch eine Aktualisierung der Events, die in der Nähe stattfinden, durch.
-			\item Die aktuelle Position des Users und nahe Events werden auf einer \alert{Karte} angezeigt. Außerdem werden die Events in einer Liste aufgeführt.\pause
-			\item Für nahe Events wird ein \alert{Geofence} registriert.
-			\item Hält sich der User lange genug innerhalb eines Geofences auf, erhält er eine \alert{Benachrichtigung}.
+			\item Der Nutzer landet bei Start auf einem \alert<1>{Splash Screen} und wird erst bei vorhandenen Standort-Berechtigungen weitergeleitet.
+			\item Die App führt in regelmäßigen Abständen (15~Minuten) automatisch eine \alert<2>{Aktualisierung} der Events, die in der Nähe stattfinden, durch.
+			\item Die aktuelle Position des Users und nahe Events werden auf einer \alert<3>{Karte} angezeigt. Außerdem werden die Events in einer Liste aufgeführt.
+			\item Für nahe Events wird ein \alert<4>{Geofence} registriert.
+			\item Hält sich der User lange genug innerhalb eines Geofences auf, erhält er eine \alert<5>{Benachrichtigung}.
 		\end{itemize}
 	\end{frame}
 
