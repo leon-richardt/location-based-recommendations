@@ -9,11 +9,18 @@
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
 
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning}
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=4em, text badly centered, node distance=1.5cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=gray!20, text centered, rounded corners]
+\tikzstyle{line} = [draw, -latex']
+
 \usetheme[sectionpage=progressbar]{metropolis}
 \beamertemplatenavigationsymbolsempty
 \setbeamertemplate{footline}{\insertauthor}
 
-\title{Location Based Recommendations\\Abschlussbericht}
+\title{Location Based Recommendations\\Ergebnisse}
 \author[H.~Gerdes, J.B.~Latzel, L.~Richardt]{Henrik~Gerdes, Johannes~B.~Latzel, Leon~Richardt}
 \institute{Universität Osnabrück}
 \date[16.10.2018]{16. Oktober 2018}
@@ -49,7 +56,7 @@
 		
 	\end{frame}
 
-	\begin{frame}{Datenbank - Schema}
+	\begin{frame}{Datenbank - Schematischer Aufbau}
 		\centering\includegraphics[width = \linewidth]{db_scheme}
 	\end{frame}
 
@@ -62,6 +69,36 @@
 		Kommt es während des Datenbank-Zugriffs zu einer \texttt{SQLException}, so wird automatisch ein \alert{Reconnect} durchgeführt.\pause
 		
 		Das momentan verwendete \alert{Scoring} ist zufallsbasiert, es ließe sich aber leicht ein anderes Scoring-System integrieren.
+	\end{frame}
+
+	\begin{frame}{Server - Schematischer Ablauf}
+		\centering
+		\resizebox{!}{\textheight-1.5cm}{%
+			\begin{tikzpicture}[node distance = 1cm, auto]
+				% Place nodes
+				\node (accept) {};
+				\node [block, below of=accept] (read) {Lesen aus \texttt{InputStream}};
+				\node [decision, below of=read] (class) {Klasse?};
+				\node [block, node distance=4cm, left of=class, yshift=-1cm] (readevents) {nahe Events lesen};
+				\node [block, right of=filterevents, xshift=2cm, right of=class, yshift=-1.75cm] (readtags) {alle Tags lesen};
+				\node [block, below of=readevents] (filterevents) {nach Tags filtern};
+				\node [block, below of=filterevents] (scoring) {Scoring};
+				\node [block, node distance=4cm, right of=scoring, yshift=-1cm] (createqueryresult) {\texttt{QueryResult} erstellen};
+				\node [block, below of=createqueryresult] (writequeryresult) {in \texttt{OutputStream} schreiben};
+				\node [block, below of=writequeryresult] (flush) {Flushen und schließen};
+				% Draw edges
+				\path [line] (accept) -- node [above, yshift=0.2cm] {\footnotesize Eingehende Verbindung} (read);
+				\path [line] (read) -- (class);
+				\path [line] (class) -| node [above] {\footnotesize\alert<1>{\texttt{LBRQuery}}} (readevents);
+				\path [line] (class) -| node [above] {\footnotesize\alert<2>{\texttt{TagQuery}}} (readtags);
+				\path [line] (readevents) -- (filterevents);
+				\path [line] (filterevents) -- (scoring);
+				\path [line] (scoring) |- (createqueryresult);
+				\path [line] (readtags) |- (createqueryresult);
+				\path [line] (createqueryresult) -- (writequeryresult);
+				\path [line] (writequeryresult) -- (flush);
+			\end{tikzpicture}
+		}
 	\end{frame}
 	
 	\section{Client-Server-Interface}
@@ -91,14 +128,14 @@
 	\begin{frame}{Herausforderungen bei der Implementation}
 		\begin{itemize}
 			\item Einarbeitung in Android und in Kotlin
-			\item Zuverlässige Netzwerk-Kommunikation zwischen App und Server
-			\item Eigenheiten von Android, unter anderem:
+			\item Zuverlässige \alert<1>{Netzwerk-Kommunikation} zwischen App und Server (\textit{Wie kriegen wir die Events vom Server zur App?})
+			\item \alert<2>{Eigenheiten} von Android, unter anderem:
 				\begin{itemize}
 					\item[--] Standortzugriff über den \texttt{FusedLocationProvider}
 					\item[--] Regelmäßiges Fetchen von Tags und Events im Hintergrund über \texttt{JobService}
 					\item[--] Unzuverlässigkeit der Geofencing-API
 				\end{itemize}
-			\item Umfangreiche Frameworks, die viel Einarbeitung benötigen, wie zum Beispiel:
+			\item Umfangreiche \alert<3>{Frameworks}, die viel Einarbeitung benötigen, wie zum Beispiel:
 				\begin{itemize}
 					\item[--] Android Job Scheduling
 					\item[--] Geofencing
