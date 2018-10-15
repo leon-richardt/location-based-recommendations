@@ -35,7 +35,7 @@
 	\begin{frame}{Was brauchen wir?}
 			\begin{itemize}
 				\item \textbf{Datenbank:} Speichert die Events
-				\item \textbf{Server:} Entscheidet, welche Events ein Nutzer zu sehen bekommt (\textit{Event Scoring})
+				\item \textbf{Server:} Entscheidet, welche Events ein bestimmter Nutzer zu sehen bekommt
 				\item \textbf{App:} GUI für den User
 				\item \textbf{Client-Server-Interface:} Kommunikation zwischen App und Server
 			\end{itemize}
@@ -127,15 +127,15 @@
 	\section{Herausforderungen}
 	\begin{frame}{Herausforderungen bei der Implementation}
 		\begin{itemize}
-			\item Einarbeitung in Android und in Kotlin
-			\item Zuverlässige \alert<1>{Netzwerk-Kommunikation} zwischen App und Server (\textit{Wie kriegen wir die Events vom Server zur App?})
-			\item \alert<2>{Eigenheiten} von Android, unter anderem:
+			\item \alert<1>{Einarbeitung} in Android und in Kotlin
+			\item Zuverlässige \alert<2>{Netzwerk-Kommunikation} zwischen App und Server (\textit{Wie kriegen wir die Events vom Server zur App?})
+			\item \alert<3>{Eigenheiten} von Android, unter anderem:
 				\begin{itemize}
 					\item[--] Standortzugriff über den \texttt{FusedLocationProvider}
 					\item[--] Regelmäßiges Fetchen von Tags und Events im Hintergrund über \texttt{JobService}
 					\item[--] Unzuverlässigkeit der Geofencing-API
 				\end{itemize}
-			\item Umfangreiche \alert<3>{Frameworks}, die viel Einarbeitung benötigen, wie zum Beispiel:
+			\item Umfangreiche \alert<4>{Frameworks}, die viel Einarbeitung benötigen, wie zum Beispiel:
 				\begin{itemize}
 					\item[--] Android Job Scheduling
 					\item[--] Geofencing
