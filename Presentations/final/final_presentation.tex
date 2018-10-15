@@ -39,15 +39,15 @@
 	\begin{frame}{Was brauchen wir?}
 			\begin{itemize}
 				\item \textbf{Datenbank:} Speichert die Events
-				\item \textbf{Server:} Entscheidet, welche Events ein bestimmter Nutzer zu sehen bekommt
+				\item \textbf{LBR-Server:} Entscheidet, welche Events ein bestimmter Nutzer zu sehen bekommt
 				\item \textbf{App:} GUI für den User
-				\item \textbf{Client-Server-Interface:} Kommunikation zwischen App und Server
+				\item \textbf{Client-Server-Interface:} Kommunikation zwischen App und LBR-Server
 			\end{itemize}
 	\end{frame}
 
 	\section{Datenbank}
 	\begin{frame}{Datenbank -- Implementation}
-		Die Datenbank läuft auf \alert{\texttt{MariaDB}}, einer Open-Source-Alternative zu \texttt{MySQL}. Die Kommunikation zwischen der Datenbank und Java geschieht mit \alert{\texttt{JDBC}} (\textit{Java Database Connectivity}).
+		Die Datenbank läuft auf \alert{\texttt{MariaDB}}, einem Fork von \texttt{MySQL}. Die Kommunikation zwischen der Datenbank und Java geschieht mit \alert{\texttt{JDBC}} (\textit{Java Database Connectivity}).
 		
 		\pause
 		In der Datenbank gibt es je eine Table für:
@@ -64,18 +64,18 @@
 		\centering\includegraphics[scale=0.5]{db_scheme}
 	\end{frame}
 
-	\section{Server}
-	\begin{frame}{Server -- Hardware \& Betriebssystem}
-		Als Server wird ein \texttt{Raspberry Pi I B+} mit dem Betriebssystem \texttt{Raspbian} genutzt.
+	\section{LBR-Server}
+	\begin{frame}{LBR-Server -- Hardware \& Betriebssystem}
+		Als physikalischer Server wird ein \texttt{Raspberry Pi I B+} mit dem Betriebssystem \texttt{Raspbian} genutzt.
 		
-		Der Server wartet auf Port \texttt{5445} auf neue Client-Verbindungen und verarbeitet diese. Da ein \alert{Thread-Pool} mit vier Threads genutzt wird, können mehrere Verbindungen gleichzeitig akzeptiert werden.\pause
+		Der LBR-Server wartet auf Port \texttt{5445} auf neue Client-Verbindungen und verarbeitet diese. Da ein \alert{Thread-Pool} mit vier Threads genutzt wird, können mehrere Verbindungen gleichzeitig akzeptiert werden.\pause
 		
 		Kommt es während des Datenbank-Zugriffs zu einer \texttt{SQLException}, so wird automatisch ein \alert{Reconnect} durchgeführt.
 		
-		Das momentan verwendete \alert{Scoring} ist zufallsbasiert, es ließe sich aber leicht ein anderes Scoring-System integrieren.
+		Das verwendete \alert{Scoring} lässt sich dynamisch mithilfe des \texttt{EventScoreCalculator}-Interfaces festlegen.
 	\end{frame}
 
-	\begin{frame}{Server -- Schematischer Ablauf}
+	\begin{frame}{LBR-Server -- Schematischer Ablauf}
 		\centering
 		\resizebox{!}{\textheight-1.5cm}{%
 			\begin{tikzpicture}[node distance = 1cm, auto]
@@ -107,12 +107,12 @@
 	
 	\section{Client-Server-Interface}
 	\begin{frame}{Client-Server-Interface -- Klassen}
-		Folgende Klassen sind besonders wichtig für die Kommunikation zwischen Server und App:
+		Folgende Klassen sind besonders wichtig für die Kommunikation zwischen LBR-Server und App:
 		\begin{itemize}
 			\item \texttt{Venue} - Ein Ort, an dem Events stattfinden können
 			\item \texttt{Event} - Ein Ereignis, wie z.\,B.\ ein \textit{Konzert} oder ein \textit{Festival}
 			\item \texttt{Tag} - Eine Kategorie, wie z.\,B.\ \textit{Tanzen} oder \textit{Live-Musik}
-			\item \texttt{Store} - Interface, um Tags und Events zwischenzuspeichern. Mit einem \texttt{StoreListener} kann auf Veränderungen komfortabel reagiert werden.
+			\item \texttt{Store} - Zwischenspeicher für Objekte aus der Datenbank. Mit einem \texttt{StoreListener} kann auf Veränderungen komfortabel reagiert werden.
 		\end{itemize}
 	\end{frame}
 	
@@ -137,7 +137,7 @@
 	\begin{frame}{Herausforderungen bei der Implementation}
 		\begin{itemize}
 			\item \alert<1>{Einarbeitung} in Android und in Kotlin
-			\item Zuverlässige \alert<2>{Netzwerk-Kommunikation} zwischen App und Server (\textit{Wie kriegen wir die Events vom Server zur App?})
+			\item Zuverlässige \alert<2>{Netzwerk-Kommunikation} zwischen App und LBR-Server (\textit{Wie kriegen wir die Events vom Server zur App?})
 			\item \alert<3>{Eigenheiten} von Android, unter anderem:
 				\begin{itemize}
 					\item[--] Standortzugriff über den \texttt{FusedLocationProvider}
