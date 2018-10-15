@@ -1,6 +1,6 @@
 \documentclass{beamer}
 
-\usepackage[english,ngerman]{babel}
+\usepackage[english, ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{microtype}
 
@@ -8,6 +8,8 @@
 
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
+
+\usepackage[font=scriptsize, labelfont=bf, skip=0.1cm]{caption}
 
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows,positioning}
@@ -148,27 +150,45 @@
 	\section{Screenshots}
 	\begin{frame}{Screenshots I}
 		\begin{columns}[onlytextwidth]
+			
 			\begin{column}{0.5\textwidth}
 				\centering
-				\fbox{\includegraphics[height=\textheight-2cm]{map_list_overview}}
+				\begin{figure}
+					\fbox{\includegraphics[height=\textheight-2cm]{map_list_overview}}
+					\caption{Karte \& Liste}
+				\end{figure}
 			\end{column}
+			
 			\begin{column}{0.5\textwidth}
 				\centering
-				\fbox{\includegraphics[height=\textheight-2cm]{marker_on_map}}
+				\begin{figure}
+					\fbox{\includegraphics[height=\textheight-2cm]{marker_on_map}}
+					\caption{Marker auf Karte}
+				\end{figure}
 			\end{column}
+		
 		\end{columns}
 	\end{frame}
 	
 	\begin{frame}{Screenshots II}
 		\begin{columns}[onlytextwidth]
+			
 			\begin{column}{0.5\textwidth}
 				\centering
-				\fbox{\includegraphics[height=\textheight-2cm]{notification}}
+				\begin{figure}
+					\fbox{\includegraphics[height=\textheight-2cm]{notification}}
+					\caption{Geofence-Benachrichtigung}
+				\end{figure}
 			\end{column}
+			
 			\begin{column}{0.5\textwidth}
 				\centering
-				\fbox{\includegraphics[height=\textheight-2cm]{event_overview}}
+				\begin{figure}
+					\fbox{\includegraphics[height=\textheight-2cm]{event_overview}}
+					\caption{Event-Übersicht}
+				\end{figure}
 			\end{column}
+		
 		\end{columns}
 	\end{frame}
 	
