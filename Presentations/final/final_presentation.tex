@@ -70,7 +70,7 @@
 		
 		Der Server wartet auf Port \texttt{5445} auf neue Client-Verbindungen und verarbeitet diese. Da ein \alert{Thread-Pool} mit vier Threads genutzt wird, können mehrere Verbindungen gleichzeitig akzeptiert werden.\pause
 		
-		Kommt es während des Datenbank-Zugriffs zu einer \texttt{SQLException}, so wird automatisch ein \alert{Reconnect} durchgeführt.\pause
+		Kommt es während des Datenbank-Zugriffs zu einer \texttt{SQLException}, so wird automatisch ein \alert{Reconnect} durchgeführt.
 		
 		Das momentan verwendete \alert{Scoring} ist zufallsbasiert, es ließe sich aber leicht ein anderes Scoring-System integrieren.
 	\end{frame}
@@ -93,8 +93,8 @@
 				% Draw edges
 				\path [line] (accept) -- node [above, yshift=0.2cm] {\footnotesize Eingehende Verbindung} (read);
 				\path [line] (read) -- (class);
-				\path [line] (class) -| node [above] {\footnotesize\alert<1>{\texttt{LBRQuery}}} (readevents);
-				\path [line] (class) -| node [above] {\footnotesize\alert<2>{\texttt{TagQuery}}} (readtags);
+				\path [line] (class) -| node [above] {\small\alert<1>{\texttt{LBRQuery}}} (readevents);
+				\path [line] (class) -| node [above] {\small\alert<2>{\texttt{TagQuery}}} (readtags);
 				\path [line] (readevents) -- (filterevents);
 				\path [line] (filterevents) -- (scoring);
 				\path [line] (scoring) |- (createqueryresult);
@@ -118,13 +118,18 @@
 	
 	
 	\section{App}
-	\begin{frame}{App -- Funktionen}
+	\begin{frame}{App -- Funktionen I}
 		\begin{itemize}
-			\item Der Nutzer landet bei Start auf einem \alert<1>{Splash Screen} und wird erst bei vorhandenen Standort-Berechtigungen weitergeleitet.
-			\item Die App führt in regelmäßigen Abständen (15~Minuten) automatisch eine \alert<2>{Aktualisierung} der Events, die in der Nähe stattfinden, durch.
-			\item Die aktuelle Position des Users und nahe Events werden auf einer \alert<3>{Karte} angezeigt. Außerdem werden die Events in einer Liste aufgeführt.
-			\item Für nahe Events wird ein \alert<4>{Geofence} registriert.
-			\item Hält sich der User lange genug innerhalb eines Geofences auf, erhält er eine \alert<5>{Benachrichtigung}.
+			\item Der Nutzer landet beim Start auf einem \alert{Splash Screen} und wird erst bei vorhandenen Standort-Berechtigungen weitergeleitet.
+			\item Die App führt in regelmäßigen Abständen (15~Minuten) automatisch eine \alert{Aktualisierung} der Events, die in der Nähe stattfinden, durch. 
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{App -- Funktionen II}
+		\begin{itemize}
+			\item Die aktuelle Position des Users und nahe Events werden auf einer \alert{Karte} angezeigt. Außerdem werden die Events in einer Liste aufgeführt.
+			\item Für nahe Events wird ein \alert{Geofence} registriert.
+			\item Hält sich der User lange genug innerhalb eines Geofences auf, erhält er eine \alert{Benachrichtigung}.
 		\end{itemize}
 	\end{frame}
 
