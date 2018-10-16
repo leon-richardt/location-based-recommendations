@@ -40,14 +40,14 @@
 			\begin{itemize}
 				\item \textbf{Datenbank:} Speichert die Events
 				\item \textbf{LBR-Server:} Entscheidet, welche Events ein bestimmter Nutzer zu sehen bekommt
-				\item \textbf{App:} GUI für den User
 				\item \textbf{Client-Server-Interface:} Kommunikation zwischen App und LBR-Server
+				\item \textbf{App:} GUI für den User
 			\end{itemize}
 	\end{frame}
 
 	\section{Datenbank}
 	\begin{frame}{Datenbank -- Implementation}
-		Die Datenbank läuft auf \alert{\texttt{MariaDB}}, einem Fork von \texttt{MySQL}. Die Kommunikation zwischen der Datenbank und Java geschieht mit \alert{\texttt{JDBC}} (\textit{Java Database Connectivity}).
+		Für die Datenbank wird \alert{\texttt{MariaDB}} benutzt, ein Fork von \texttt{MySQL}. Die Kommunikation zwischen Datenbank und LBR-Server geschieht mit \alert{\texttt{JDBC}} (\textit{Java Database Connectivity}).
 		
 		\pause
 		In der Datenbank gibt es je eine Table für:
@@ -137,7 +137,7 @@
 	\begin{frame}{Herausforderungen bei der Implementation}
 		\begin{itemize}
 			\item \alert<1>{Einarbeitung} in Android und in Kotlin
-			\item Zuverlässige \alert<2>{Netzwerk-Kommunikation} zwischen App und LBR-Server (\textit{Wie kriegen wir die Events vom Server zur App?})
+			\item Zuverlässige \alert<2>{Netzwerk-Kommun --ikation} zwischen App und LBR-Server (\textit{Wie kriegen wir die Events vom Server zur App?})
 			\item \alert<3>{Eigenheiten} von Android, unter anderem:
 				\begin{itemize}
 					\item[--] Standortzugriff über den \texttt{FusedLocationProvider}
@@ -159,8 +159,8 @@
 			\begin{column}{0.5\textwidth}
 				\centering
 				\begin{figure}
-					\fbox{\includegraphics[height=\textheight-2cm]{map_list_overview}}
-					\caption{Karte \& Liste}
+					\fbox{\includegraphics[height=\textheight-2cm]{notification}}
+					\caption{Geofence-Benachrichtigung}
 				\end{figure}
 			\end{column}
 			
@@ -168,21 +168,21 @@
 				\centering
 				\begin{figure}
 					\fbox{\includegraphics[height=\textheight-2cm]{marker_on_map}}
-					\caption{Marker auf Karte}
+					\caption{Marker auf Map}
 				\end{figure}
 			\end{column}
 		
 		\end{columns}
 	\end{frame}
-	
+
 	\begin{frame}{Screenshots II}
 		\begin{columns}[onlytextwidth]
 			
 			\begin{column}{0.5\textwidth}
 				\centering
 				\begin{figure}
-					\fbox{\includegraphics[height=\textheight-2cm]{notification}}
-					\caption{Geofence-Benachrichtigung}
+					\fbox{\includegraphics[height=\textheight-2cm]{map_list_overview}}
+					\caption{Karte \& Liste}
 				\end{figure}
 			\end{column}
 			
@@ -193,7 +193,7 @@
 					\caption{Event-Übersicht}
 				\end{figure}
 			\end{column}
-		
+			
 		\end{columns}
 	\end{frame}
 	
